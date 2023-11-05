@@ -9,7 +9,7 @@ namespace SmartHRM.API.Controllers
     [ApiController]
     public class AccountController : ControllerBase
     {
-        //sample
+        //sample branch1
         private readonly AccountService _accountService;
         public AccountController(AccountService accountService)
         {
