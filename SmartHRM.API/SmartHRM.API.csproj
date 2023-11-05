@@ -1,0 +1,24 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\SmartHRM.Repository\SmartHRM.Repository.csproj" />
+    <ProjectReference Include="..\SmartHRM.Services\SmartHRM.Services.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="HUG.CRUD">
+      <HintPath>..\..\..\..\..\..\..\..\..\..\DEV2301LM-NETCORE24\PROJECT\Development\CozynibiHotel\HUG.CRUD\bin\Debug\net6.0\HUG.CRUD.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+</Project>

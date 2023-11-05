@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\SmartHRM.Repository\SmartHRM.Repository.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="HUG.CRUD">
+      <HintPath>..\..\..\..\..\..\..\..\..\..\DEV2301LM-NETCORE24\PROJECT\Development\CozynibiHotel\HUG.CRUD\bin\Debug\net6.0\HUG.CRUD.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+</Project>

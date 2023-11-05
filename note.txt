@@ -1,0 +1,48 @@
+*CÁC BƯỚC TẠO API(Mô hình repository pattern)
+I. Luồng đi API
+
+Database ---> Repository(CRUD) + Mapping Model ---> Service(CRUD - logic) ---> Controler(End-point)
+
+II. Các bước tạo
+1. Vào SmartHRM.Repository
+- Thêm Model (kế thưà BaseModel)
+- Vào folder Connection -> AppDbcontext: thêm DbSet<Model>...
+- Vào thư mục Repository: Tạo class <ModelName>Repository(kế thừa GenericRepository<Model>)
+- Vào folder Connection -> file ServiceExtention: services.AddScoped<ModelRepository>();
+
+---> Hàm thêm, sửa, xóa do đã kế thừa GenericRepository<Model>
+
+2. Vào SmartHRM.Service (logic)
+---> Gọi lại những hàm thêm sửa xóa từ SmartHRM.Repository nhưng sẽ thêm logic
+- Thêm Service: Tạo class <ModelName>Sevice
+	+ Chú ý: Có hàm tạo chứa đối là <ModelName>Repository
+- Sửa các hàm trong Service ứng với logic cần trước và sau CRUD
+
+3. Vào SmartHRM.API
+- Vào Program.cs -> Add Service (builder.Services.AddScoped<ModelService>();)
+- Vào Controler(End-point) gọi lại những Service vừa tạo + Cấu hình Controler
+
+4. Test
+--> Xem
+--> Thêm, Sửa, Xóa 
+
+5. Tasks
+- Những bảng ngoài
++ tAllownce -> Khánh
++ tBonus -> Khánh
++ tDeduction -> Đức
++ tTimeKeeping -> Đức
++ tTask -> Sử
++ tPosition -> Sử
++ tProject -> Sử
++ tDepartment -> Hoàng
++ tContract -> Hoàng
++ tInsurance
+-> đẩy ra giao diện
+- Nếu có thêm dữ liệu vào CSDL thì gửi code SQL đoạn thêm
+
+
+
+
+
+

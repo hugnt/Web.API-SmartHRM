@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "jpZIfaAyET0nH2zNlaYVqbUoE4Mq0KciMWOYShRxqr8=",
+  "Source": "SmartHRM.API",
+  "BasePath": "_content/SmartHRM.API",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}
