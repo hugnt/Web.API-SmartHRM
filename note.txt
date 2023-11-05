@@ -36,8 +36,8 @@ II. Các bước tạo
 + tPosition -> Sử
 + tProject -> Sử
 + tDepartment -> Hoàng
-+ tContract -> Hoàng
-+ tInsurance
++ tContract -> Hoàng 
++ tInsurance 
 -> đẩy ra giao diện
 - Nếu có thêm dữ liệu vào CSDL thì gửi code SQL đoạn thêm
 
