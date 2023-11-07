@@ -1,0 +1,40 @@
+﻿<div class="row" id="titlePageBox">
+    <div class="col-12">
+        <div class="page-title-box d-sm-flex align-items-center justify-content-between">
+            <h4 id="page-title-main" class="mb-sm-0">Current</h4>
+
+            <div class="page-title-right">
+                <ol class="breadcrumb m-0">
+                    <li class="breadcrumb-item">
+                        <a href="javascript: void(0);" >Level x</a>
+                    </li>
+                    <li class="breadcrumb-item active">Current</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    var pathname = window.location.pathname;
+   // console.log(pathname);
+    var pathParts = pathname.split('/');
+
+    pathParts = pathParts.map(x => insertSpaceBetweenCamelCase(x));
+    pathParts = pathParts.slice(1);
+    console.log(pathParts);
+    function insertSpaceBetweenCamelCase(str) {
+      return str.replace(/([a-z])([A-Z])/g, '$1 $2');
+    }
+    var lastPage =  pathParts[pathParts.length-1];
+    document.querySelector("#page-title-main").innerText = lastPage;
+    var htmlPath = ``;
+    for(var i =0; i<pathParts.length - 1; i++){
+        htmlPath += `
+            <li class="breadcrumb-item">
+                <a href="javascript: void(0);" >${pathParts[i]}</a>
+            </li>
+        `;
+    }
+    htmlPath += `<li class="breadcrumb-item active">${lastPage}</li>`;
+    document.querySelector("#titlePageBox .breadcrumb").innerHTML = htmlPath;
+</script>

@@ -15,6 +15,9 @@ builder.Services.AddDIServices(builder.Configuration);
 //Account
 builder.Services.AddScoped<AccountService>();
 
+//Employee
+builder.Services.AddScoped<EmployeeService>();
+
 //Enable CORS
 builder.Services.AddCors(p =>
     p.AddPolicy("HUG_LOCAL", build =>

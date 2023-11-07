@@ -17,7 +17,7 @@
 
   <ItemGroup>
     <Reference Include="HUG.CRUD">
-      <HintPath>..\..\..\..\..\..\..\..\..\..\DEV2301LM-NETCORE24\PROJECT\Development\CozynibiHotel\HUG.CRUD\bin\Debug\net6.0\HUG.CRUD.dll</HintPath>
+      <HintPath>..\SmartHRM.Lib\HUG.CRUD.dll</HintPath>
     </Reference>
   </ItemGroup>
 

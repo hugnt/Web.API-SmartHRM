@@ -22,7 +22,6 @@ C:\Users\User\Documents\SchoolFiles\IT\SEMESTER_5\Web Programming\project\SmartH
 C:\Users\User\Documents\SchoolFiles\IT\SEMESTER_5\Web Programming\project\SmartHRM\SmartHRM.Services\bin\Debug\net6.0\HUG.CRUD.dll
 C:\Users\User\Documents\SchoolFiles\IT\SEMESTER_5\Web Programming\project\SmartHRM\SmartHRM.Services\bin\Debug\net6.0\SmartHRM.Repository.dll
 C:\Users\User\Documents\SchoolFiles\IT\SEMESTER_5\Web Programming\project\SmartHRM\SmartHRM.Services\bin\Debug\net6.0\SmartHRM.Repository.pdb
-C:\Users\User\Documents\SchoolFiles\IT\SEMESTER_5\Web Programming\project\SmartHRM\SmartHRM.Services\bin\Debug\net6.0\HUG.CRUD.pdb
 C:\Users\User\Documents\SchoolFiles\IT\SEMESTER_5\Web Programming\project\SmartHRM\SmartHRM.Services\obj\Debug\net6.0\SmartHRM.Services.csproj.AssemblyReference.cache
 C:\Users\User\Documents\SchoolFiles\IT\SEMESTER_5\Web Programming\project\SmartHRM\SmartHRM.Services\obj\Debug\net6.0\SmartHRM.Services.GeneratedMSBuildEditorConfig.editorconfig
 C:\Users\User\Documents\SchoolFiles\IT\SEMESTER_5\Web Programming\project\SmartHRM\SmartHRM.Services\obj\Debug\net6.0\SmartHRM.Services.AssemblyInfoInputs.cache

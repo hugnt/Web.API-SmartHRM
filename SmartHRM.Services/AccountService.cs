@@ -70,23 +70,5 @@ namespace SmartHRM.Services
             return new ResponseModel(204, "");
         }
 
-        public Role GetRoleById(int roleId)
-        {
-            throw new NotImplementedException();
-        }
-
-        public List<Role> GetRoles()
-        {
-            throw new NotImplementedException();
-        }
-        public Task<ResponseModel> ValidateAccount(Account account)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<ResponseModel> ValidateUsernameAndPassword(Account account)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

@@ -1,49 +1,84 @@
 ﻿<!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-layout="vertical" data-topbar="light" data-sidebar="dark" data-sidebar-size="lg"
+      data-sidebar-image="none" data-preloader="disable">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - SmartHRM.Admin</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/SmartHRM.Admin.styles.css" asp-append-version="true" />
+    <meta content="SmartHRM Admin & Dashboard" name="description" />
+    <meta content="Hugnt" name="author" />
+    <!-- App favicon -->
+    <link rel="shortcut icon" href="~/assets/images/favicon.ico" />
+
+    @await RenderSectionAsync("Styles", required: false)
+
+    <!-- Layout config Js -->
+    <script src="~/assets/js/layout.js"></script>
+    <!-- Bootstrap Css -->
+    <link href="~/assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <!-- Icons Css -->
+    <link href="~/assets/css/icons.min.css" rel="stylesheet" type="text/css" />
+    <!-- App Css-->
+    <link href="~/assets/css/app.min.css" rel="stylesheet" type="text/css" />
+    <!-- custom Css-->
+    <link href="~/assets/css/custom.min.css" rel="stylesheet" type="text/css" />
+
+    
+
 </head>
 <body>
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">SmartHRM.Admin</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
-                    </ul>
+    <div id="layout-wrapper">
+        @await Html.PartialAsync("~/Views/Shared/Partial/Layout/_HeaderPartial.cshtml")
+        @await Html.PartialAsync("~/Views/Shared/Partial/Notification/RemoveModelPartial.cshtml")
+        @await Html.PartialAsync("~/Views/Shared/Partial/Layout/_NavBarPartial.cshtml")
+        <div class="vertical-overlay"></div>
+        <div class="main-content">
+            <!-- Start Page-content -->
+            <div class="page-content">
+                <div class="container-fluid">
+                    @await Html.PartialAsync("~/Views/Shared/Partial/Layout/TitleBox.cshtml")
+                    <!-- end page title -->
+                    <!-- Loading -->
+                    @await Html.PartialAsync("~/Views/Shared/Partial/Notification/LoadingPartial.cshtml")
+                    @RenderBody()
                 </div>
             </div>
-        </nav>
-    </header>
-    <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
+            <!-- End Page-content -->
+            @await Html.PartialAsync("~/Views/Shared/Partial/Layout/_FooterPartial.cshtml")
+        </div>
     </div>
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2023 - SmartHRM.Admin - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+    <!--start back-to-top-->
+    <button onclick="topFunction()" class="btn btn-danger btn-icon" id="back-to-top">
+        <i class="ri-arrow-up-line"></i>
+    </button>
+
+    <!--preloader-->
+    <div id="preloader">
+        <div id="status">
+            <div class="spinner-border text-primary avatar-sm" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>
         </div>
-    </footer>
+    </div>
+
+    @await Html.PartialAsync("~/Views/Shared/Partial/Layout/ThemeSettings.cshtml")
+
+    @await RenderSectionAsync("Modals", required: false)
+
+    <!-- JAVASCRIPT REQUIRED LIB-->
+    <script src="~/assets/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="~/assets/libs/simplebar/simplebar.min.js"></script>
+    <script src="~/assets/libs/node-waves/waves.min.js"></script>
+    <script src="~/assets/libs/feather-icons/feather.min.js"></script>
+    <script src="~/assets/js/pages/plugins/lord-icon-2.1.0.js"></script>
+    <script src="~/assets/js/plugins.js"></script>
+
+
+    <!-- App js -->
+    <script src="~/assets/js/app.js"></script>
+
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
