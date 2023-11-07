@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "ProjectMap": {
+    "b94ce625-ed3e-47b8-adbb-0a90f4244d03": {
+      "ProjectGuid": "b94ce625-ed3e-47b8-adbb-0a90f4244d03",
+      "DisplayName": "SmartHRM.Admin",
+      "ColorIndex": 0
+    }
+  },
+  "NextColorIndex": 1
+}
