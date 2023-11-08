@@ -22,3 +22,32 @@ C:\Users\User\Documents\SchoolFiles\IT\SEMESTER_5\Web Programming\project\SmartH
 C:\Users\User\Documents\SchoolFiles\IT\SEMESTER_5\Web Programming\project\SmartHRM\SmartHRM.Admin\obj\Debug\net6.0\ref\SmartHRM.Admin.dll
 C:\Users\User\Documents\SchoolFiles\IT\SEMESTER_5\Web Programming\project\SmartHRM\SmartHRM.Admin\obj\Debug\net6.0\SmartHRM.Admin.pdb
 C:\Users\User\Documents\SchoolFiles\IT\SEMESTER_5\Web Programming\project\SmartHRM\SmartHRM.Admin\obj\Debug\net6.0\SmartHRM.Admin.genruntimeconfig.cache
+D:\baitaplonweb\SmartHRM\Web.API-SmartHRM\SmartHRM.Admin\bin\Debug\net6.0\appsettings.Development.json
+D:\baitaplonweb\SmartHRM\Web.API-SmartHRM\SmartHRM.Admin\bin\Debug\net6.0\appsettings.json
+D:\baitaplonweb\SmartHRM\Web.API-SmartHRM\SmartHRM.Admin\bin\Debug\net6.0\SmartHRM.Admin.staticwebassets.runtime.json
+D:\baitaplonweb\SmartHRM\Web.API-SmartHRM\SmartHRM.Admin\bin\Debug\net6.0\SmartHRM.Admin.exe
+D:\baitaplonweb\SmartHRM\Web.API-SmartHRM\SmartHRM.Admin\bin\Debug\net6.0\SmartHRM.Admin.deps.json
+D:\baitaplonweb\SmartHRM\Web.API-SmartHRM\SmartHRM.Admin\bin\Debug\net6.0\SmartHRM.Admin.runtimeconfig.json
+D:\baitaplonweb\SmartHRM\Web.API-SmartHRM\SmartHRM.Admin\bin\Debug\net6.0\SmartHRM.Admin.dll
+D:\baitaplonweb\SmartHRM\Web.API-SmartHRM\SmartHRM.Admin\bin\Debug\net6.0\SmartHRM.Admin.pdb
+D:\baitaplonweb\SmartHRM\Web.API-SmartHRM\SmartHRM.Admin\obj\Debug\net6.0\SmartHRM.Admin.csproj.AssemblyReference.cache
+D:\baitaplonweb\SmartHRM\Web.API-SmartHRM\SmartHRM.Admin\obj\Debug\net6.0\SmartHRM.Admin.GeneratedMSBuildEditorConfig.editorconfig
+D:\baitaplonweb\SmartHRM\Web.API-SmartHRM\SmartHRM.Admin\obj\Debug\net6.0\SmartHRM.Admin.AssemblyInfoInputs.cache
+D:\baitaplonweb\SmartHRM\Web.API-SmartHRM\SmartHRM.Admin\obj\Debug\net6.0\SmartHRM.Admin.AssemblyInfo.cs
+D:\baitaplonweb\SmartHRM\Web.API-SmartHRM\SmartHRM.Admin\obj\Debug\net6.0\SmartHRM.Admin.csproj.CoreCompileInputs.cache
+D:\baitaplonweb\SmartHRM\Web.API-SmartHRM\SmartHRM.Admin\obj\Debug\net6.0\SmartHRM.Admin.MvcApplicationPartsAssemblyInfo.cache
+D:\baitaplonweb\SmartHRM\Web.API-SmartHRM\SmartHRM.Admin\obj\Debug\net6.0\SmartHRM.Admin.RazorAssemblyInfo.cache
+D:\baitaplonweb\SmartHRM\Web.API-SmartHRM\SmartHRM.Admin\obj\Debug\net6.0\SmartHRM.Admin.RazorAssemblyInfo.cs
+D:\baitaplonweb\SmartHRM\Web.API-SmartHRM\SmartHRM.Admin\obj\Debug\net6.0\staticwebassets\msbuild.SmartHRM.Admin.Microsoft.AspNetCore.StaticWebAssets.props
+D:\baitaplonweb\SmartHRM\Web.API-SmartHRM\SmartHRM.Admin\obj\Debug\net6.0\staticwebassets\msbuild.build.SmartHRM.Admin.props
+D:\baitaplonweb\SmartHRM\Web.API-SmartHRM\SmartHRM.Admin\obj\Debug\net6.0\staticwebassets\msbuild.buildMultiTargeting.SmartHRM.Admin.props
+D:\baitaplonweb\SmartHRM\Web.API-SmartHRM\SmartHRM.Admin\obj\Debug\net6.0\staticwebassets\msbuild.buildTransitive.SmartHRM.Admin.props
+D:\baitaplonweb\SmartHRM\Web.API-SmartHRM\SmartHRM.Admin\obj\Debug\net6.0\staticwebassets.pack.json
+D:\baitaplonweb\SmartHRM\Web.API-SmartHRM\SmartHRM.Admin\obj\Debug\net6.0\staticwebassets.build.json
+D:\baitaplonweb\SmartHRM\Web.API-SmartHRM\SmartHRM.Admin\obj\Debug\net6.0\staticwebassets.development.json
+D:\baitaplonweb\SmartHRM\Web.API-SmartHRM\SmartHRM.Admin\obj\Debug\net6.0\scopedcss\bundle\SmartHRM.Admin.styles.css
+D:\baitaplonweb\SmartHRM\Web.API-SmartHRM\SmartHRM.Admin\obj\Debug\net6.0\SmartHRM.Admin.dll
+D:\baitaplonweb\SmartHRM\Web.API-SmartHRM\SmartHRM.Admin\obj\Debug\net6.0\refint\SmartHRM.Admin.dll
+D:\baitaplonweb\SmartHRM\Web.API-SmartHRM\SmartHRM.Admin\obj\Debug\net6.0\SmartHRM.Admin.pdb
+D:\baitaplonweb\SmartHRM\Web.API-SmartHRM\SmartHRM.Admin\obj\Debug\net6.0\SmartHRM.Admin.genruntimeconfig.cache
+D:\baitaplonweb\SmartHRM\Web.API-SmartHRM\SmartHRM.Admin\obj\Debug\net6.0\ref\SmartHRM.Admin.dll

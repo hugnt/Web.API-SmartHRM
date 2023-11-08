@@ -8,23 +8,23 @@
     "net6.0": []
   },
   "packageFolders": {
-    "C:\\Users\\User\\.nuget\\packages\\": {},
+    "C:\\Users\\vuvan\\.nuget\\packages\\": {},
     "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\User\\Documents\\SchoolFiles\\IT\\SEMESTER_5\\Web Programming\\project\\SmartHRM\\SmartHRM.Admin\\SmartHRM.Admin.csproj",
+      "projectUniqueName": "D:\\baitaplonweb\\SmartHRM\\Web.API-SmartHRM\\SmartHRM.Admin\\SmartHRM.Admin.csproj",
       "projectName": "SmartHRM.Admin",
-      "projectPath": "C:\\Users\\User\\Documents\\SchoolFiles\\IT\\SEMESTER_5\\Web Programming\\project\\SmartHRM\\SmartHRM.Admin\\SmartHRM.Admin.csproj",
-      "packagesPath": "C:\\Users\\User\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\User\\Documents\\SchoolFiles\\IT\\SEMESTER_5\\Web Programming\\project\\SmartHRM\\SmartHRM.Admin\\obj\\",
+      "projectPath": "D:\\baitaplonweb\\SmartHRM\\Web.API-SmartHRM\\SmartHRM.Admin\\SmartHRM.Admin.csproj",
+      "packagesPath": "C:\\Users\\vuvan\\.nuget\\packages\\",
+      "outputPath": "D:\\baitaplonweb\\SmartHRM\\Web.API-SmartHRM\\SmartHRM.Admin\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
       ],
       "configFilePaths": [
-        "C:\\Users\\User\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\vuvan\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
@@ -56,7 +56,8 @@
           "net47",
           "net471",
           "net472",
-          "net48"
+          "net48",
+          "net481"
         ],
         "assetTargetFallback": true,
         "warn": true,
@@ -68,7 +69,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.124\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.400\\RuntimeIdentifierGraph.json"
       }
     }
   }
