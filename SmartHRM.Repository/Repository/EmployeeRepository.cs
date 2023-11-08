@@ -15,6 +15,6 @@ namespace SmartHRM.Repository
         {
             _dbContext = dbContext;
         }
-   
+    //Hoang vua thay doi gi do
     }
 }
