@@ -1,24 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\User\\Documents\\SchoolFiles\\IT\\SEMESTER_5\\Web Programming\\project\\SmartHRM\\SmartHRM.API\\SmartHRM.API.csproj": {}
+    "C:\\Users\\giakh\\OneDrive\\Máy tính\\Web_Project\\Web.API-SmartHRM\\SmartHRM.API\\SmartHRM.API.csproj": {}
   },
   "projects": {
-    "C:\\Users\\User\\Documents\\SchoolFiles\\IT\\SEMESTER_5\\Web Programming\\project\\SmartHRM\\SmartHRM.API\\SmartHRM.API.csproj": {
+    "C:\\Users\\giakh\\OneDrive\\Máy tính\\Web_Project\\Web.API-SmartHRM\\SmartHRM.API\\SmartHRM.API.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\User\\Documents\\SchoolFiles\\IT\\SEMESTER_5\\Web Programming\\project\\SmartHRM\\SmartHRM.API\\SmartHRM.API.csproj",
+        "projectUniqueName": "C:\\Users\\giakh\\OneDrive\\Máy tính\\Web_Project\\Web.API-SmartHRM\\SmartHRM.API\\SmartHRM.API.csproj",
         "projectName": "SmartHRM.API",
-        "projectPath": "C:\\Users\\User\\Documents\\SchoolFiles\\IT\\SEMESTER_5\\Web Programming\\project\\SmartHRM\\SmartHRM.API\\SmartHRM.API.csproj",
-        "packagesPath": "C:\\Users\\User\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\User\\Documents\\SchoolFiles\\IT\\SEMESTER_5\\Web Programming\\project\\SmartHRM\\SmartHRM.API\\obj\\",
+        "projectPath": "C:\\Users\\giakh\\OneDrive\\Máy tính\\Web_Project\\Web.API-SmartHRM\\SmartHRM.API\\SmartHRM.API.csproj",
+        "packagesPath": "C:\\Users\\giakh\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\giakh\\OneDrive\\Máy tính\\Web_Project\\Web.API-SmartHRM\\SmartHRM.API\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-        ],
         "configFilePaths": [
-          "C:\\Users\\User\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Users\\giakh\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -32,11 +28,11 @@
           "net6.0": {
             "targetAlias": "net6.0",
             "projectReferences": {
-              "C:\\Users\\User\\Documents\\SchoolFiles\\IT\\SEMESTER_5\\Web Programming\\project\\SmartHRM\\SmartHRM.Repository\\SmartHRM.Repository.csproj": {
-                "projectPath": "C:\\Users\\User\\Documents\\SchoolFiles\\IT\\SEMESTER_5\\Web Programming\\project\\SmartHRM\\SmartHRM.Repository\\SmartHRM.Repository.csproj"
+              "C:\\Users\\giakh\\OneDrive\\Máy tính\\Web_Project\\Web.API-SmartHRM\\SmartHRM.Repository\\SmartHRM.Repository.csproj": {
+                "projectPath": "C:\\Users\\giakh\\OneDrive\\Máy tính\\Web_Project\\Web.API-SmartHRM\\SmartHRM.Repository\\SmartHRM.Repository.csproj"
               },
-              "C:\\Users\\User\\Documents\\SchoolFiles\\IT\\SEMESTER_5\\Web Programming\\project\\SmartHRM\\SmartHRM.Services\\SmartHRM.Services.csproj": {
-                "projectPath": "C:\\Users\\User\\Documents\\SchoolFiles\\IT\\SEMESTER_5\\Web Programming\\project\\SmartHRM\\SmartHRM.Services\\SmartHRM.Services.csproj"
+              "C:\\Users\\giakh\\OneDrive\\Máy tính\\Web_Project\\Web.API-SmartHRM\\SmartHRM.Services\\SmartHRM.Services.csproj": {
+                "projectPath": "C:\\Users\\giakh\\OneDrive\\Máy tính\\Web_Project\\Web.API-SmartHRM\\SmartHRM.Services\\SmartHRM.Services.csproj"
               }
             }
           }
@@ -62,7 +58,8 @@
             "net47",
             "net471",
             "net472",
-            "net48"
+            "net48",
+            "net481"
           ],
           "assetTargetFallback": true,
           "warn": true,
@@ -74,25 +71,21 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.124\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.402\\RuntimeIdentifierGraph.json"
         }
       }
     },
-    "C:\\Users\\User\\Documents\\SchoolFiles\\IT\\SEMESTER_5\\Web Programming\\project\\SmartHRM\\SmartHRM.Repository\\SmartHRM.Repository.csproj": {
+    "C:\\Users\\giakh\\OneDrive\\Máy tính\\Web_Project\\Web.API-SmartHRM\\SmartHRM.Repository\\SmartHRM.Repository.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\User\\Documents\\SchoolFiles\\IT\\SEMESTER_5\\Web Programming\\project\\SmartHRM\\SmartHRM.Repository\\SmartHRM.Repository.csproj",
+        "projectUniqueName": "C:\\Users\\giakh\\OneDrive\\Máy tính\\Web_Project\\Web.API-SmartHRM\\SmartHRM.Repository\\SmartHRM.Repository.csproj",
         "projectName": "SmartHRM.Repository",
-        "projectPath": "C:\\Users\\User\\Documents\\SchoolFiles\\IT\\SEMESTER_5\\Web Programming\\project\\SmartHRM\\SmartHRM.Repository\\SmartHRM.Repository.csproj",
-        "packagesPath": "C:\\Users\\User\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\User\\Documents\\SchoolFiles\\IT\\SEMESTER_5\\Web Programming\\project\\SmartHRM\\SmartHRM.Repository\\obj\\",
+        "projectPath": "C:\\Users\\giakh\\OneDrive\\Máy tính\\Web_Project\\Web.API-SmartHRM\\SmartHRM.Repository\\SmartHRM.Repository.csproj",
+        "packagesPath": "C:\\Users\\giakh\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\giakh\\OneDrive\\Máy tính\\Web_Project\\Web.API-SmartHRM\\SmartHRM.Repository\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-        ],
         "configFilePaths": [
-          "C:\\Users\\User\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Users\\giakh\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -133,7 +126,8 @@
             "net47",
             "net471",
             "net472",
-            "net48"
+            "net48",
+            "net481"
           ],
           "assetTargetFallback": true,
           "warn": true,
@@ -142,25 +136,21 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.124\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.402\\RuntimeIdentifierGraph.json"
         }
       }
     },
-    "C:\\Users\\User\\Documents\\SchoolFiles\\IT\\SEMESTER_5\\Web Programming\\project\\SmartHRM\\SmartHRM.Services\\SmartHRM.Services.csproj": {
+    "C:\\Users\\giakh\\OneDrive\\Máy tính\\Web_Project\\Web.API-SmartHRM\\SmartHRM.Services\\SmartHRM.Services.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\User\\Documents\\SchoolFiles\\IT\\SEMESTER_5\\Web Programming\\project\\SmartHRM\\SmartHRM.Services\\SmartHRM.Services.csproj",
+        "projectUniqueName": "C:\\Users\\giakh\\OneDrive\\Máy tính\\Web_Project\\Web.API-SmartHRM\\SmartHRM.Services\\SmartHRM.Services.csproj",
         "projectName": "SmartHRM.Services",
-        "projectPath": "C:\\Users\\User\\Documents\\SchoolFiles\\IT\\SEMESTER_5\\Web Programming\\project\\SmartHRM\\SmartHRM.Services\\SmartHRM.Services.csproj",
-        "packagesPath": "C:\\Users\\User\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\User\\Documents\\SchoolFiles\\IT\\SEMESTER_5\\Web Programming\\project\\SmartHRM\\SmartHRM.Services\\obj\\",
+        "projectPath": "C:\\Users\\giakh\\OneDrive\\Máy tính\\Web_Project\\Web.API-SmartHRM\\SmartHRM.Services\\SmartHRM.Services.csproj",
+        "packagesPath": "C:\\Users\\giakh\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\giakh\\OneDrive\\Máy tính\\Web_Project\\Web.API-SmartHRM\\SmartHRM.Services\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-        ],
         "configFilePaths": [
-          "C:\\Users\\User\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Users\\giakh\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -174,8 +164,8 @@
           "net6.0": {
             "targetAlias": "net6.0",
             "projectReferences": {
-              "C:\\Users\\User\\Documents\\SchoolFiles\\IT\\SEMESTER_5\\Web Programming\\project\\SmartHRM\\SmartHRM.Repository\\SmartHRM.Repository.csproj": {
-                "projectPath": "C:\\Users\\User\\Documents\\SchoolFiles\\IT\\SEMESTER_5\\Web Programming\\project\\SmartHRM\\SmartHRM.Repository\\SmartHRM.Repository.csproj"
+              "C:\\Users\\giakh\\OneDrive\\Máy tính\\Web_Project\\Web.API-SmartHRM\\SmartHRM.Repository\\SmartHRM.Repository.csproj": {
+                "projectPath": "C:\\Users\\giakh\\OneDrive\\Máy tính\\Web_Project\\Web.API-SmartHRM\\SmartHRM.Repository\\SmartHRM.Repository.csproj"
               }
             }
           }
@@ -195,7 +185,8 @@
             "net47",
             "net471",
             "net472",
-            "net48"
+            "net48",
+            "net481"
           ],
           "assetTargetFallback": true,
           "warn": true,
@@ -204,7 +195,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.124\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.402\\RuntimeIdentifierGraph.json"
         }
       }
     }

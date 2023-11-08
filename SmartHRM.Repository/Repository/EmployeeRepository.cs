@@ -15,6 +15,5 @@ namespace SmartHRM.Repository
         {
             _dbContext = dbContext;
         }
-   
     }
 }
