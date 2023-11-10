@@ -11,41 +11,41 @@ namespace SmartHRM.API.Controllers
     public class ContractController : ControllerBase
     {
         //sample
-        private readonly ContractServise _RoleService;
-        public ContractController(ContractServise RoleService)
+        private readonly ContractServise _ContractService;
+        public ContractController(ContractServise ContractService)
         {
-            _RoleService = RoleService;
+            _ContractService = ContractService;
         }
 
         [HttpGet]
-        [ProducesResponseType(200, Type = typeof(IEnumerable<Role>))]
-        public IActionResult GetRoles()
+        [ProducesResponseType(200, Type = typeof(IEnumerable<Contract>))]
+        public IActionResult GetContracts()
         {
-            var Roles = _RoleService.GetRoles();
+            var Contracts = _ContractService.GetContracts();
             if (!ModelState.IsValid) return BadRequest(ModelState);
 
-            return Ok(Roles);
+            return Ok(Contracts);
         }
 
-        [HttpGet("{RoleId}")]
-        [ProducesResponseType(200, Type = typeof(Role))]
+        [HttpGet("{ContractId}")]
+        [ProducesResponseType(200, Type = typeof(Contract))]
         [ProducesResponseType(400)]
-        public IActionResult GetRole(int RoleId)
+        public IActionResult GetContract(int ContractId)
         {
-            var Role = _RoleService.GetRole(RoleId);
+            var Contract = _ContractService.GetContract(ContractId);
             if (!ModelState.IsValid) return BadRequest();
-            if (Role == null) return NotFound();
-            return Ok(Role);
+            if (Contract == null) return NotFound();
+            return Ok(Contract);
         }
 
         [HttpPost]
         [ProducesResponseType(201)]
         [ProducesResponseType(400)]
-        public IActionResult CreateRole([FromBody] Contract RoleCreate)
+        public IActionResult CreateContract([FromBody] Contract ContractCreate)
         {
-            if (RoleCreate == null) return BadRequest(ModelState);
+            if (ContractCreate == null) return BadRequest(ModelState);
 
-            var res = _RoleService.CreateRole(RoleCreate);
+            var res = _ContractService.CreateContract(ContractCreate);
 
             if (res.Status != 201)
             {
@@ -58,17 +58,17 @@ namespace SmartHRM.API.Controllers
             return StatusCode(res.Status, res.StatusMessage);
         }
 
-        [HttpPut("{RoleId}")]
+        [HttpPut("{ContractId}")]
         [ProducesResponseType(400)]
         [ProducesResponseType(204)]
         [ProducesResponseType(404)]
-        public IActionResult UpdateRole(int RoleId, [FromBody] Contract updatedRole)
+        public IActionResult UpdateContract(int ContractId, [FromBody] Contract updatedContract)
         {
-            if (updatedRole == null) return BadRequest(ModelState);
-            if (RoleId != updatedRole.Id) return BadRequest(ModelState);
+            if (updatedContract == null) return BadRequest(ModelState);
+            if (ContractId != updatedContract.Id) return BadRequest(ModelState);
 
 
-            var res = _RoleService.UpdateRole(RoleId, updatedRole);
+            var res = _ContractService.UpdateContract(ContractId, updatedContract);
             if (res.Status != 204)
             {
                 ModelState.AddModelError("", res.StatusMessage);
@@ -79,13 +79,13 @@ namespace SmartHRM.API.Controllers
             return NoContent();
         }
 
-        [HttpDelete("{RoleId}")]
+        [HttpDelete("{ContractId}")]
         [ProducesResponseType(400)]
         [ProducesResponseType(204)]
         [ProducesResponseType(404)]
-        public IActionResult DeleteRole(int RoleId)
+        public IActionResult DeleteContract(int ContractId)
         {
-            var res = _RoleService.DeleteRole(RoleId);
+            var res = _ContractService.DeleteContract(ContractId);
             if (res.Status != 204)
             {
                 ModelState.AddModelError("", res.StatusMessage);

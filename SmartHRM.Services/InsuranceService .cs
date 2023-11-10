@@ -72,7 +72,7 @@ namespace SmartHRM.Services
             throw new NotImplementedException();
         }
 
-        public List<Insurance> GetInsurances()
+        public List<Insurance> GetInsurance()
         {
             throw new NotImplementedException();
         }
