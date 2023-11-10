@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "pGojrDdpT7UA8+irvBZQlf1Seo/QDSj1IpCsx/FV30A=",
+  "Hash": "HJuPRFRGuqdXs3MwKIDVr6bfdqDdKIuUW+6kuU/qfoQ=",
   "Source": "SmartHRM.Admin",
   "BasePath": "_content/SmartHRM.Admin",
   "Mode": "Default",
@@ -14484,6 +14484,40 @@
       "OriginalItemSpec": "wwwroot\\js\\api.js"
     },
     {
+      "Identity": "D:\\baitaplonweb\\SmartHRM\\Web.API-SmartHRM\\SmartHRM.Admin\\wwwroot\\js\\employee\\contract.js",
+      "SourceId": "SmartHRM.Admin",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\baitaplonweb\\SmartHRM\\Web.API-SmartHRM\\SmartHRM.Admin\\wwwroot\\",
+      "BasePath": "_content/SmartHRM.Admin",
+      "RelativePath": "js/employee/contract.js",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\js\\employee\\contract.js"
+    },
+    {
+      "Identity": "D:\\baitaplonweb\\SmartHRM\\Web.API-SmartHRM\\SmartHRM.Admin\\wwwroot\\js\\employee\\department.js",
+      "SourceId": "SmartHRM.Admin",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\baitaplonweb\\SmartHRM\\Web.API-SmartHRM\\SmartHRM.Admin\\wwwroot\\",
+      "BasePath": "_content/SmartHRM.Admin",
+      "RelativePath": "js/employee/department.js",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\js\\employee\\department.js"
+    },
+    {
       "Identity": "D:\\baitaplonweb\\SmartHRM\\Web.API-SmartHRM\\SmartHRM.Admin\\wwwroot\\js\\employee\\personnelFiles.js",
       "SourceId": "SmartHRM.Admin",
       "SourceType": "Discovered",
@@ -14533,6 +14567,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\js\\hugrid.js"
+    },
+    {
+      "Identity": "D:\\baitaplonweb\\SmartHRM\\Web.API-SmartHRM\\SmartHRM.Admin\\wwwroot\\js\\insurance\\insuranceList.js",
+      "SourceId": "SmartHRM.Admin",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\baitaplonweb\\SmartHRM\\Web.API-SmartHRM\\SmartHRM.Admin\\wwwroot\\",
+      "BasePath": "_content/SmartHRM.Admin",
+      "RelativePath": "js/insurance/insuranceList.js",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\js\\insurance\\insuranceList.js"
     },
     {
       "Identity": "D:\\baitaplonweb\\SmartHRM\\Web.API-SmartHRM\\SmartHRM.Admin\\wwwroot\\js\\table_custom.js",

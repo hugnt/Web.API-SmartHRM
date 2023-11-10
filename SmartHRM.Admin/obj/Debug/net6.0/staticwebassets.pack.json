@@ -3405,6 +3405,14 @@
       "PackagePath": "staticwebassets\\js\\api.js"
     },
     {
+      "Id": "D:\\baitaplonweb\\SmartHRM\\Web.API-SmartHRM\\SmartHRM.Admin\\wwwroot\\js\\employee\\contract.js",
+      "PackagePath": "staticwebassets\\js\\employee\\contract.js"
+    },
+    {
+      "Id": "D:\\baitaplonweb\\SmartHRM\\Web.API-SmartHRM\\SmartHRM.Admin\\wwwroot\\js\\employee\\department.js",
+      "PackagePath": "staticwebassets\\js\\employee\\department.js"
+    },
+    {
       "Id": "D:\\baitaplonweb\\SmartHRM\\Web.API-SmartHRM\\SmartHRM.Admin\\wwwroot\\js\\employee\\personnelFiles.js",
       "PackagePath": "staticwebassets\\js\\employee\\personnelFiles.js"
     },
@@ -3415,6 +3423,10 @@
     {
       "Id": "D:\\baitaplonweb\\SmartHRM\\Web.API-SmartHRM\\SmartHRM.Admin\\wwwroot\\js\\hugrid.js",
       "PackagePath": "staticwebassets\\js\\hugrid.js"
+    },
+    {
+      "Id": "D:\\baitaplonweb\\SmartHRM\\Web.API-SmartHRM\\SmartHRM.Admin\\wwwroot\\js\\insurance\\insuranceList.js",
+      "PackagePath": "staticwebassets\\js\\insurance\\insuranceList.js"
     },
     {
       "Id": "D:\\baitaplonweb\\SmartHRM\\Web.API-SmartHRM\\SmartHRM.Admin\\wwwroot\\js\\table_custom.js",

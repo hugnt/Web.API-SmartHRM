@@ -9,24 +9,24 @@ using System.Threading.Tasks;
 
 namespace SmartHRM.Services
 {
-    public class IsuranceServise
+    public class InsuranceService
     {
-        private readonly IsuranceRepository _IsuranceRepository;
-        public IsuranceServise(IsuranceRepository IsuranceRepository)
+        private readonly InsuranceRepository _InsuranceRepository;
+        public InsuranceService(InsuranceRepository InsuranceRepository)
         {
-            _IsuranceRepository = IsuranceRepository;
+            _InsuranceRepository = InsuranceRepository;
         }
-        public ResponseModel CreateRole(Isurance IsuranceCreate)
+        public ResponseModel CreateInsurance(Insurance InsuranceCreate)
         {
-            var Roles = _IsuranceRepository.GetAll()
-                            .Where(l => l.Name.Trim().ToLower() == IsuranceCreate.Name.Trim().ToLower())
+            var Insurances = _InsuranceRepository.GetAll()
+                            .Where(l => l.Name.Trim().ToLower() == InsuranceCreate.Name.Trim().ToLower())
                             .FirstOrDefault();
-            if (Roles != null)
+            if (Insurances != null)
             {
-                return new ResponseModel(422, "Isurance already exists");
+                return new ResponseModel(422, "Insurance already exists");
             }
 
-            if (!_IsuranceRepository.Create(IsuranceCreate))
+            if (!_InsuranceRepository.Create(InsuranceCreate))
             {
                 return new ResponseModel(500, "Something went wrong while saving");
             }
@@ -34,40 +34,56 @@ namespace SmartHRM.Services
             return new ResponseModel(201, "Successfully created");
         }
 
-        public ResponseModel DeleteRole(int RoleId)
+        public ResponseModel DeleteInsurance(int InsuranceId)
         {
-            if (!_IsuranceRepository.IsExists(RoleId)) return new ResponseModel(404, "Not found");
-            var RoleToDelete = _IsuranceRepository.GetById(RoleId);
-            if (!_IsuranceRepository.Delete(RoleToDelete))
+            if (!_InsuranceRepository.IsExists(InsuranceId)) return new ResponseModel(404, "Not found");
+            var InsuranceToDelete = _InsuranceRepository.GetById(InsuranceId);
+            if (!_InsuranceRepository.Delete(InsuranceToDelete))
             {
-                return new ResponseModel(500, "Something went wrong when deleting Isurance");
+                return new ResponseModel(500, "Something went wrong when deleting Insurance");
             }
             return new ResponseModel(204, "");
         }
 
-        public Isurance? GetRole(int RoleId)
+        public Insurance? GetInsurance(int InsuranceId)
         {
-            if (!_IsuranceRepository.IsExists(RoleId)) return null;
-            var Isurance = _IsuranceRepository.GetById(RoleId);
-            return Isurance;
+            if (!_InsuranceRepository.IsExists(InsuranceId)) return null;
+            var Insurance = _InsuranceRepository.GetById(InsuranceId);
+            return Insurance;
         }
 
-        public IEnumerable<Isurance> GetRoles()
+        public IEnumerable<Insurance> GetInsurances()
         {
-            return _IsuranceRepository.GetAll();
+            return _InsuranceRepository.GetAll();
         }
 
-        public ResponseModel UpdateRole(int RoleId, Isurance updatedRole)
+        public ResponseModel UpdateInsurance(int InsuranceId, Insurance updatedInsurance)
         {
-            if (!_IsuranceRepository.IsExists(RoleId)) return new ResponseModel(404, "Not found");
-          
-            if (!_IsuranceRepository.Update(updatedRole))
+            if (!_InsuranceRepository.IsExists(InsuranceId)) return new ResponseModel(404, "Not found");
+            if (!_InsuranceRepository.Update(updatedInsurance))
             {
-                return new ResponseModel(500, "Something went wrong updating Isurance");
+                return new ResponseModel(500, "Something went wrong updating Insurance");
             }
             return new ResponseModel(204, "");
         }
 
-   
+        public Insurance GetInsuranceById(int InsuranceId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<Insurance> GetInsurances()
+        {
+            throw new NotImplementedException();
+        }
+        public Task<ResponseModel> ValidateInsurance(Insurance Insurance)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<ResponseModel> ValidateNameAndPassword(Insurance Insurance)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

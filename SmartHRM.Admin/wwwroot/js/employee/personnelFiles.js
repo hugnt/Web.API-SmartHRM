@@ -15,11 +15,11 @@ $(document).ready(async function () {
             }
         },
         {
-            id:"fullName",
+            id: "fullName",
             name: "Full Name",
             sort: true,
             data: function (e) {
-                    return htmlText(`
+                return htmlText(`
                     <div class= "d-flex align-items-center" >
                         <div class="flex-shrink-0 me-3">
                             <div class="avatar-sm bg-light rounded p-1">
@@ -33,7 +33,7 @@ $(document).ready(async function () {
                             <p class="text-muted mb-0">Department : <span class="fw-medium">${e.departmentId}</span></p>
                         </div >
                     </div > `)
-             }
+            }
         },
         {
             id: "phoneNumber",
@@ -105,7 +105,7 @@ $(document).ready(async function () {
             }
         } catch (e) {
             console.log(e);
-            AJAXCONFIG.ajaxFail(e);
+           AJAXCONFIG.ajaxFail(e);
         }
         finally {
             AJAXCONFIG.ajaxAfterSend();

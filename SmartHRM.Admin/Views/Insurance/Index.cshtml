@@ -1,0 +1,282 @@
+﻿@{
+    ViewData["Title"] = "PERSONNEL FILES";
+}
+@section Styles{
+    <!-- gridjs css -->
+    <link rel="stylesheet" href="~/assets/libs/gridjs/theme/mermaid.min.css" />
+
+    <!-- Filepond css -->
+    <link rel="stylesheet" href="~/assets/libs/filepond/filepond.min.css" type="text/css" />
+    <link rel="stylesheet" href="~/assets/libs/filepond-plugin-image-preview/filepond-plugin-image-preview.min.css" />
+}
+<div class="row bodyContent">
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="card-header border-bottom-dashed">
+                <div class="row g-4 align-items-center">
+                    <div class="col-sm">
+                        <div>
+                            <!-- <h5 class="card-title mb-0">Employee Roster</h5> -->
+                            <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                                    data-bs-target="#inforModal">
+                                Test Modal
+                            </button>
+                            <button type="button" class="btn btn-success btnAddNew me-1">
+                                <i class="ri-user-add-line align-bottom me-1"></i>
+                                Add new
+                            </button>
+                            <div class="btn-group">
+                                <button class="btn btn-light" type="button">
+                                    Others
+                                </button>
+                                <button type="button"
+                                        class="btn btn-light dropdown-toggle dropdown-toggle-split"
+                                        data-bs-toggle="dropdown" aria-haspopup="true"
+                                        aria-expanded="false"></button>
+                                <div class="dropdown-menu">
+                                    <a class="dropdown-item" href="#">Category 1</a>
+                                    <a class="dropdown-item" href="#">Category 2</a>
+                                    <a class="dropdown-item" href="#">Category 3</a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" href="#">
+                                        <i class="ri-delete-bin-5-line align-middle me-1"></i>Trash
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-auto">
+                        <div class="d-flex flex-wrap align-items-start gap-2">
+                            <button type="button" class="btn btn-outline-primary btnCheckTool"
+                                    id="btnAddToGroup">
+                                +<i class="ri-group-line align-bottom ri-1x"></i>
+                            </button>
+                            <button type="button" class="btn btn-outline-danger btnCheckTool"
+                                    id="btnRemoveListCheck">
+                                <i class="ri-delete-bin-2-line align-bottom ri-1x"></i>
+                            </button>
+                            <button type="button" class="btn btn-outline-warning" id="btnOpenCheck">
+                                <i class="ri-edit-box-line align-bottom ri-1x"></i>
+                            </button>
+
+                            <button type="button" class="btn btn-info">
+                                <i class="ri-printer-line align-bottom me-1"></i>
+                                Export
+                            </button>
+                            <button type="button" class="btn btn-primary" data-bs-toggle="collapse"
+                                    data-bs-target="#collapseFilter" aria-expanded="false"
+                                    aria-controls="collapseFilter">
+                                <i class="ri-equalizer-fill me-1 align-bottom"></i>Filters
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="collapse" id="collapseFilter">
+                <div class="card-body border-bottom-dashed border-bottom">
+                    <form>
+                        <div class="row g-3">
+                            <div class="col-xl-6">
+                                <div class="search-box">
+                                    <input type="text" class="form-control search"
+                                           placeholder="Search for customer, email, phone, status or something..." />
+                                    <i class="ri-search-line search-icon"></i>
+                                </div>
+                            </div>
+                            <!--end col-->
+                            <div class="col-xl-6">
+                                <div class="row g-3">
+                                    <div class="col-sm-4">
+                                        <div class="">
+                                            <input type="text" class="form-control"
+                                                   id="datepicker-range" data-provider="flatpickr"
+                                                   data-date-format="d M, Y" data-range-date="true"
+                                                   placeholder="Select date" />
+                                        </div>
+                                    </div>
+                                    <!--end col-->
+                                    <div class="col-sm-4">
+                                        <div id="select-status">
+                                            <select class="form-control" data-plugin="choices"
+                                                    data-choices data-choices-search-false
+                                                    name="choices-single-default" id="idStatus">
+                                                <option value="">Status</option>
+                                                <option value="all" selected>All</option>
+                                                <option value="Active">Active</option>
+                                                <option value="Block">Block</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <!--end col-->
+
+                                    <div class="col-sm-4">
+                                        <div>
+                                            <button type="button" class="btn btn-primary w-100"
+                                                    onclick="SearchData();">
+                                                <i class="ri-equalizer-fill me-2 align-bottom"></i>Filters
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <!--end col-->
+                                </div>
+                            </div>
+                        </div>
+                        <!--end row-->
+                    </form>
+                </div>
+            </div>
+
+            <div class="card-body">
+                <div id="table-product-list-all" class="table-card gridjs-border-none"></div>
+
+                <div class="noresult" style="display: none">
+                    <div class="text-center">
+                        <lord-icon src="https://cdn.lordicon.com/msoeawqm.json" trigger="loop"
+                                   colors="primary:#121331,secondary:#08a88a"
+                                   style="width: 75px; height: 75px"></lord-icon>
+                        <h5 class="mt-2">Sorry! No Result Found</h5>
+                        <p class="text-muted mb-0">
+                            We've searched more than 150+ customer We did not find
+                            any customer for you search.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Modals{
+    <!-- begin: Modal -->
+    <div class="modal fade" id="inforModal" tabindex="-1" aria-labelledby="inforModal" aria-modal="true"
+         data-bs-backdrop="static">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="inforModal">Details</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form action="javascript:void(0);">
+                        <div class="row g-3">
+                            <div class="col-12">
+                                <div style="width: 40%; margin: auto;">
+                                    <input type="file" class="filepond filepond-input-circle" name="filepond"
+                                           accept="image/png, image/jpeg, image/gif" />
+                                </div>
+                            </div>
+                            <div class="col-2">
+                                <div>
+                                    <label for="id" class="form-label">Id</label>
+                                    <input type="text" class="form-control" id="employee_id" />
+                                </div>
+                            </div>
+                            <div class="col-10">
+                                <div>
+                                    <label for="fullName" class="form-label">Full Name</label>
+                                    <input type="text" class="form-control" id="fullName"
+                                           placeholder="Enter fullname" />
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div>
+                                    <label for="phoneNumber" class="form-label">Phone Number</label>
+                                    <input type="tel" class="form-control" id="phoneNumber"
+                                           placeholder="Enter phoneNumber" />
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div>
+                                    <label for="email" class="form-label">Email</label>
+                                    <input type="email" class="form-control" id="email" placeholder="Enter email" />
+                                </div>
+                            </div>
+                            <div class="col-3">
+                                <div>
+                                    <label for="gender" class="form-label">Gender</label>
+                                    <select class="form-select mb-3" aria-label="Gender" id="gender">
+                                        <option value="1" selected>Male</option>
+                                        <option value="0">Female</option>
+                                        <option value="null">Other</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <div>
+                                    <label for="dob" class="form-label">Date of birth</label>
+                                    <input type="date" class="form-control" id="dob" placeholder="Enter dob" />
+                                </div>
+                            </div>
+                            <div class="col-5">
+                                <div>
+                                    <label for="icard" class="form-label">Identification Card</label>
+                                    <input type="text" class="form-control" id="icard" placeholder="Enter icard" />
+                                </div>
+                            </div>
+                            <!--end col-->
+                            <div class="col-xxl-6">
+                                <div>
+                                    <label for="position" class="form-label">Position</label>
+                                    <select class="form-select mb-3" aria-label="Department" id="position">
+                                        <option selected>----Select position---</option>
+                                        <option value="1">One</option>
+                                        <option value="2">Two</option>
+                                        <option value="3">Three</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-xxl-6">
+                                <div>
+                                    <label for="department" class="form-label">Department</label>
+                                    <select class="form-select mb-3" aria-label="Department" id="department">
+                                        <option selected>----Select department---</option>
+                                        <option value="1">One</option>
+                                        <option value="2">Two</option>
+                                        <option value="3">Three</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <!--end col-->
+                            <div class="col-xxl-12">
+                                <div>
+                                    <label for="address" class="form-label">Address</label>
+                                    <input type="text" class="form-control" id="address"
+                                           placeholder="Enter your address" />
+                                </div>
+                            </div>
+                            <!--end col-->
+                            <div class="col-lg-12">
+                                <div class="hstack gap-2 justify-content-end">
+                                    <button type="button" class="btn btn-light" data-bs-dismiss="modal">
+                                        Close
+                                    </button>
+                                    <button type="submit" class="btn btn-primary">
+                                        Submit
+                                    </button>
+                                </div>
+                            </div>
+                            <!--end col-->
+                        </div>
+                        <!--end row-->
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- end: Modal -->
+}
+@section Scripts{
+
+    @await Html.PartialAsync("~/Views/Shared/Partial/ScriptLink/FilePond.cshtml")
+
+    <script>
+        $("#sidebardInsurance").addClass("show");
+        $('a[href="#sidebarInsurance"]').addClass("active");
+        $('a[href="/Insurance/InsuranceList"]').addClass("active");
+
+
+    </script>
+
+    <script src="~/js/table_custom.js"></script>
+    <script type="module" src="~/js/insurance/insuranceList.js"></script>
+}

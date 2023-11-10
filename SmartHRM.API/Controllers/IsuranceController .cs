@@ -8,44 +8,44 @@ namespace SmartHRM.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class IsuranceController : ControllerBase
+    public class InsuranceController : ControllerBase
     {
         //sample
-        private readonly IsuranceServise _RoleService;
-        public IsuranceController(IsuranceServise RoleService)
+        private readonly InsuranceService _InsuranceService;
+        public InsuranceController(InsuranceService InsuranceService)
         {
-            _RoleService = RoleService;
+            _InsuranceService = InsuranceService;
         }
 
         [HttpGet]
-        [ProducesResponseType(200, Type = typeof(IEnumerable<Isurance>))]
-        public IActionResult GetRoles()
+        [ProducesResponseType(200, Type = typeof(IEnumerable<Insurance>))]
+        public IActionResult GetInsurances()
         {
-            var Roles = _RoleService.GetRoles();
+            var Insurances = _InsuranceService.GetInsurances();
             if (!ModelState.IsValid) return BadRequest(ModelState);
 
-            return Ok(Roles);
+            return Ok(Insurances);
         }
 
-        [HttpGet("{RoleId}")]
-        [ProducesResponseType(200, Type = typeof(Isurance))]
+        [HttpGet("{InsuranceId}")]
+        [ProducesResponseType(200, Type = typeof(Insurance))]
         [ProducesResponseType(400)]
-        public IActionResult GetRole(int RoleId)
+        public IActionResult GetInsurance(int InsuranceId)
         {
-            var Isurance = _RoleService.GetRole(RoleId);
+            var Insurance = _InsuranceService.GetInsurance(InsuranceId);
             if (!ModelState.IsValid) return BadRequest();
-            if (Isurance == null) return NotFound();
-            return Ok(Isurance);
+            if (Insurance == null) return NotFound();
+            return Ok(Insurance);
         }
 
         [HttpPost]
         [ProducesResponseType(201)]
         [ProducesResponseType(400)]
-        public IActionResult CreateRole([FromBody] Isurance RoleCreate)
+        public IActionResult CreateInsurance([FromBody] Insurance InsuranceCreate)
         {
-            if (RoleCreate == null) return BadRequest(ModelState);
+            if (InsuranceCreate == null) return BadRequest(ModelState);
 
-            var res = _RoleService.CreateRole(RoleCreate);
+            var res = _InsuranceService.CreateInsurance(InsuranceCreate);
 
             if (res.Status != 201)
             {
@@ -58,17 +58,17 @@ namespace SmartHRM.API.Controllers
             return StatusCode(res.Status, res.StatusMessage);
         }
 
-        [HttpPut("{RoleId}")]
+        [HttpPut("{InsuranceId}")]
         [ProducesResponseType(400)]
         [ProducesResponseType(204)]
         [ProducesResponseType(404)]
-        public IActionResult UpdateRole(int RoleId, [FromBody] Isurance updatedRole)
+        public IActionResult UpdateInsurance(int InsuranceId, [FromBody] Insurance updatedInsurance)
         {
-            if (updatedRole == null) return BadRequest(ModelState);
-            if (RoleId != updatedRole.Id) return BadRequest(ModelState);
+            if (updatedInsurance == null) return BadRequest(ModelState);
+            if (InsuranceId != updatedInsurance.Id) return BadRequest(ModelState);
 
 
-            var res = _RoleService.UpdateRole(RoleId, updatedRole);
+            var res = _InsuranceService.UpdateInsurance(InsuranceId, updatedInsurance);
             if (res.Status != 204)
             {
                 ModelState.AddModelError("", res.StatusMessage);
@@ -79,13 +79,13 @@ namespace SmartHRM.API.Controllers
             return NoContent();
         }
 
-        [HttpDelete("{RoleId}")]
+        [HttpDelete("{InsuranceId}")]
         [ProducesResponseType(400)]
         [ProducesResponseType(204)]
         [ProducesResponseType(404)]
-        public IActionResult DeleteRole(int RoleId)
+        public IActionResult DeleteInsurance(int InsuranceId)
         {
-            var res = _RoleService.DeleteRole(RoleId);
+            var res = _InsuranceService.DeleteInsurance(InsuranceId);
             if (res.Status != 204)
             {
                 ModelState.AddModelError("", res.StatusMessage);

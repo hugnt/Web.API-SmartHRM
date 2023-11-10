@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using SmartHRM.Repository.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,8 +21,11 @@ namespace SmartHRM.Repository.Connection
 
             services.AddScoped<AccountRepository>();
             services.AddScoped<EmployeeRepository>();
-			services.AddScoped<IsuranceRepository>();
-			return services;
+			services.AddScoped<InsuranceRepository>();
+            services.AddScoped<ContractRepository>();
+            services.AddScoped<DepartmentRepository>();
+
+            return services;
         }
     }
 }
