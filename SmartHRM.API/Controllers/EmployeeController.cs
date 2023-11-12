@@ -97,5 +97,24 @@ namespace SmartHRM.API.Controllers
         }
 
 
+        [HttpPut("{employeeId}")]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(204)]
+        [ProducesResponseType(404)]
+        public IActionResult UpdateDeleteStatus(int employeeId, bool status)
+        {
+
+            var res = _employeeService.UpdateDeleteStatus(employeeId, status);
+            if (res.Status != 204)
+            {
+                ModelState.AddModelError("", res.StatusMessage);
+                return StatusCode(res.Status, ModelState);
+
+            }
+            if (!ModelState.IsValid) return BadRequest(ModelState);
+            return NoContent();
+        }
+
+
     }
 }

@@ -38,11 +38,89 @@ II. Các bước tạo
 + tDepartment -> Hoàng
 + tContract -> Hoàng 
 + tInsurance 
++ tBaseSalary
 -> đẩy ra giao diện
 - Nếu có thêm dữ liệu vào CSDL thì gửi code SQL đoạn thêm
 
 
+*CÁC BƯỚC ĐẨY LÊN GITHUB (Thao tác trên Visual Studio)
+1. Mở Git Changes (Trong cửa sổ View)
+	- Kiểm tra branch: trỏ đến đúng nhánh của mình làm việc, 
+	trước khi thực hiện bất cứ thay đổi nào trong code
+2. Stage Changes
+	- Sau khi phát hiện có thay đổi trong code, tab Changes ở trong
+	Git Changes sẽ chỉ ra những thay đổi
+	- Ấn dấu "+" bên phải dòng Changes(2) để đẩy thay đổi lên Stage
+3. Commit
+	- Ở hộp thoại message: nhập ghi chú cho những thay đổi sắp đc đẩy lên
+	- Ấn nút Commit Staged để commit thay đổi
+4. Push
+	- Sau khi đã commit xong, ấn nut mũi tên hương lên bên trên phía bên phải 
+	cửa sổ Git Changes thì commit sẽ được đẩy lên trên Git Hub
+
+5. Lên GitHub kiểm tra tại nhánh của mình xem có thay đổi chưa 
 
 
+III. CÁC BƯỚC GỌI API HIỂN THỊ TRÊN UI
+- UI sẽ làm trên ASP.NET MVC: Chỉ sử dụng Views và Controller
+- Luồng đi: Controller -> Views -> js(Gọi API)
+
+0. Vào thư mục SmartHRM.Admin (Giao diện)
+	- Kiểm tra xem đã ở nhánh của mình chưa
+1. Tạo Controller
+	- Controller có liên quan đến đối tượng mình đang cần sử lý,
+	nếu đã tồn tại rồi thì ko cần tạo COntroller nữa
+	VD: đang làm bảng tBonus và tAllownce(liên quan đến nghiệp vụ Lương)
+	-> cần tạo controller (SalaryController) nếu chưa có
+
+2. Tạo View
+	- Trong Controller sẽ tạo Action sau đó AddView cho các View
+	Trong lần đầu tiên AddView thì để tên View mặc định là Index.cshtml
+	(sau đó chú ý cách đặt tên theo kiểu InsuranceList)
+	- Copy code trong file Index của Employee vào file vừa đc tạo ra, test bằng
+	cách nhập đường dẫn trên URL của trình duyệt xem nó có lên trang giống Employee k
+
+3. Call API (ajax - trong file js)
+	- Mở wwwroot/js
+	- Tạo thư mục chứa nghiệp vụ mình đang làm(nếu chưa có)
+	- Copy file employeeRoster.js và đặt tên file là tên bảng mình đang làm(giống tên View)), 
+	đặt tên theo kiểu: insuranceList.js
+	(1)- Chỉnh sửa đối truyền vào hàm getList là đường dẫn đến API(chỉ lấy phần tính sau /api)
+	(2)- comment dòng (var newGrid = new....). Sau đó kiểm tra xem kên Console log đã log ra data chưa
+	(3)- Sau khi chắc chắn đc biến listData đã có dữ liệu, bắt đầu config để hiển thị lên UI
+
+4. Hiển thị lên giao diện 
+	- Vẫn trong file js đang thao tác, tìm đến biến comlums - đây là chỗ config những gì sẽ hiển thị trên bảng
+	- mở comment nếu có comment dòng (var newGrid = new....
+    	var columns = [
+        		{
+            		  id: "id",
+            		  name: htmlText(`<div class="text-center">Id</div>`),
+            		  sort: false,
+            		  formatter: function (e) {
+                	      return htmlText(`<div class="text-center">${e}</div>`)
+            		}
+        	},....	
+
+	- Mỗi cột muốn hiển thị sẽ tương ứng với 1 block 
+	{
+            id: "phoneNumber",
+            name: "phone Number"
+        }
+		+ id: mapping với tên trường trong cục dữ liệu json được trả về
+		+ name: định dạng tên cột muốn hiển thị trên bảng
+		+ formatter: function (e) {
+                	      return ...
+            		} -> định dạng dữ liệu ứng với cột hiển thị: vd muốn thêm kí tự "$" đằng trc tiền
+	- Lên giao diện kiểm tra xem dữ liệu đc hiển thị đúng ra bảng chưa
+
+5. Hiển thị giao diện bảng mình đang làm:
+	- Trong file cshtml của mình đang thao tác, kéo xuống cuối sẽ thấy 3 dòng kiểu ntn:
+	 $("#sidebarEmployeeRoster").addClass("show");
+        $('a[href="#sidebarEmployeeRoster"]').addClass("active");
+        $('a[href="/Employee/PersonnelFiles"]').addClass("active");
+	- Chỉnh sửa thành các thông số của trang đang thao tác để hiển thị đc 
+	(vào file _NavBarPartial.cshtml có trong Shared/Partial/Layout)
+	
 
 

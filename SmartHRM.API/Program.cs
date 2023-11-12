@@ -50,6 +50,12 @@ app.UseHttpsRedirection();
 
 app.UseCors("HUG_LOCAL");
 
+app.UseCors(options => options.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin());
+
+app.UseStaticFiles();// Add middleware for specify the static files in wwwroot
+
+app.UseRouting();
+
 app.UseAuthorization();
 
 app.MapControllers();

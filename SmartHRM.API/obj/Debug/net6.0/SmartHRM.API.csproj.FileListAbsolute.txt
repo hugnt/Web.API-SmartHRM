@@ -61,3 +61,4 @@ C:\Users\User\Documents\SchoolFiles\IT\SEMESTER_5\Web Programming\project\SmartH
 C:\Users\User\Documents\SchoolFiles\IT\SEMESTER_5\Web Programming\project\SmartHRM\SmartHRM.API\obj\Debug\net6.0\ref\SmartHRM.API.dll
 C:\Users\User\Documents\SchoolFiles\IT\SEMESTER_5\Web Programming\project\SmartHRM\SmartHRM.API\obj\Debug\net6.0\SmartHRM.API.pdb
 C:\Users\User\Documents\SchoolFiles\IT\SEMESTER_5\Web Programming\project\SmartHRM\SmartHRM.API\obj\Debug\net6.0\SmartHRM.API.genruntimeconfig.cache
+C:\Users\User\Documents\SchoolFiles\IT\SEMESTER_5\Web Programming\project\SmartHRM\SmartHRM.API\bin\Debug\net6.0\SmartHRM.API.staticwebassets.runtime.json

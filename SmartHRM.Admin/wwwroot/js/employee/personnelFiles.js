@@ -15,15 +15,15 @@ $(document).ready(async function () {
             }
         },
         {
-            id:"fullName",
+            id: "fullName",
             name: "Full Name",
             sort: true,
             data: function (e) {
-                    return htmlText(`
+                return htmlText(`
                     <div class= "d-flex align-items-center" >
                         <div class="flex-shrink-0 me-3">
                             <div class="avatar-sm bg-light rounded p-1">
-                                <img src="" alt="" class="img-fluid d-block">
+                                <img src="${API.IMAGE_URL}/avatar/${e.avatar}" alt="" class="img-fluid d-block">
                             </div >
                         </div>
                         <div class="flex-grow-1">
@@ -33,7 +33,7 @@ $(document).ready(async function () {
                             <p class="text-muted mb-0">Department : <span class="fw-medium">${e.departmentId}</span></p>
                         </div >
                     </div > `)
-             }
+            }
         },
         {
             id: "phoneNumber",
@@ -58,10 +58,6 @@ $(document).ready(async function () {
             }
         },
         {
-            id: "level",
-            name: "Level"
-        },
-        {
             id: 'Action',
             name: htmlText('<div class="text-center">Action</div>'),
             sort: false,
@@ -71,17 +67,17 @@ $(document).ready(async function () {
             <div class="dropdown text-center">
                 <button class="btn btn-soft-secondary btn-sm dropdown" type="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="ri-more-fill"></i></button>
                 <ul class="dropdown-menu dropdown-menu-end">
-                    <li>
-                        <a class="dropdown-item" data-id=${t._cells[1].data}>
+                    <li class="btnDetails" data-id=${t._cells[1].data}>
+                        <a class="dropdown-item">
                         <i class="ri-eye-fill align-bottom me-2 text-muted"></i> View</a>
                     </li>
-                    <li>
-                        <a class="dropdown-item" data-id=${t._cells[1].data}>
+                    <li class="btnUpdate" data-id=${t._cells[1].data}>
+                        <a class="dropdown-item">
                         <i class="ri-pencil-fill align-bottom me-2 text-muted"></i> Edit</a>
                     </li>
                     <li class="dropdown-divider"></li>
-                    <li>
-                        <a class="dropdown-item " href="#" data-id=${t._cells[1].data} data-bs-toggle="modal" data-bs-target="#removeItemModal">
+                    <li class="btnDelete" data-id=${t._cells[1].data}>
+                        <a class="dropdown-item " href="#"  data-bs-toggle="modal" data-bs-target="#removeNotificationModal">
                             <i class="ri-delete-bin-fill align-bottom me-2 text-muted"></i> Delete</a>
                     </li>
                 </ul>
@@ -89,7 +85,102 @@ $(document).ready(async function () {
             }
         }];
 
+    //1st render
     var newGrid = new huGrid("table-product-list-all", columns, listData);
+    newGrid.addEventListener(".btnDetails", getDetails);
+    newGrid.addEventListener(".btnUpdate", updateInfor);
+    newGrid.addEventListener(".btnDelete", deleteInfor);
+
+    //Modal
+    const myModal = new bootstrap.Modal(document.getElementById('inforModal'));
+    document.getElementById('inforModal').addEventListener('hidden.bs.modal', event => {
+        setStatusForm(true);
+
+    })
+
+    //Toast
+    var toastMixin = Swal.mixin({
+        toast: true,
+        icon: 'success',
+        title: 'General Title',
+        animation: false,
+        position: 'top-right',
+        showConfirmButton: false,
+        timer: 3000,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+            toast.addEventListener('mouseenter', Swal.stopTimer)
+            toast.addEventListener('mouseleave', Swal.resumeTimer)
+        }
+    });
+
+    //Details
+    async function getDetails() {
+        var id = $(this).data("id");
+        var selectedData = await getList(`/Employee/${id}`);
+        setDataForm(selectedData);
+        setTypeForm("details");
+        setStatusForm(false);
+        myModal.show()
+    };
+
+    //Add
+    $(".btnAddNew").click(function () {
+        setDataForm(null);
+        setTypeForm("add");
+        myModal.show();
+    });
+    $("#btnAdd").click(async function () {
+        var dataInsert = getDataForm();
+        if (!await isValidForm(dataInsert)) return;
+        myModal.hide();
+        await postData("/Employee", dataInsert);
+        var listData = await getList("/Employee");
+        newGrid.updateData(listData)
+    });
+
+
+    //Update
+    async function updateInfor() {
+        var id = $(this).data("id");
+        var selectedData = await getList(`/Employee/${id}`);
+        setDataForm(selectedData);
+        setTypeForm("edit");
+        myModal.show()
+    };
+    $("#btnSave").click(async function () {
+        var updatedData = getDataForm();
+        console.log(updatedData)
+        if (!await isValidForm(updatedData)) return;
+        myModal.hide();
+        await putData(`/Employee/${updatedData.id}`, updatedData);
+        var listData = await getList("/Employee");
+        newGrid.updateData(listData)
+    });
+
+
+    //Remove
+    async function deleteInfor() {
+        var id = $(this).data("id");
+        localStorage.setItem("selectedId",id)
+    };
+    $("#delete-notification").click(async function () {
+        var id = localStorage.getItem("selectedId");
+        await deleteData(`/Employee/${id}`);
+        var listData = await getList("/Employee");
+        newGrid.updateData(listData)
+    });
+
+
+    $(".btnTestModal").click(function () {
+        toastMixin.fire({
+            animation: true,
+            title: 'Data has been moved to trash!',
+            timer: 2000,
+        });
+    });
+
+    //Ajax
     async function getList(endPoint) {
         try {
             const res = await $.ajax({
@@ -100,7 +191,7 @@ $(document).ready(async function () {
                     AJAXCONFIG.ajaxBeforeSend(xhr, false);
                 }
             });
-            if (res && res.length > 0) {
+            if (res) {
                 return res;
             }
         } catch (e) {
@@ -112,4 +203,220 @@ $(document).ready(async function () {
         }
     }
 
+    async function postData(endPoint, data) {
+        try {
+            const res = await $.ajax({
+                url: `${API.API_URL}${endPoint}`,
+                type: "POST",
+                contentType: "application/json",
+                data: JSON.stringify(data),
+                beforeSend: function (xhr) {
+                    AJAXCONFIG.ajaxBeforeSend(xhr, false);
+                }
+            });
+            if (res) {
+                Swal.fire({
+                    position: "top",
+                    icon: "success",
+                    title: "Created Successfully",
+                    showConfirmButton: false,
+                    timer: 1500
+                });
+            }
+        } catch (e) {
+            console.log(e);
+            Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: "Something went wrong!",
+            });
+        }
+        finally {
+            AJAXCONFIG.ajaxAfterSend();
+        }
+    }
+
+    async function putData(endPoint, data) {
+        try {
+            const res = await $.ajax({
+                url: `${API.API_URL}${endPoint}`,
+                type: "PUT",
+                contentType: "application/json",
+                data: JSON.stringify(data),
+                beforeSend: function (xhr) {
+                    AJAXCONFIG.ajaxBeforeSend(xhr, false);
+                }
+            });
+            Swal.fire({
+                position: "top",
+                icon: "success",
+                title: "Updated Successfully",
+                showConfirmButton: false,
+                timer: 1500
+            });
+        } catch (e) {
+            console.log(e);
+            Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: "Something went wrong!",
+            });
+        }
+        finally {
+            AJAXCONFIG.ajaxAfterSend();
+        }
+    }
+
+    async function deleteData(endPoint) {
+        try {
+            const res = await $.ajax({
+                url: `${API.API_URL}${endPoint}`,
+                type: "DELETE",
+                contentType: "application/json",
+                beforeSend: function (xhr) {
+                    AJAXCONFIG.ajaxBeforeSend(xhr, false);
+                }
+            });
+            toastMixin.fire({
+                animation: true,
+                title: 'Data has been moved to trash!',
+                timer: 2000,
+            });
+        } catch (e) {
+            console.log(e);
+            Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: "Something went wrong!",
+            });
+        }
+        finally {
+            AJAXCONFIG.ajaxAfterSend();
+        }
+    }
+
+    //Form action
+    function getDataForm() {
+        //console.log(pond)
+        return {
+            id: $("#employee_id").val() == "" ? 0 : $("#employee_id").val(),
+            fullName: $("#fullName").val(),
+            phoneNumber: $("#phoneNumber").val(),
+            email: $("#email").val(),
+            dob: $("#dob").val(),
+            address: $("#address").val(),
+            avatar: pond.getFiles().length != 0 ? pond.getFile().filename : null,
+            gender: $("#gender").val() == "1" ? true : false,
+            departmentId: $("#departmentId").val(),
+            positionId: $("#positionId").val(),
+            identificationCard: $("#identificationCard").val()
+        }
+    }
+
+    function setDataForm(data) {
+        if (data == null) {
+            $("#inforModal form :input").val("");
+            pond.removeFile();
+            return;
+        }
+        $("#employee_id").val(data.id);
+        $("#fullName").val(data.fullName);
+        $("#phoneNumber").val(data.phoneNumber);
+        $("#email").val(data.email);
+        $("#dob").val(data.dob.substring(0, 10));
+        $("#address").val(data.address);
+        $("#gender").val(data.gender ? "1" : "0");
+        $("#departmentId").val(data.departmentId);
+        $("#positionId").val(data.positionId);
+        $("#identificationCard").val(data.identificationCard);
+        data.avatar && pond.addFile(`${API.IMAGE_URL}/avatar/${data.avatar}`)
+            .then((file) => {
+                // File has been added
+            })
+            .catch((error) => {
+                // Something went wrong
+                console.log(error)
+            });
+
+    }
+
+    function setStatusForm(status) {
+        $("#inforModal form :input").prop("disabled", !status);
+        $('input[name="id"]').prop("disabled", true);
+    }
+
+    function setTypeForm(type) {
+        $("#btnSave").hide();
+        $("#btnAdd").hide();
+        if (type == "add") {
+            $("#btnAdd").show();
+        }
+        else if (type == "edit") {
+            $("#btnSave").show();
+        }
+
+    }
+
+    async function isValidForm(data) {
+        var message = null;
+        const phoneNumberRegex = /^[+]?[(]?[0-9]{1,4}[)]?[-\s./0-9]*$/;
+        const emailRegex = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/;
+        const numberOnlyRegex = /^\d+$/;
+        if (data.fullName == "" || data.fullName ==null) {
+            message = "Full name is required!";
+        }
+        else if (!phoneNumberRegex.test(data.phoneNumber)) {
+            message = "phone number is not valid!";
+        }
+        else if (!emailRegex.test(data.email)) {
+            message = "email is not valid!";
+        }
+        else if (!numberOnlyRegex.test(data.identificationCard)) {
+            message = "Identification Card is not valid!";
+        }
+        if (message != null) {
+            toastMixin.fire({
+                title: message,
+                icon: 'error'
+            });
+            return false;
+        }
+        await toastMixin.fire({
+            animation: true,
+            title: 'Validated Successfully',
+            timer: 1000,
+        });
+        return true;
+    }
+
+
+
+    //File handler
+    FilePond.registerPlugin(
+        // encodes the file as base64 data
+        FilePondPluginFileEncode,
+        // validates the size of the file
+        FilePondPluginFileValidateSize,
+        // corrects mobile image orientation
+        FilePondPluginImageExifOrientation,
+        // previews dropped images
+        FilePondPluginImagePreview
+    );
+
+    const pond = FilePond.create(
+        document.querySelector('.filepond-input-circle'),
+        {
+            labelIdle: 'Drag & Drop your picture or Browse',
+            imagePreviewHeight: 170,
+            imageCropAspectRatio: '1:1',
+            imageResizeTargetWidth: 200,
+            imageResizeTargetHeight: 200,
+            stylePanelLayout: 'compact circle',
+            styleLoadIndicatorPosition: 'center bottom',
+            styleProgressIndicatorPosition: 'right bottom',
+            styleButtonRemoveItemPosition: 'left bottom',
+            styleButtonProcessItemPosition: 'right bottom',
+        }
+    );
+    
 });

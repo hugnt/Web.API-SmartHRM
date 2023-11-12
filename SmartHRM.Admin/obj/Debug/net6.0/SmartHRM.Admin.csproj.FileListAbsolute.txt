@@ -7,7 +7,6 @@ C:\Users\User\Documents\SchoolFiles\IT\SEMESTER_5\Web Programming\project\SmartH
 C:\Users\User\Documents\SchoolFiles\IT\SEMESTER_5\Web Programming\project\SmartHRM\SmartHRM.Admin\bin\Debug\net6.0\SmartHRM.Admin.dll
 C:\Users\User\Documents\SchoolFiles\IT\SEMESTER_5\Web Programming\project\SmartHRM\SmartHRM.Admin\bin\Debug\net6.0\ref\SmartHRM.Admin.dll
 C:\Users\User\Documents\SchoolFiles\IT\SEMESTER_5\Web Programming\project\SmartHRM\SmartHRM.Admin\bin\Debug\net6.0\SmartHRM.Admin.pdb
-C:\Users\User\Documents\SchoolFiles\IT\SEMESTER_5\Web Programming\project\SmartHRM\SmartHRM.Admin\obj\Debug\net6.0\SmartHRM.Admin.csproj.AssemblyReference.cache
 C:\Users\User\Documents\SchoolFiles\IT\SEMESTER_5\Web Programming\project\SmartHRM\SmartHRM.Admin\obj\Debug\net6.0\SmartHRM.Admin.GeneratedMSBuildEditorConfig.editorconfig
 C:\Users\User\Documents\SchoolFiles\IT\SEMESTER_5\Web Programming\project\SmartHRM\SmartHRM.Admin\obj\Debug\net6.0\SmartHRM.Admin.AssemblyInfoInputs.cache
 C:\Users\User\Documents\SchoolFiles\IT\SEMESTER_5\Web Programming\project\SmartHRM\SmartHRM.Admin\obj\Debug\net6.0\SmartHRM.Admin.AssemblyInfo.cs
@@ -22,3 +21,4 @@ C:\Users\User\Documents\SchoolFiles\IT\SEMESTER_5\Web Programming\project\SmartH
 C:\Users\User\Documents\SchoolFiles\IT\SEMESTER_5\Web Programming\project\SmartHRM\SmartHRM.Admin\obj\Debug\net6.0\ref\SmartHRM.Admin.dll
 C:\Users\User\Documents\SchoolFiles\IT\SEMESTER_5\Web Programming\project\SmartHRM\SmartHRM.Admin\obj\Debug\net6.0\SmartHRM.Admin.pdb
 C:\Users\User\Documents\SchoolFiles\IT\SEMESTER_5\Web Programming\project\SmartHRM\SmartHRM.Admin\obj\Debug\net6.0\SmartHRM.Admin.genruntimeconfig.cache
+C:\Users\User\Documents\SchoolFiles\IT\SEMESTER_5\Web Programming\project\SmartHRM\SmartHRM.Admin\obj\Debug\net6.0\SmartHRM.Admin.csproj.AssemblyReference.cache

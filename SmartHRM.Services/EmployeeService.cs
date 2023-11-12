@@ -68,5 +68,18 @@ namespace SmartHRM.Services
             return new ResponseModel(204, "");
         }
 
+        public ResponseModel UpdateDeleteStatus(int employeeId, bool status)
+        {
+            if (!_employeeRepository.IsExists(employeeId)) return new ResponseModel(404, "Not found");
+            var updatedEmployee = _employeeRepository.GetById(employeeId);
+            updatedEmployee.IsDeleted = status;
+            if (!_employeeRepository.Update(updatedEmployee))
+            {
+                return new ResponseModel(500, "Something went wrong when change delete status employee");
+            }
+            return new ResponseModel(204, "");
+        }
+
+
     }
 }
