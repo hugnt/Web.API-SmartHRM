@@ -26,3 +26,17 @@ C:\Users\User\Documents\SchoolFiles\IT\SEMESTER_5\Web Programming\project\SmartH
 C:\Users\User\Documents\SchoolFiles\IT\SEMESTER_5\Web Programming\project\SmartHRM\SmartHRM.Repository\obj\Debug\net6.0\SmartHRM.Repository.dll
 C:\Users\User\Documents\SchoolFiles\IT\SEMESTER_5\Web Programming\project\SmartHRM\SmartHRM.Repository\obj\Debug\net6.0\ref\SmartHRM.Repository.dll
 C:\Users\User\Documents\SchoolFiles\IT\SEMESTER_5\Web Programming\project\SmartHRM\SmartHRM.Repository\obj\Debug\net6.0\SmartHRM.Repository.pdb
+D:\Main\Btvn\nam 3\Ki 1\C# Web\Web_Project\Fin\Web.API-SmartHRM\SmartHRM.Repository\bin\Debug\net6.0\SmartHRM.Repository.deps.json
+D:\Main\Btvn\nam 3\Ki 1\C# Web\Web_Project\Fin\Web.API-SmartHRM\SmartHRM.Repository\bin\Debug\net6.0\SmartHRM.Repository.dll
+D:\Main\Btvn\nam 3\Ki 1\C# Web\Web_Project\Fin\Web.API-SmartHRM\SmartHRM.Repository\bin\Debug\net6.0\SmartHRM.Repository.pdb
+D:\Main\Btvn\nam 3\Ki 1\C# Web\Web_Project\Fin\Web.API-SmartHRM\SmartHRM.Repository\bin\Debug\net6.0\HUG.CRUD.dll
+D:\Main\Btvn\nam 3\Ki 1\C# Web\Web_Project\Fin\Web.API-SmartHRM\SmartHRM.Repository\obj\Debug\net6.0\SmartHRM.Repository.csproj.AssemblyReference.cache
+D:\Main\Btvn\nam 3\Ki 1\C# Web\Web_Project\Fin\Web.API-SmartHRM\SmartHRM.Repository\obj\Debug\net6.0\SmartHRM.Repository.GeneratedMSBuildEditorConfig.editorconfig
+D:\Main\Btvn\nam 3\Ki 1\C# Web\Web_Project\Fin\Web.API-SmartHRM\SmartHRM.Repository\obj\Debug\net6.0\SmartHRM.Repository.AssemblyInfoInputs.cache
+D:\Main\Btvn\nam 3\Ki 1\C# Web\Web_Project\Fin\Web.API-SmartHRM\SmartHRM.Repository\obj\Debug\net6.0\SmartHRM.Repository.AssemblyInfo.cs
+D:\Main\Btvn\nam 3\Ki 1\C# Web\Web_Project\Fin\Web.API-SmartHRM\SmartHRM.Repository\obj\Debug\net6.0\SmartHRM.Repository.csproj.CoreCompileInputs.cache
+D:\Main\Btvn\nam 3\Ki 1\C# Web\Web_Project\Fin\Web.API-SmartHRM\SmartHRM.Repository\obj\Debug\net6.0\SmartHRM.Repository.csproj.CopyComplete
+D:\Main\Btvn\nam 3\Ki 1\C# Web\Web_Project\Fin\Web.API-SmartHRM\SmartHRM.Repository\obj\Debug\net6.0\SmartHRM.Repository.dll
+D:\Main\Btvn\nam 3\Ki 1\C# Web\Web_Project\Fin\Web.API-SmartHRM\SmartHRM.Repository\obj\Debug\net6.0\refint\SmartHRM.Repository.dll
+D:\Main\Btvn\nam 3\Ki 1\C# Web\Web_Project\Fin\Web.API-SmartHRM\SmartHRM.Repository\obj\Debug\net6.0\SmartHRM.Repository.pdb
+D:\Main\Btvn\nam 3\Ki 1\C# Web\Web_Project\Fin\Web.API-SmartHRM\SmartHRM.Repository\obj\Debug\net6.0\ref\SmartHRM.Repository.dll

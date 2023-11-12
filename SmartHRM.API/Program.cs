@@ -18,6 +18,12 @@ builder.Services.AddScoped<AccountService>();
 //Employee
 builder.Services.AddScoped<EmployeeService>();
 
+//Deduction
+builder.Services.AddScoped<DeductionService>();
+
+//TimeKeeping
+builder.Services.AddScoped<TimeKeepingService>();
+
 //Enable CORS
 builder.Services.AddCors(p =>
     p.AddPolicy("HUG_LOCAL", build =>
