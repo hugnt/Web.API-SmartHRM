@@ -11,7 +11,7 @@ export class huGrid{
             columns: [
                 {
                     id: 'checkBox',
-                    name: html(` <div class="text-center">
+                    name: html(` <div class="text-center noExl">
                                             <input class="form-check-input" type="checkbox" id="checkAll" value="option">
                                         </div>`),
                     sort:false,

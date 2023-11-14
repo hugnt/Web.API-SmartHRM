@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "IDtKydm39n3C9CVh04y0AD5CWFXwXEU9Gf38fLmTxXk=",
+  "Hash": "mf55TlxeyjnUm8X0S/jbY2bHub14L2L7rI3ki4tYpqA=",
   "Source": "SmartHRM.Admin",
   "BasePath": "_content/SmartHRM.Admin",
   "Mode": "Default",
@@ -14501,6 +14501,23 @@
       "OriginalItemSpec": "wwwroot\\js\\employee\\personnelFiles.js"
     },
     {
+      "Identity": "C:\\Users\\User\\Documents\\SchoolFiles\\IT\\SEMESTER_5\\Web Programming\\project\\SmartHRM\\SmartHRM.Admin\\wwwroot\\js\\employee\\trashPersonnelFiles.js",
+      "SourceId": "SmartHRM.Admin",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\User\\Documents\\SchoolFiles\\IT\\SEMESTER_5\\Web Programming\\project\\SmartHRM\\SmartHRM.Admin\\wwwroot\\",
+      "BasePath": "_content/SmartHRM.Admin",
+      "RelativePath": "js/employee/trashPersonnelFiles.js",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\js\\employee\\trashPersonnelFiles.js"
+    },
+    {
       "Identity": "C:\\Users\\User\\Documents\\SchoolFiles\\IT\\SEMESTER_5\\Web Programming\\project\\SmartHRM\\SmartHRM.Admin\\wwwroot\\js\\form_config.js",
       "SourceId": "SmartHRM.Admin",
       "SourceType": "Discovered",
@@ -14550,6 +14567,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\js\\table_custom.js"
+    },
+    {
+      "Identity": "C:\\Users\\User\\Documents\\SchoolFiles\\IT\\SEMESTER_5\\Web Programming\\project\\SmartHRM\\SmartHRM.Admin\\wwwroot\\js\\table2excel.js",
+      "SourceId": "SmartHRM.Admin",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\User\\Documents\\SchoolFiles\\IT\\SEMESTER_5\\Web Programming\\project\\SmartHRM\\SmartHRM.Admin\\wwwroot\\",
+      "BasePath": "_content/SmartHRM.Admin",
+      "RelativePath": "js/table2excel.js",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\js\\table2excel.js"
     },
     {
       "Identity": "C:\\Users\\User\\Documents\\SchoolFiles\\IT\\SEMESTER_5\\Web Programming\\project\\SmartHRM\\SmartHRM.Admin\\wwwroot\\js\\test1.js",

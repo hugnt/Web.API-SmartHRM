@@ -97,7 +97,7 @@ namespace SmartHRM.API.Controllers
         }
 
 
-        [HttpPut("{employeeId}")]
+        [HttpPut("DeletedStatus/{employeeId}/{status}")]
         [ProducesResponseType(400)]
         [ProducesResponseType(204)]
         [ProducesResponseType(404)]

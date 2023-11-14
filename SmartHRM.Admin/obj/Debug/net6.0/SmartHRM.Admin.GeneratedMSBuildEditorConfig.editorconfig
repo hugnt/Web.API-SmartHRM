@@ -23,6 +23,10 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRW1wbG95ZWVcSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/User/Documents/SchoolFiles/IT/SEMESTER_5/Web Programming/project/SmartHRM/SmartHRM.Admin/Views/Employee/PersonalFileTrash.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRW1wbG95ZWVcUGVyc29uYWxGaWxlVHJhc2guY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/User/Documents/SchoolFiles/IT/SEMESTER_5/Web Programming/project/SmartHRM/SmartHRM.Admin/Views/Home/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
@@ -67,8 +71,8 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXFBhcnRpYWxcTm90aWZpY2F0aW9uXFJlbW92ZU1vZGVsUGFydGlhbC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/User/Documents/SchoolFiles/IT/SEMESTER_5/Web Programming/project/SmartHRM/SmartHRM.Admin/Views/Shared/Partial/Notification/SuccessModelPartial.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXFBhcnRpYWxcTm90aWZpY2F0aW9uXFN1Y2Nlc3NNb2RlbFBhcnRpYWwuY3NodG1s
+[C:/Users/User/Documents/SchoolFiles/IT/SEMESTER_5/Web Programming/project/SmartHRM/SmartHRM.Admin/Views/Shared/Partial/Notification/RestoreModelPartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXFBhcnRpYWxcTm90aWZpY2F0aW9uXFJlc3RvcmVNb2RlbFBhcnRpYWwuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/User/Documents/SchoolFiles/IT/SEMESTER_5/Web Programming/project/SmartHRM/SmartHRM.Admin/Views/Shared/Partial/ScriptLink/FilePond.cshtml]

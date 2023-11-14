@@ -11,5 +11,11 @@ namespace SmartHRM.Admin.Controllers
         {
             return View();
         }
+
+        [Route("Employee/PersonnelFiles/Trash")]
+        public IActionResult PersonalFileTrash()
+        {
+            return View();
+        }
     }
 }

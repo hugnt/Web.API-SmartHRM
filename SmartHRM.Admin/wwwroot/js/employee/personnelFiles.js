@@ -37,7 +37,7 @@ $(document).ready(async function () {
         },
         {
             id: "phoneNumber",
-            name: "phone Number"
+            name: "Phone Number"
         },
         {
             id: "email",
@@ -59,12 +59,12 @@ $(document).ready(async function () {
         },
         {
             id: 'Action',
-            name: htmlText('<div class="text-center">Action</div>'),
+            name: htmlText('<div class="text-center noExl">Action</div>'),
             sort: false,
             formatter: function (e, t) {
                 //t = (new DOMParser).parseFromString(t._cells[0].data.props.content, "text/html").body.querySelector(".checkbox-product-list .form-check-input").value;
                 return htmlText(`
-            <div class="dropdown text-center">
+            <div class="dropdown text-center noExl">
                 <button class="btn btn-soft-secondary btn-sm dropdown" type="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="ri-more-fill"></i></button>
                 <ul class="dropdown-menu dropdown-menu-end">
                     <li class="btnDetails" data-id=${t._cells[1].data}>
@@ -98,26 +98,10 @@ $(document).ready(async function () {
 
     })
 
-    //Toast
-    var toastMixin = Swal.mixin({
-        toast: true,
-        icon: 'success',
-        title: 'General Title',
-        animation: false,
-        position: 'top-right',
-        showConfirmButton: false,
-        timer: 3000,
-        timerProgressBar: true,
-        didOpen: (toast) => {
-            toast.addEventListener('mouseenter', Swal.stopTimer)
-            toast.addEventListener('mouseleave', Swal.resumeTimer)
-        }
-    });
-
     //Details
     async function getDetails() {
         var id = $(this).data("id");
-        var selectedData = await getList(`/Employee/${id}`);
+        var selectedData = await getData(`/Employee/${id}`);
         setDataForm(selectedData);
         setTypeForm("details");
         setStatusForm(false);
@@ -166,22 +150,48 @@ $(document).ready(async function () {
     };
     $("#delete-notification").click(async function () {
         var id = localStorage.getItem("selectedId");
-        await deleteData(`/Employee/${id}`);
+        await putStatus(`/Employee/DeletedStatus/${id}/${true}`);
         var listData = await getList("/Employee");
         newGrid.updateData(listData)
     });
 
 
     $(".btnTestModal").click(function () {
-        toastMixin.fire({
-            animation: true,
-            title: 'Data has been moved to trash!',
-            timer: 2000,
+        
+    });
+
+    //Export
+    $("#btnExport").click(function () {
+        $("table").table2excel({
+            name: "Worksheet Name",
+            filename: "exportList.xls",
         });
     });
 
     //Ajax
     async function getList(endPoint) {
+        try {
+            const res = await $.ajax({
+                url: `${API.API_URL}${endPoint}`,
+                type: "GET",
+                contentType: "application/json",
+                beforeSend: function (xhr) {
+                    AJAXCONFIG.ajaxBeforeSend(xhr, false);
+                }
+            });
+            if (res) {
+                return res.filter(x => x.isDeleted === false);
+            }
+        } catch (e) {
+            console.log(e);
+            AJAXCONFIG.ajaxFail(e);
+        }
+        finally {
+            AJAXCONFIG.ajaxAfterSend();
+        }
+    }
+
+    async function getData(endPoint) {
         try {
             const res = await $.ajax({
                 url: `${API.API_URL}${endPoint}`,
@@ -267,21 +277,22 @@ $(document).ready(async function () {
         }
     }
 
-    async function deleteData(endPoint) {
+    async function putStatus(endPoint) {
         try {
             const res = await $.ajax({
                 url: `${API.API_URL}${endPoint}`,
-                type: "DELETE",
+                type: "PUT",
                 contentType: "application/json",
                 beforeSend: function (xhr) {
                     AJAXCONFIG.ajaxBeforeSend(xhr, false);
                 }
             });
-            toastMixin.fire({
-                animation: true,
-                title: 'Data has been moved to trash!',
-                timer: 2000,
-            });
+            Toastify({
+                text: "Data has been moved to trash!",
+                close: true,
+                className: "bg-success",
+                duration: 2000
+            }).showToast();
         } catch (e) {
             console.log(e);
             Swal.fire({
@@ -375,17 +386,20 @@ $(document).ready(async function () {
             message = "Identification Card is not valid!";
         }
         if (message != null) {
-            toastMixin.fire({
-                title: message,
-                icon: 'error'
-            });
+            Toastify({
+                text: message,
+                close: true,
+                className: "bg-danger",
+                duration: 2500
+            }).showToast();
             return false;
         }
-        await toastMixin.fire({
-            animation: true,
-            title: 'Validated Successfully',
-            timer: 1000,
-        });
+        await Toastify({
+            text: 'Validated Successfully',
+            close: true,
+            className: "bg-success",
+            duration: 1500
+        }).showToast();
         return true;
     }
 
