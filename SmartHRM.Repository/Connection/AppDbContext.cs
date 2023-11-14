@@ -17,6 +17,7 @@ namespace SmartHRM.Repository
         public DbSet<Role> Roles { get; set; }
         public DbSet<Account> Accounts { get; set; }
         public DbSet<Employee> Employees { get; set; }
+        public DbSet<Position> Positions { get; set; }
 
     }
 }

@@ -18,6 +18,9 @@ builder.Services.AddScoped<AccountService>();
 //Employee
 builder.Services.AddScoped<EmployeeService>();
 
+//Position
+builder.Services.AddScoped<PositionService>();
+
 //Enable CORS
 builder.Services.AddCors(p =>
     p.AddPolicy("HUG_LOCAL", build =>

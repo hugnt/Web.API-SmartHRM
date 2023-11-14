@@ -122,5 +122,8 @@ III. CÁC BƯỚC GỌI API HIỂN THỊ TRÊN UI
 	- Chỉnh sửa thành các thông số của trang đang thao tác để hiển thị đc 
 	(vào file _NavBarPartial.cshtml có trong Shared/Partial/Layout)
 	
-
-
+IV. CÁC BƯỚC GỌI API THÊM SỬA XÓA TRÊN UI
+	- vẫn tạo view như trên
+	- Copy file cshml từ Position và PositionTrash
+	- Copy file js từ position và positionTrash
+	- Thay đường dẫn API, columns (trong file js) để chạy
