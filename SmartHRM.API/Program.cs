@@ -19,6 +19,8 @@ builder.Services.AddScoped<AccountService>();
 builder.Services.AddScoped<EmployeeService>();
 //Insurance
 builder.Services.AddScoped<InsuranceService>();
+builder.Services.AddScoped<AllowanceService>();
+builder.Services.AddScoped<BonusService>();
 
 
 //Enable CORS

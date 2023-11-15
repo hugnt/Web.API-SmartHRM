@@ -1,0 +1,101 @@
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using SmartHRM.Repository;
+using SmartHRM.Services;
+
+namespace SmartHRM.API.Controllers
+{
+    [Route("api/[controller]")]
+    [ApiController]
+    public class BonusController : ControllerBase
+    {
+        //sample
+        private readonly BonusService _BonusService;
+        public BonusController(BonusService BonusService)
+        {
+            _BonusService = BonusService;
+        }
+
+        [HttpGet]
+        [ProducesResponseType(200, Type = typeof(IEnumerable<Bonus>))]
+        public IActionResult GetBonuss()
+        {
+            var Bonuss = _BonusService.GetBonuss();
+            if (!ModelState.IsValid) return BadRequest(ModelState);
+
+            return Ok(Bonuss);
+        }
+
+        [HttpGet("{BonusId}")]
+        [ProducesResponseType(200, Type = typeof(Bonus))]
+        [ProducesResponseType(400)]
+        public IActionResult GetBonus(int BonusId)
+        {
+            var Bonus = _BonusService.GetBonus(BonusId);
+            if (!ModelState.IsValid) return BadRequest();
+            if (Bonus == null) return NotFound();
+            return Ok(Bonus);
+        }
+
+        [HttpPost]
+        [ProducesResponseType(201)]
+        [ProducesResponseType(400)]
+        public IActionResult CreateBonus([FromBody] Bonus BonusCreate)
+        {
+            if (BonusCreate == null) return BadRequest(ModelState);
+
+            var res = _BonusService.CreateBonus(BonusCreate);
+
+            if (res.Status != 201)
+            {
+                ModelState.AddModelError("", res.StatusMessage);
+                return StatusCode(res.Status, ModelState);
+            }
+
+            if (!ModelState.IsValid) return BadRequest(ModelState);
+
+            return StatusCode(res.Status, res.StatusMessage);
+        }
+
+        [HttpPut("{BonusId}")]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(204)]
+        [ProducesResponseType(404)]
+        public IActionResult UpdateBonus(int BonusId, [FromBody] Bonus updatedBonus)
+        {
+            if (updatedBonus == null) return BadRequest(ModelState);
+            if (BonusId != updatedBonus.Id) return BadRequest(ModelState);
+
+
+            var res = _BonusService.UpdateBonus(BonusId, updatedBonus);
+            if (res.Status != 204)
+            {
+                ModelState.AddModelError("", res.StatusMessage);
+                return StatusCode(res.Status, ModelState);
+
+            }
+            if (!ModelState.IsValid) return BadRequest(ModelState);
+            return NoContent();
+        }
+
+        [HttpDelete("{BonusId}")]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(204)]
+        [ProducesResponseType(404)]
+        public IActionResult DeleteBonus(int BonusId)
+        {
+            var res = _BonusService.DeleteBonus(BonusId);
+            if (res.Status != 204)
+            {
+                ModelState.AddModelError("", res.StatusMessage);
+                return StatusCode(res.Status, ModelState);
+            }
+
+            if (!ModelState.IsValid) return BadRequest(ModelState);
+
+            return NoContent();
+        }
+
+
+    }
+}
