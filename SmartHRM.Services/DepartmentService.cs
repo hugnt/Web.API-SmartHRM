@@ -94,12 +94,25 @@ namespace SmartHRM.Services
             return new ResponseModel(204, "");
         }
 
-        public IEnumerable<Department> Search(string field, string keyWords)
+        public IEnumerable<DepartmentDto> Search(string field, string keyWords)
         {
-            if (keyWords == "null") return _departmentRepository.GetAll();
+            if (keyWords == "null") return GetDepartments();
             var res = _departmentRepository.Search(field, keyWords);
-            if (res == null) return new List<Department>();
-            return res;
+            var resDto = new List<DepartmentDto>();
+            foreach ( var D in res)
+            {
+                resDto.Add(new DepartmentDto()
+                {
+
+                    Id = D.Id,
+                    Name = D.Name,
+                    Description = D.Description,
+                    Manager = _EmployeeRepository.GetById(D.ManagerId),
+                    IsDeleted = D.IsDeleted
+                });
+            }
+            if (resDto == null) return new List<DepartmentDto>();
+            return resDto;
         }
 
     }
