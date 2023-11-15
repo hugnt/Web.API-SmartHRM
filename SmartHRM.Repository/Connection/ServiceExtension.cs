@@ -24,7 +24,7 @@ namespace SmartHRM.Repository.Connection
 			services.AddScoped<InsuranceRepository>();
             services.AddScoped<ContractRepository>();
             services.AddScoped<DepartmentRepository>();
-
+            services.AddScoped<PositionRepository>();
             return services;
         }
     }

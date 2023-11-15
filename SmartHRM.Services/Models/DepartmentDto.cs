@@ -1,4 +1,5 @@
-﻿using SmartHRM.Repository;
+﻿using HUG.CRUD.Base;
+using SmartHRM.Repository;
 using SmartHRM.Repository.Models;
 using System;
 using System.Collections.Generic;
@@ -9,11 +10,13 @@ using System.Threading.Tasks;
 
 namespace SmartHRM.Services.Models
 {
-    public class DepartmentDto 
+    public class DepartmentDto : BaseModel
     {
-        public int Id { get; set; }
+        
         public string? Name { get; set; }
         public string? Description { get; set; }
         public Employee Manager { get; set; }
+
+
     }
 }

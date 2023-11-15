@@ -8,44 +8,44 @@ namespace SmartHRM.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ContractController : ControllerBase
+    public class PositionController : ControllerBase
     {
         //sample
-        private readonly ContractServise _ContractService;
-        public ContractController(ContractServise ContractService)
+        private readonly PositionService _PositionService;
+        public PositionController(PositionService PositionService)
         {
-            _ContractService = ContractService;
+            _PositionService = PositionService;
         }
 
         [HttpGet]
-        [ProducesResponseType(200, Type = typeof(IEnumerable<Contract>))]
-        public IActionResult GetContracts()
+        [ProducesResponseType(200, Type = typeof(IEnumerable<Position>))]
+        public IActionResult GetPositions()
         {
-            var Contracts = _ContractService.GetContracts();
+            var Positions = _PositionService.GetPositions();
             if (!ModelState.IsValid) return BadRequest(ModelState);
 
-            return Ok(Contracts);
+            return Ok(Positions);
         }
 
-        [HttpGet("{ContractId}")]
-        [ProducesResponseType(200, Type = typeof(Contract))]
+        [HttpGet("{PositionId}")]
+        [ProducesResponseType(200, Type = typeof(Position))]
         [ProducesResponseType(400)]
-        public IActionResult GetContract(int ContractId)
+        public IActionResult GetPosition(int PositionId)
         {
-            var Contract = _ContractService.GetContract(ContractId);
+            var Position = _PositionService.GetPosition(PositionId);
             if (!ModelState.IsValid) return BadRequest();
-            if (Contract == null) return NotFound();
-            return Ok(Contract);
+            if (Position == null) return NotFound();
+            return Ok(Position);
         }
 
         [HttpPost]
         [ProducesResponseType(201)]
         [ProducesResponseType(400)]
-        public IActionResult CreateContract([FromBody] Contract ContractCreate)
+        public IActionResult CreatePosition([FromBody] Position PositionCreate)
         {
-            if (ContractCreate == null) return BadRequest(ModelState);
+            if (PositionCreate == null) return BadRequest(ModelState);
 
-            var res = _ContractService.CreateContract(ContractCreate);
+            var res = _PositionService.CreatePosition(PositionCreate);
 
             if (res.Status != 201)
             {
@@ -58,17 +58,17 @@ namespace SmartHRM.API.Controllers
             return StatusCode(res.Status, res.StatusMessage);
         }
 
-        [HttpPut("{ContractId}")]
+        [HttpPut("{PositionId}")]
         [ProducesResponseType(400)]
         [ProducesResponseType(204)]
         [ProducesResponseType(404)]
-        public IActionResult UpdateContract(int ContractId, [FromBody] Contract updatedContract)
+        public IActionResult UpdatePosition(int PositionId, [FromBody] Position updatedPosition)
         {
-            if (updatedContract == null) return BadRequest(ModelState);
-            if (ContractId != updatedContract.Id) return BadRequest(ModelState);
+            if (updatedPosition == null) return BadRequest(ModelState);
+            if (PositionId != updatedPosition.Id) return BadRequest(ModelState);
 
 
-            var res = _ContractService.UpdateContract(ContractId, updatedContract);
+            var res = _PositionService.UpdatePosition(PositionId, updatedPosition);
             if (res.Status != 204)
             {
                 ModelState.AddModelError("", res.StatusMessage);
@@ -79,13 +79,13 @@ namespace SmartHRM.API.Controllers
             return NoContent();
         }
 
-        [HttpDelete("{ContractId}")]
+        [HttpDelete("{PositionId}")]
         [ProducesResponseType(400)]
         [ProducesResponseType(204)]
         [ProducesResponseType(404)]
-        public IActionResult DeleteContract(int ContractId)
+        public IActionResult DeletePosition(int PositionId)
         {
-            var res = _ContractService.DeleteContract(ContractId);
+            var res = _PositionService.DeletePosition(PositionId);
             if (res.Status != 204)
             {
                 ModelState.AddModelError("", res.StatusMessage);
@@ -96,14 +96,14 @@ namespace SmartHRM.API.Controllers
 
             return NoContent();
         }
-        [HttpPut("DeletedStatus/{contractId}/{status}")]
+        [HttpPut("DeletedStatus/{positionId}/{status}")]
         [ProducesResponseType(400)]
         [ProducesResponseType(204)]
         [ProducesResponseType(404)]
-        public IActionResult UpdateDeleteStatus(int contractId, bool status)
+        public IActionResult UpdateDeleteStatus(int positionId, bool status)
         {
 
-            var res = _ContractService.UpdateDeleteStatus(contractId, status);
+            var res = _PositionService.UpdateDeleteStatus(positionId, status);
             if (res.Status != 204)
             {
                 ModelState.AddModelError("", res.StatusMessage);
@@ -115,12 +115,12 @@ namespace SmartHRM.API.Controllers
         }
 
         [HttpGet("Search/{field}/{keyWords}")]
-        [ProducesResponseType(200, Type = typeof(IEnumerable<Contract>))]
+        [ProducesResponseType(200, Type = typeof(IEnumerable<Position>))]
         public IActionResult Search(string field, string keyWords)
         {
-            var contracts = _ContractService.Search(field, keyWords);
+            var positions = _PositionService.Search(field, keyWords);
             if (!ModelState.IsValid) return BadRequest(ModelState);
-            return Ok(contracts);
+            return Ok(positions);
         }
 
     }

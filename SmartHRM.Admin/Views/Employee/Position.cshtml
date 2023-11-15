@@ -1,5 +1,5 @@
 ﻿@{
-    ViewData["Title"] = "DEPARTMENT";
+    ViewData["Title"] = "POSITION";
 }
 @section Styles{
     <!-- gridjs css -->
@@ -31,7 +31,7 @@
                                         aria-expanded="false"></button>
                                 <div class="dropdown-menu">
                                     <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item" href="/Employee/Department/Trash">
+                                    <a class="dropdown-item" href="/Employee/Position/Trash">
                                         <i class="ri-delete-bin-5-line align-middle me-1"></i>Trash
                                     </a>
                                 </div>
@@ -95,7 +95,7 @@
                                                     name="choices-single-default" id="sellectBoxFilter">
                                                 <option value="name" selected>All</option>
                                                 <option value="id">Id</option>
-                                                <option value="name">Content</option>
+                                                <option value="name">Position Name</option>
                                             </select>
                                         </div>
                                     </div>
@@ -158,23 +158,9 @@
                             </div>
                             <div class="col-10">
                                 <div>
-                                    <label for="name" class="form-label">Name</label>
+                                    <label for="name" class="form-label">Position Name</label>
                                     <input type="text" class="form-control" id="name"
                                            placeholder="Enter name" />
-                                </div>
-                            </div>
-                            <div class="col-12">
-                                <div>
-                                    <label for="managerId" class="form-label">manager</label>
-                                    <input type="text" class="form-control" id="managerId"
-                                           placeholder="Enter Manager" />
-                                </div>
-                            </div>
-                            <div class="col-12">
-                                <div>
-                                    <label for="description" class="form-label">Description</label>
-                                    <input type="text" class="form-control" id="description"
-                                           placeholder="Enter Description" />
                                 </div>
                             </div>
                         </div>
@@ -208,10 +194,10 @@
     <script>
         $("#sidebarEmployeeRoster").addClass("show");
         $('a[href="#sidebarEmployeeRoster"]').addClass("active");
-        $('a[href="/Employee/Department"]').addClass("active");
+        $('a[href="/Employee/Position"]').addClass("active");
     </script>
 
     <script src="~/js/table_custom.js"></script>
     <script src="~/js/jquery.table2excel.js"></script>
-    <script type="module" src="~/js/employee/department.js"></script>
+    <script type="module" src="~/js/employee/position.js"></script>
 }

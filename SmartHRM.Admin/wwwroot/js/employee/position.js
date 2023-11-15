@@ -3,7 +3,7 @@ import * as API from '../api.js';
 import * as AJAXCONFIG from '../ajax_config.js';
 
 $(document).ready(async function () {
-    var listData = await getList("/Contract");
+    var listData = await getList("/Position");
     console.log(listData);
     var columns = [
         {
@@ -16,16 +16,9 @@ $(document).ready(async function () {
             width: '8%'
         },
         {
-            id: "content",
-            name: "Content",
-        },
-        {
-            id: "employeeId",
-            name: "EmployeeId"          
-        },
-        {
-            id: "image",
-            name: "Image"
+            id: "name",
+            name: "Position Name",
+            sort: true
         },
         {
             id: 'Action',
@@ -71,7 +64,7 @@ $(document).ready(async function () {
     //Details
     async function getDetails() {
         var id = $(this).data("id");
-        var selectedData = await getData(`/Contract/${id}`);
+        var selectedData = await getData(`/Position/${id}`);
         setDataForm(selectedData);
         setTypeForm("details");
         setStatusForm(false);
@@ -88,8 +81,8 @@ $(document).ready(async function () {
         var dataInsert = getDataForm();
         if (!await isValidForm(dataInsert)) return;
         myModal.hide();
-        await postData("/Contract", dataInsert);
-        var listData = await getList("/Contract");
+        await postData("/Position", dataInsert);
+        var listData = await getList("/Position");
         newGrid.updateData(listData)
     });
 
@@ -97,7 +90,7 @@ $(document).ready(async function () {
     //Update
     async function updateInfor() {
         var id = $(this).data("id");
-        var selectedData = await getData(`/Contract/${id}`);
+        var selectedData = await getData(`/Position/${id}`);
         setDataForm(selectedData);
         setTypeForm("edit");
         myModal.show()
@@ -107,8 +100,8 @@ $(document).ready(async function () {
         console.log(updatedData)
         if (!await isValidForm(updatedData)) return;
         myModal.hide();
-        await putData(`/Contract/${updatedData.id}`, updatedData);
-        var listData = await getList("/Contract");
+        await putData(`/Position/${updatedData.id}`, updatedData);
+        var listData = await getList("/Position");
         newGrid.updateData(listData)
     });
 
@@ -116,12 +109,12 @@ $(document).ready(async function () {
     //Remove
     async function deleteInfor() {
         var id = $(this).data("id");
-        localStorage.setItem("selectedId", id)
+        localStorage.setItem("selectedId",id)
     };
     $("#delete-notification").click(async function () {
         var id = localStorage.getItem("selectedId");
-        await putStatus(`/Contract/DeletedStatus/${id}/${true}`);
-        var listData = await getList("/Contract");
+        await putStatus(`/Position/DeletedStatus/${id}/${true}`);
+        var listData = await getList("/Position");
         newGrid.updateData(listData)
     });
 
@@ -141,7 +134,7 @@ $(document).ready(async function () {
         var keyword = $("#searchBoxFilter").val();
         keyword = keyword == "" ? null : keyword;
         console.log(field + " - keyword: " + keyword)
-        var listData = await getList(`/Contract/Search/${field}/${keyword}`);
+        var listData = await getList(`/Position/Search/${field}/${keyword}`);
         console.log(listData)
         newGrid.updateData(listData)
         if (listData.length == 0) $(".noresult").show();
@@ -207,7 +200,7 @@ $(document).ready(async function () {
             });
             if (res) {
                 Swal.fire({
-                    Contract: "top",
+                    position: "top",
                     icon: "success",
                     title: "Created Successfully",
                     showConfirmButton: false,
@@ -239,7 +232,7 @@ $(document).ready(async function () {
                 }
             });
             Swal.fire({
-                Contract: "top",
+                position: "top",
                 icon: "success",
                 title: "Updated Successfully",
                 showConfirmButton: false,
@@ -292,9 +285,7 @@ $(document).ready(async function () {
         //console.log(pond)
         return {
             id: $("#position_id").val() == "" ? 0 : $("#position_id").val(),
-            content: $("#content").val(),
-            employeeId: $("#employeeId").val(),
-            image: $("#image").val(),
+            name: $("#name").val(),
             isDeleted: false,
         }
     }
@@ -305,9 +296,8 @@ $(document).ready(async function () {
             return;
         }
         $("#position_id").val(data.id);
-        $("#content").val(data.content);
-        $("#employeeId").val(data.employeeId);
-        $("#image").val(data.image);
+        $("#name").val(data.name);
+
     }
 
     function setStatusForm(status) {
@@ -329,8 +319,8 @@ $(document).ready(async function () {
 
     async function isValidForm(data) {
         var message = null;
-        if (data.content == "" || data.content == null) {
-            message = "Contract content is required!";
+        if (data.name == "" || data.name ==null) {
+            message = "Position name is required!";
         }
         if (message != null) {
             Toastify({
@@ -352,5 +342,5 @@ $(document).ready(async function () {
 
 
 
-
+    
 });

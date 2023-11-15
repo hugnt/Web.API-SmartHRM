@@ -24,6 +24,8 @@ builder.Services.AddScoped<ContractServise>();
 
 builder.Services.AddScoped<DepartmentServise>();
 
+builder.Services.AddScoped<PositionService>();
+
 
 
 

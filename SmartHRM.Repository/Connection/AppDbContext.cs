@@ -21,6 +21,8 @@ namespace SmartHRM.Repository
 		public DbSet<Insurance> Insurances { get; set; }
         public DbSet<Contract> Contracts { get; set; }
         public DbSet<Department> Departments { get; set; }
+        public DbSet<Position> Positions { get; set; }
+
 
 
     }

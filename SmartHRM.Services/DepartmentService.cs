@@ -12,16 +12,16 @@ namespace SmartHRM.Services
 {
     public class DepartmentServise
     {
-        private readonly DepartmentRepository _DepartmentRepository;
+        private readonly DepartmentRepository _departmentRepository;
         private readonly EmployeeRepository _EmployeeRepository;
         public DepartmentServise(DepartmentRepository departmentRepository, EmployeeRepository employeeRepository)
         {
-            _DepartmentRepository = departmentRepository;
+            _departmentRepository = departmentRepository;
             _EmployeeRepository = employeeRepository;
         }
         public ResponseModel CreateDepartment(Department DepartmentCreate)
         {
-            var Departments = _DepartmentRepository.GetAll()
+            var Departments = _departmentRepository.GetAll()
                             .Where(l => l.Name.Trim().ToLower() == DepartmentCreate.Name.Trim().ToLower())
                             .FirstOrDefault();
             if (Departments != null)
@@ -29,7 +29,7 @@ namespace SmartHRM.Services
                 return new ResponseModel(422, "Department already exists");
             }
 
-            if (!_DepartmentRepository.Create(DepartmentCreate))
+            if (!_departmentRepository.Create(DepartmentCreate))
             {
                 return new ResponseModel(500, "Something went wrong while saving");
             }
@@ -39,9 +39,9 @@ namespace SmartHRM.Services
 
         public ResponseModel DeleteDepartment(int DepartmentId)
         {
-            if (!_DepartmentRepository.IsExists(DepartmentId)) return new ResponseModel(404, "Not found");
-            var DepartmentToDelete = _DepartmentRepository.GetById(DepartmentId);
-            if (!_DepartmentRepository.Delete(DepartmentToDelete))
+            if (!_departmentRepository.IsExists(DepartmentId)) return new ResponseModel(404, "Not found");
+            var DepartmentToDelete = _departmentRepository.GetById(DepartmentId);
+            if (!_departmentRepository.Delete(DepartmentToDelete))
             {
                 return new ResponseModel(500, "Something went wrong when deleting Department");
             }
@@ -50,22 +50,23 @@ namespace SmartHRM.Services
 
         public Department? GetDepartment(int DepartmentId)
         {
-            if (!_DepartmentRepository.IsExists(DepartmentId)) return null;
-            var Department = _DepartmentRepository.GetById(DepartmentId);
+            if (!_departmentRepository.IsExists(DepartmentId)) return null;
+            var Department = _departmentRepository.GetById(DepartmentId);
             return Department;
         }
         
         
         public IEnumerable<DepartmentDto> GetDepartments()
         {
-            var departmentQuerry = from D in _DepartmentRepository.GetAll()
+            var departmentQuerry = from D in _departmentRepository.GetAll()
                       join E in _EmployeeRepository.GetAll() on D.ManagerId equals E.Id
                       select new DepartmentDto
                       {
                           Id = D.Id,
                           Name = D.Name,
                           Description = D.Description,
-                          Manager = E
+                          Manager = E,
+                          IsDeleted = D.IsDeleted,
                       };
             var dtos = departmentQuerry.ToList();
             return dtos;
@@ -73,15 +74,33 @@ namespace SmartHRM.Services
 
         public ResponseModel UpdateDepartment(int DepartmentId, Department updatedDepartment)
         {
-            if (!_DepartmentRepository.IsExists(DepartmentId)) return new ResponseModel(404, "Not found");
+            if (!_departmentRepository.IsExists(DepartmentId)) return new ResponseModel(404, "Not found");
           
-            if (!_DepartmentRepository.Update(updatedDepartment))
+            if (!_departmentRepository.Update(updatedDepartment))
             {
                 return new ResponseModel(500, "Something went wrong updating Department");
             }
             return new ResponseModel(204, "");
         }
+        public ResponseModel UpdateDeleteStatus(int departmentId, bool status)
+        {
+            if (!_departmentRepository.IsExists(departmentId)) return new ResponseModel(404, "Not found");
+            var updatedPosition = _departmentRepository.GetById(departmentId);
+            updatedPosition.IsDeleted = status;
+            if (!_departmentRepository.Update(updatedPosition))
+            {
+                return new ResponseModel(500, "Something went wrong when change delete status Department");
+            }
+            return new ResponseModel(204, "");
+        }
 
-   
+        public IEnumerable<Department> Search(string field, string keyWords)
+        {
+            if (keyWords == "null") return _departmentRepository.GetAll();
+            var res = _departmentRepository.Search(field, keyWords);
+            if (res == null) return new List<Department>();
+            return res;
+        }
+
     }
 }
