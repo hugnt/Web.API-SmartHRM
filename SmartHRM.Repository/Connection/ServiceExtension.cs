@@ -20,6 +20,11 @@ namespace SmartHRM.Repository.Connection
 
             services.AddScoped<AccountRepository>();
             services.AddScoped<EmployeeRepository>();
+			services.AddScoped<InsuranceRepository>();
+            services.AddScoped<ProjectRepository>();
+            services.AddScoped<DepartmentRepository>();
+            services.AddScoped<ContractRepository>();
+
             return services;
         }
     }
