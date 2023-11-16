@@ -84,5 +84,24 @@ namespace SmartHRM.Services
         {
             throw new NotImplementedException();
         }
+        public ResponseModel UpdateDeleteStatus(int BonusId, bool status)
+        {
+            if (!_AllowanceRepository.IsExists(BonusId)) return new ResponseModel(404, "Not found");
+            var updatedBonus = _AllowanceRepository.GetById(BonusId);
+            updatedBonus.IsDeleted = status;
+            if (!_AllowanceRepository.Update(updatedBonus))
+            {
+                return new ResponseModel(500, "Something went wrong when change delete status Allowance");
+            }
+            return new ResponseModel(204, "");
+        }
+
+        public IEnumerable<Allowance> Search(string field, string keyWords)
+        {
+            if (keyWords == "null") return _AllowanceRepository.GetAll();
+            var res = _AllowanceRepository.Search(field, keyWords);
+            if (res == null) return new List<Allowance>();
+            return res;
+        }
     }
 }

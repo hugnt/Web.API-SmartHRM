@@ -66,23 +66,24 @@ namespace SmartHRM.Services
             return new ResponseModel(204, "");
         }
 
-        public Role GetRoleById(int roleId)
+        public ResponseModel UpdateDeleteStatus(int BonusId, bool status)
         {
-            throw new NotImplementedException();
+            if (!_BonusRepository.IsExists(BonusId)) return new ResponseModel(404, "Not found");
+            var updatedBonus = _BonusRepository.GetById(BonusId);
+            updatedBonus.IsDeleted = status;
+            if (!_BonusRepository.Update(updatedBonus))
+            {
+                return new ResponseModel(500, "Something went wrong when change delete status Bonus");
+            }
+            return new ResponseModel(204, "");
         }
 
-        public List<Role> GetRoles()
+        public IEnumerable<Bonus> Search(string field, string keyWords)
         {
-            throw new NotImplementedException();
-        }
-        public Task<ResponseModel> ValidateBonus(Bonus Bonus)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<ResponseModel> ValidateNameAndPassword(Bonus Bonus)
-        {
-            throw new NotImplementedException();
+            if (keyWords == "null") return _BonusRepository.GetAll();
+            var res = _BonusRepository.Search(field, keyWords);
+            if (res == null) return new List<Bonus>();
+            return res;
         }
     }
 }

@@ -7,43 +7,44 @@ namespace SmartHRM.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class BonusController : ControllerBase
+    public class PositionController : ControllerBase
     {
-        private readonly BonusService _BonusService;
-        public BonusController(BonusService BonusService)
+        //sample
+        private readonly PositionService _PositionService;
+        public PositionController(PositionService PositionService)
         {
-            _BonusService = BonusService;
+            _PositionService = PositionService;
         }
 
         [HttpGet]
-        [ProducesResponseType(200, Type = typeof(IEnumerable<Bonus>))]
-        public IActionResult GetBonuss()
+        [ProducesResponseType(200, Type = typeof(IEnumerable<Position>))]
+        public IActionResult GetPositions()
         {
-            var Bonuss = _BonusService.GetBonuss();
+            var Positions = _PositionService.GetPositions();
             if (!ModelState.IsValid) return BadRequest(ModelState);
 
-            return Ok(Bonuss);
+            return Ok(Positions);
         }
 
-        [HttpGet("{BonusId}")]
-        [ProducesResponseType(200, Type = typeof(Bonus))]
+        [HttpGet("{PositionId}")]
+        [ProducesResponseType(200, Type = typeof(Position))]
         [ProducesResponseType(400)]
-        public IActionResult GetBonus(int BonusId)
+        public IActionResult GetPosition(int PositionId)
         {
-            var Bonus = _BonusService.GetBonus(BonusId);
+            var Position = _PositionService.GetPosition(PositionId);
             if (!ModelState.IsValid) return BadRequest();
-            if (Bonus == null) return NotFound();
-            return Ok(Bonus);
+            if (Position == null) return NotFound();
+            return Ok(Position);
         }
 
         [HttpPost]
         [ProducesResponseType(201)]
         [ProducesResponseType(400)]
-        public IActionResult CreateBonus([FromBody] Bonus BonusCreate)
+        public IActionResult CreatePosition([FromBody] Position PositionCreate)
         {
-            if (BonusCreate == null) return BadRequest(ModelState);
+            if (PositionCreate == null) return BadRequest(ModelState);
 
-            var res = _BonusService.CreateBonus(BonusCreate);
+            var res = _PositionService.CreatePosition(PositionCreate);
 
             if (res.Status != 201)
             {
@@ -56,17 +57,17 @@ namespace SmartHRM.API.Controllers
             return StatusCode(res.Status, res.StatusMessage);
         }
 
-        [HttpPut("{BonusId}")]
+        [HttpPut("{PositionId}")]
         [ProducesResponseType(400)]
         [ProducesResponseType(204)]
         [ProducesResponseType(404)]
-        public IActionResult UpdateBonus(int BonusId, [FromBody] Bonus updatedBonus)
+        public IActionResult UpdatePosition(int PositionId, [FromBody] Position updatedPosition)
         {
-            if (updatedBonus == null) return BadRequest(ModelState);
-            if (BonusId != updatedBonus.Id) return BadRequest(ModelState);
+            if (updatedPosition == null) return BadRequest(ModelState);
+            if (PositionId != updatedPosition.Id) return BadRequest(ModelState);
 
 
-            var res = _BonusService.UpdateBonus(BonusId, updatedBonus);
+            var res = _PositionService.UpdatePosition(PositionId, updatedPosition);
             if (res.Status != 204)
             {
                 ModelState.AddModelError("", res.StatusMessage);
@@ -77,13 +78,13 @@ namespace SmartHRM.API.Controllers
             return NoContent();
         }
 
-        [HttpDelete("{BonusId}")]
+        [HttpDelete("{PositionId}")]
         [ProducesResponseType(400)]
         [ProducesResponseType(204)]
         [ProducesResponseType(404)]
-        public IActionResult DeleteBonus(int BonusId)
+        public IActionResult DeletePosition(int PositionId)
         {
-            var res = _BonusService.DeleteBonus(BonusId);
+            var res = _PositionService.DeletePosition(PositionId);
             if (res.Status != 204)
             {
                 ModelState.AddModelError("", res.StatusMessage);
@@ -94,15 +95,14 @@ namespace SmartHRM.API.Controllers
 
             return NoContent();
         }
-
-        [HttpPut("DeletedStatus/{BonusId}/{status}")]
+        [HttpPut("DeletedStatus/{positionId}/{status}")]
         [ProducesResponseType(400)]
         [ProducesResponseType(204)]
         [ProducesResponseType(404)]
-        public IActionResult UpdateDeleteStatus(int BonusId, bool status)
+        public IActionResult UpdateDeleteStatus(int positionId, bool status)
         {
 
-            var res = _BonusService.UpdateDeleteStatus(BonusId, status);
+            var res = _PositionService.UpdateDeleteStatus(positionId, status);
             if (res.Status != 204)
             {
                 ModelState.AddModelError("", res.StatusMessage);
@@ -114,12 +114,12 @@ namespace SmartHRM.API.Controllers
         }
 
         [HttpGet("Search/{field}/{keyWords}")]
-        [ProducesResponseType(200, Type = typeof(IEnumerable<Bonus>))]
+        [ProducesResponseType(200, Type = typeof(IEnumerable<Position>))]
         public IActionResult Search(string field, string keyWords)
         {
-            var Bonuss = _BonusService.Search(field, keyWords);
+            var positions = _PositionService.Search(field, keyWords);
             if (!ModelState.IsValid) return BadRequest(ModelState);
-            return Ok(Bonuss);
+            return Ok(positions);
         }
 
     }
