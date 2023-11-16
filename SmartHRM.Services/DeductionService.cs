@@ -65,6 +65,25 @@ namespace SmartHRM.Services
             }
             return new ResponseModel(204, "");
         }
+        public ResponseModel UpdateDeleteStatus(int positionId, bool status)
+        {
+            if (!_DeductionRepository.IsExists(positionId)) return new ResponseModel(404, "Not found");
+            var updatedPosition = _DeductionRepository.GetById(positionId);
+            updatedPosition.IsDeleted = status;
+            if (!_DeductionRepository.Update(updatedPosition))
+            {
+                return new ResponseModel(500, "Something went wrong when change delete status position");
+            }
+            return new ResponseModel(204, "");
+        }
+
+        public IEnumerable<Deduction> Search(string field, string keyWords)
+        {
+            if (keyWords == "null") return _DeductionRepository.GetAll();
+            var res = _DeductionRepository.Search(field, keyWords);
+            if (res == null) return new List<Deduction>();
+            return res;
+        }
 
     }
 }

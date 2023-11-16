@@ -95,6 +95,32 @@ namespace SmartHRM.API.Controllers
 
             return NoContent();
         }
+        [HttpPut("DeletedStatus/{deductionId}/{status}")]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(204)]
+        [ProducesResponseType(404)]
+        public IActionResult UpdateDeleteStatus(int deductionId, bool status)
+        {
+
+            var res = _DeductionService.UpdateDeleteStatus(deductionId, status);
+            if (res.Status != 204)
+            {
+                ModelState.AddModelError("", res.StatusMessage);
+                return StatusCode(res.Status, ModelState);
+
+            }
+            if (!ModelState.IsValid) return BadRequest(ModelState);
+            return NoContent();
+        }
+
+        [HttpGet("Search/{field}/{keyWords}")]
+        [ProducesResponseType(200, Type = typeof(IEnumerable<Deduction>))]
+        public IActionResult Search(string field, string keyWords)
+        {
+            var deductions = _DeductionService.Search(field, keyWords);
+            if (!ModelState.IsValid) return BadRequest(ModelState);
+            return Ok(deductions);
+        }
 
 
     }

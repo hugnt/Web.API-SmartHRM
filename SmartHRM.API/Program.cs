@@ -24,6 +24,9 @@ builder.Services.AddScoped<DeductionService>();
 //TimeKeeping
 builder.Services.AddScoped<TimeKeepingService>();
 
+//TimeKeeping
+builder.Services.AddScoped<PositionService>();
+
 //Enable CORS
 builder.Services.AddCors(p =>
     p.AddPolicy("HUG_LOCAL", build =>

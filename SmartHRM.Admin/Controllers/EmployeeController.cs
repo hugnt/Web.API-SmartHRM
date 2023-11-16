@@ -11,5 +11,18 @@ namespace SmartHRM.Admin.Controllers
         {
             return View();
         }
+        [Route("Employee")]
+        [Route("Employee/Position")]
+        public  IActionResult Position()
+        {
+            return View();
+        }
+
+        [Route("Employee")]
+        [Route("Employee/Position/Trash")]
+        public IActionResult PositionTrash()
+        {
+            return View();
+        }
     }
 }

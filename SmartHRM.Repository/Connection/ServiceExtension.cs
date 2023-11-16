@@ -22,6 +22,7 @@ namespace SmartHRM.Repository.Connection
             services.AddScoped<EmployeeRepository>();
             services.AddScoped<DeductionRepository>();
             services.AddScoped<TimeKeepingRepository>();
+            services.AddScoped<PositionRepository>();
             return services;
         }
     }

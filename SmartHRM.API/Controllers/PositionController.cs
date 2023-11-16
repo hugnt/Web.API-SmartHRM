@@ -7,44 +7,44 @@ namespace SmartHRM.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class TimeKeepingController : ControllerBase
+    public class PositionController : ControllerBase
     {
         //sample
-        private readonly TimeKeepingService _TimeKeepingService;
-        public TimeKeepingController(TimeKeepingService TimeKeepingService)
+        private readonly PositionService _positionService;
+        public PositionController(PositionService PositionService)
         {
-            _TimeKeepingService = TimeKeepingService;
+            _positionService = PositionService;
         }
 
         [HttpGet]
-        [ProducesResponseType(200, Type = typeof(IEnumerable<TimeKeeping>))]
-        public IActionResult GetTimeKeepings()
+        [ProducesResponseType(200, Type = typeof(IEnumerable<Position>))]
+        public IActionResult GetPositions()
         {
-            var TimeKeepings = _TimeKeepingService.GetTimeKeepings();
+            var Positions = _positionService.GetPositions();
             if (!ModelState.IsValid) return BadRequest(ModelState);
 
-            return Ok(TimeKeepings);
+            return Ok(Positions);
         }
 
-        [HttpGet("{TimeKeepingId}")]
-        [ProducesResponseType(200, Type = typeof(TimeKeeping))]
+        [HttpGet("{PositionId}")]
+        [ProducesResponseType(200, Type = typeof(Position))]
         [ProducesResponseType(400)]
-        public IActionResult GetTimeKeeping(int TimeKeepingId)
+        public IActionResult GetPosition(int PositionId)
         {
-            var TimeKeeping = _TimeKeepingService.GetTimeKeeping(TimeKeepingId);
+            var Position = _positionService.GetPosition(PositionId);
             if (!ModelState.IsValid) return BadRequest();
-            if (TimeKeeping == null) return NotFound();
-            return Ok(TimeKeeping);
+            if (Position == null) return NotFound();
+            return Ok(Position);
         }
 
         [HttpPost]
         [ProducesResponseType(201)]
         [ProducesResponseType(400)]
-        public IActionResult CreateTimeKeeping([FromBody] TimeKeeping TimeKeepingCreate)
+        public IActionResult CreatePosition([FromBody] Position PositionCreate)
         {
-            if (TimeKeepingCreate == null) return BadRequest(ModelState);
+            if (PositionCreate == null) return BadRequest(ModelState);
 
-            var res = _TimeKeepingService.CreateTimeKeeping(TimeKeepingCreate);
+            var res = _positionService.CreatePosition(PositionCreate);
 
             if (res.Status != 201)
             {
@@ -57,17 +57,17 @@ namespace SmartHRM.API.Controllers
             return StatusCode(res.Status, res.StatusMessage);
         }
 
-        [HttpPut("{TimeKeepingId}")]
+        [HttpPut("{PositionId}")]
         [ProducesResponseType(400)]
         [ProducesResponseType(204)]
         [ProducesResponseType(404)]
-        public IActionResult UpdateTimeKeeping(int TimeKeepingId, [FromBody] TimeKeeping updatedTimeKeeping)
+        public IActionResult UpdatePosition(int PositionId, [FromBody] Position updatedPosition)
         {
-            if (updatedTimeKeeping == null) return BadRequest(ModelState);
-            if (TimeKeepingId != updatedTimeKeeping.Id) return BadRequest(ModelState);
+            if (updatedPosition == null) return BadRequest(ModelState);
+            if (PositionId != updatedPosition.Id) return BadRequest(ModelState);
 
 
-            var res = _TimeKeepingService.UpdateTimeKeeping(TimeKeepingId, updatedTimeKeeping);
+            var res = _positionService.UpdatePosition(PositionId, updatedPosition);
             if (res.Status != 204)
             {
                 ModelState.AddModelError("", res.StatusMessage);
@@ -78,13 +78,13 @@ namespace SmartHRM.API.Controllers
             return NoContent();
         }
 
-        [HttpDelete("{TimeKeepingId}")]
+        [HttpDelete("{PositionId}")]
         [ProducesResponseType(400)]
         [ProducesResponseType(204)]
         [ProducesResponseType(404)]
-        public IActionResult DeleteTimeKeeping(int TimeKeepingId)
+        public IActionResult DeletePosition(int PositionId)
         {
-            var res = _TimeKeepingService.DeleteTimeKeeping(TimeKeepingId);
+            var res = _positionService.DeletePosition(PositionId);
             if (res.Status != 204)
             {
                 ModelState.AddModelError("", res.StatusMessage);
@@ -95,14 +95,14 @@ namespace SmartHRM.API.Controllers
 
             return NoContent();
         }
-        [HttpPut("DeletedStatus/{timeKeepingId}/{status}")]
+        [HttpPut("DeletedStatus/{positionId}/{status}")]
         [ProducesResponseType(400)]
         [ProducesResponseType(204)]
         [ProducesResponseType(404)]
-        public IActionResult UpdateDeleteStatus(int timeKeepingId, bool status)
+        public IActionResult UpdateDeleteStatus(int positionId, bool status)
         {
 
-            var res = _TimeKeepingService.UpdateDeleteStatus(timeKeepingId, status);
+            var res = _positionService.UpdateDeleteStatus(positionId, status);
             if (res.Status != 204)
             {
                 ModelState.AddModelError("", res.StatusMessage);
@@ -114,13 +114,12 @@ namespace SmartHRM.API.Controllers
         }
 
         [HttpGet("Search/{field}/{keyWords}")]
-        [ProducesResponseType(200, Type = typeof(IEnumerable<TimeKeeping>))]
+        [ProducesResponseType(200, Type = typeof(IEnumerable<Position>))]
         public IActionResult Search(string field, string keyWords)
         {
-            var timeKeepings = _TimeKeepingService.Search(field, keyWords);
+            var positions = _positionService.Search(field, keyWords);
             if (!ModelState.IsValid) return BadRequest(ModelState);
-            return Ok(timeKeepings);
+            return Ok(positions);
         }
-
     }
 }

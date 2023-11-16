@@ -3,59 +3,22 @@ import * as API from '../api.js';
 import * as AJAXCONFIG from '../ajax_config.js';
 
 $(document).ready(async function () {
-    var listData = await getList("/Employee");
+    var listData = await getList("/Position");
     console.log(listData);
     var columns = [
         {
             id: "id",
             name: htmlText(`<div class="text-center">Id</div>`),
-            sort: false,
+            sort: true,
             formatter: function (e) {
                 return htmlText(`<div class="text-center">${e}</div>`)
-            }
+            },
+            width: '8%'
         },
         {
-            id: "fullName",
-            name: "Full Name",
-            sort: true,
-            data: function (e) {
-                return htmlText(`
-                    <div class= "d-flex align-items-center" >
-                        <div class="flex-shrink-0 me-3">
-                            <div class="avatar-sm bg-light rounded p-1">
-                                <img src="${API.IMAGE_URL}/avatar/${e.avatar}" alt="" class="img-fluid d-block">
-                            </div >
-                        </div>
-                        <div class="flex-grow-1">
-                            <h5 class="fs-14 mb-1">
-                                <a href="apps-ecommerce-product-details.html" class="text-body">${e.fullName}</a>
-                            </h5>
-                            <p class="text-muted mb-0">Department : <span class="fw-medium">${e.departmentId}</span></p>
-                        </div >
-                    </div > `)
-            }
-        },
-        {
-            id: "phoneNumber",
-            name: "Phone Number"
-        },
-        {
-            id: "email",
-            name: "Email"
-        },
-        {
-            id: "dob",
-            name: "Date of birth",
-            formatter: function (e) {
-                return new Date(e).toLocaleDateString();
-            }
-        },
-        {
-            id: "gender",
-            name: "Gender",
-            formatter: function (e) {
-                return e ? "Male" : "Female";
-            }
+            id: "name",
+            name: "Position Name",
+            sort: true
         },
         {
             id: 'Action',
@@ -101,7 +64,7 @@ $(document).ready(async function () {
     //Details
     async function getDetails() {
         var id = $(this).data("id");
-        var selectedData = await getData(`/Employee/${id}`);
+        var selectedData = await getData(`/Position/${id}`);
         setDataForm(selectedData);
         setTypeForm("details");
         setStatusForm(false);
@@ -118,8 +81,8 @@ $(document).ready(async function () {
         var dataInsert = getDataForm();
         if (!await isValidForm(dataInsert)) return;
         myModal.hide();
-        await postData("/Employee", dataInsert);
-        var listData = await getList("/Employee");
+        await postData("/Position", dataInsert);
+        var listData = await getList("/Position");
         newGrid.updateData(listData)
     });
 
@@ -127,7 +90,7 @@ $(document).ready(async function () {
     //Update
     async function updateInfor() {
         var id = $(this).data("id");
-        var selectedData = await getData(`/Employee/${id}`);
+        var selectedData = await getData(`/Position/${id}`);
         setDataForm(selectedData);
         setTypeForm("edit");
         myModal.show()
@@ -137,8 +100,8 @@ $(document).ready(async function () {
         console.log(updatedData)
         if (!await isValidForm(updatedData)) return;
         myModal.hide();
-        await putData(`/Employee/${updatedData.id}`, updatedData);
-        var listData = await getList("/Employee");
+        await putData(`/Position/${updatedData.id}`, updatedData);
+        var listData = await getList("/Position");
         newGrid.updateData(listData)
     });
 
@@ -150,15 +113,12 @@ $(document).ready(async function () {
     };
     $("#delete-notification").click(async function () {
         var id = localStorage.getItem("selectedId");
-        await putStatus(`/Employee/DeletedStatus/${id}/${true}`);
-        var listData = await getList("/Employee");
+        await putStatus(`/Position/DeletedStatus/${id}/${true}`);
+        var listData = await getList("/Position");
         newGrid.updateData(listData)
     });
 
 
-    $(".btnTestModal").click(function () {
-        
-    });
 
     //Export
     $("#btnExport").click(function () {
@@ -167,6 +127,20 @@ $(document).ready(async function () {
             filename: "exportList.xls",
         });
     });
+
+    //Search
+    $("#btnFilter").click(async function () {
+        var field = $("#sellectBoxFilter").val();
+        var keyword = $("#searchBoxFilter").val();
+        keyword = keyword == "" ? null : keyword;
+        console.log(field + " - keyword: " + keyword)
+        var listData = await getList(`/Position/Search/${field}/${keyword}`);
+        console.log(listData)
+        newGrid.updateData(listData)
+        if (listData.length == 0) $(".noresult").show();
+        else $(".noresult").hide()
+
+    })
 
     //Ajax
     async function getList(endPoint) {
@@ -310,44 +284,19 @@ $(document).ready(async function () {
     function getDataForm() {
         //console.log(pond)
         return {
-            id: $("#employee_id").val() == "" ? 0 : $("#employee_id").val(),
-            fullName: $("#fullName").val(),
-            phoneNumber: $("#phoneNumber").val(),
-            email: $("#email").val(),
-            dob: $("#dob").val(),
-            address: $("#address").val(),
-            avatar: pond.getFiles().length != 0 ? pond.getFile().filename : null,
-            gender: $("#gender").val() == "1" ? true : false,
-            departmentId: $("#departmentId").val(),
-            positionId: $("#positionId").val(),
-            identificationCard: $("#identificationCard").val()
+            id: $("#position_id").val() == "" ? 0 : $("#position_id").val(),
+            name: $("#name").val(),
+            isDeleted: false,
         }
     }
 
     function setDataForm(data) {
         if (data == null) {
             $("#inforModal form :input").val("");
-            pond.removeFile();
             return;
         }
-        $("#employee_id").val(data.id);
-        $("#fullName").val(data.fullName);
-        $("#phoneNumber").val(data.phoneNumber);
-        $("#email").val(data.email);
-        $("#dob").val(data.dob.substring(0, 10));
-        $("#address").val(data.address);
-        $("#gender").val(data.gender ? "1" : "0");
-        $("#departmentId").val(data.departmentId);
-        $("#positionId").val(data.positionId);
-        $("#identificationCard").val(data.identificationCard);
-        data.avatar && pond.addFile(`${API.IMAGE_URL}/avatar/${data.avatar}`)
-            .then((file) => {
-                // File has been added
-            })
-            .catch((error) => {
-                // Something went wrong
-                console.log(error)
-            });
+        $("#position_id").val(data.id);
+        $("#name").val(data.name);
 
     }
 
@@ -370,20 +319,8 @@ $(document).ready(async function () {
 
     async function isValidForm(data) {
         var message = null;
-        const phoneNumberRegex = /^[+]?[(]?[0-9]{1,4}[)]?[-\s./0-9]*$/;
-        const emailRegex = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/;
-        const numberOnlyRegex = /^\d+$/;
-        if (data.fullName == "" || data.fullName ==null) {
-            message = "Full name is required!";
-        }
-        else if (!phoneNumberRegex.test(data.phoneNumber)) {
-            message = "phone number is not valid!";
-        }
-        else if (!emailRegex.test(data.email)) {
-            message = "email is not valid!";
-        }
-        else if (!numberOnlyRegex.test(data.identificationCard)) {
-            message = "Identification Card is not valid!";
+        if (data.name == "" || data.name ==null) {
+            message = "Position name is required!";
         }
         if (message != null) {
             Toastify({
@@ -405,32 +342,5 @@ $(document).ready(async function () {
 
 
 
-    //File handler
-    FilePond.registerPlugin(
-        // encodes the file as base64 data
-        FilePondPluginFileEncode,
-        // validates the size of the file
-        FilePondPluginFileValidateSize,
-        // corrects mobile image orientation
-        FilePondPluginImageExifOrientation,
-        // previews dropped images
-        FilePondPluginImagePreview
-    );
-
-    const pond = FilePond.create(
-        document.querySelector('.filepond-input-circle'),
-        {
-            labelIdle: 'Drag & Drop your picture or Browse',
-            imagePreviewHeight: 170,
-            imageCropAspectRatio: '1:1',
-            imageResizeTargetWidth: 200,
-            imageResizeTargetHeight: 200,
-            stylePanelLayout: 'compact circle',
-            styleLoadIndicatorPosition: 'center bottom',
-            styleProgressIndicatorPosition: 'right bottom',
-            styleButtonRemoveItemPosition: 'left bottom',
-            styleButtonProcessItemPosition: 'right bottom',
-        }
-    );
     
 });

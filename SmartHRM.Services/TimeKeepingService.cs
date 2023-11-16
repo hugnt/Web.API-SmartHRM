@@ -1,5 +1,6 @@
 ﻿using HUG.CRUD.Services;
 using SmartHRM.Repository;
+using SmartHRM.Services.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,14 +12,17 @@ namespace SmartHRM.Services
     public class TimeKeepingService 
     {
         private readonly TimeKeepingRepository _TimeKeepingRepository;
-        public TimeKeepingService(TimeKeepingRepository TimeKeepingRepository)
+        private readonly EmployeeRepository _EmployeeRepository;
+        public TimeKeepingService(TimeKeepingRepository TimeKeepingRepository, EmployeeRepository EmployeeRepository)
         {
             _TimeKeepingRepository = TimeKeepingRepository;
+            _EmployeeRepository = EmployeeRepository;
         }
         public ResponseModel CreateTimeKeeping(TimeKeeping TimeKeepingCreate)
         {
             var TimeKeepings = _TimeKeepingRepository.GetAll()
-                            .Where(l => l.EmployeeId == TimeKeepingCreate.EmployeeId)
+                            .Where(l => l.EmployeeId == TimeKeepingCreate.EmployeeId 
+                            && l.TimeAttendance.ToShortDateString() == TimeKeepingCreate.TimeAttendance.ToShortDateString())
                             .FirstOrDefault();
             if (TimeKeepings != null)
             {
@@ -51,9 +55,19 @@ namespace SmartHRM.Services
             return TimeKeeping;
         }
 
-        public IEnumerable<TimeKeeping> GetTimeKeepings()
+        public IEnumerable<TimeKeeperEmployee> GetTimeKeepings()
         {
-            return _TimeKeepingRepository.GetAll();
+            var tkQuerry = from T in _TimeKeepingRepository.GetAll()
+                           join E in _EmployeeRepository.GetAll() on T.EmployeeId equals E.Id
+                           select new TimeKeeperEmployee{
+                               Id = T.Id,
+                               TimeAttendance = T.TimeAttendance,
+                               Note = T.Note,
+                               EmployeeName = E,
+                               IsDeleted = T.IsDeleted,
+            };
+            var tkes = tkQuerry.ToList();
+            return tkes;
         }
 
         public ResponseModel UpdateTimeKeeping(int TimeKeepingId, TimeKeeping updatedTimeKeeping)
@@ -64,6 +78,38 @@ namespace SmartHRM.Services
                 return new ResponseModel(500, "Something went wrong updating TimeKeeping");
             }
             return new ResponseModel(204, "");
+        }
+        public ResponseModel UpdateDeleteStatus(int TimeKeepingId, bool status)
+        {
+            if (!_TimeKeepingRepository.IsExists(TimeKeepingId)) return new ResponseModel(404, "Not found");
+            var updatedTimeKeeping = _TimeKeepingRepository.GetById(TimeKeepingId);
+            updatedTimeKeeping.IsDeleted = status;
+            if (!_TimeKeepingRepository.Update(updatedTimeKeeping))
+            {
+                return new ResponseModel(500, "Something went wrong when change delete status TimeKeeping");
+            }
+            return new ResponseModel(204, "");
+        }
+
+        public IEnumerable<TimeKeeperEmployee> Search(string field, string keyWords)
+        {
+            if (keyWords == "null") return GetTimeKeepings();
+            var res = _TimeKeepingRepository.Search(field, keyWords);
+            var resTkes = new List<TimeKeeperEmployee>();
+            foreach ( var T in res)
+            {
+                resTkes.Add(new TimeKeeperEmployee()
+                {
+                    Id = T.Id,
+                    TimeAttendance = T.TimeAttendance,
+                    Note = T.Note,
+                    EmployeeName = _EmployeeRepository.GetById(T.EmployeeId),
+                    IsDeleted = T.IsDeleted,
+                });
+            }
+
+            if (resTkes == null) return new List<TimeKeeperEmployee>();
+            return resTkes;
         }
 
     }
