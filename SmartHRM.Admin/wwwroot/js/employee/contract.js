@@ -16,12 +16,15 @@ $(document).ready(async function () {
             width: '8%'
         },
         {
-            id: "content",
-            name: "Content",
+            id: "employees",
+            name: "Employee Name",  
+            formatter: function (e) {
+                return e.fullName
+            }
         },
         {
-            id: "employeeId",
-            name: "EmployeeId"          
+            id: "content",
+            name: "Content",
         },
         {
             id: "image",

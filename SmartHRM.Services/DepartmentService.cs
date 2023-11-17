@@ -10,11 +10,11 @@ using System.Threading.Tasks;
 
 namespace SmartHRM.Services
 {
-    public class DepartmentServise
+    public class DepartmentService
     {
         private readonly DepartmentRepository _departmentRepository;
         private readonly EmployeeRepository _EmployeeRepository;
-        public DepartmentServise(DepartmentRepository departmentRepository, EmployeeRepository employeeRepository)
+        public DepartmentService(DepartmentRepository departmentRepository, EmployeeRepository employeeRepository)
         {
             _departmentRepository = departmentRepository;
             _EmployeeRepository = employeeRepository;

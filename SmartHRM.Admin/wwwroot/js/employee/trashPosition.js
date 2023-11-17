@@ -1,5 +1,4 @@
 ﻿import { htmlText, huGrid } from '../hugrid.js';
-import { htmlText, huGrid } from '../hugrid.js';
 import * as API from '../api.js';
 import * as AJAXCONFIG from '../ajax_config.js';
 

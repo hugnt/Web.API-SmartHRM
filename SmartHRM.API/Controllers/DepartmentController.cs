@@ -12,8 +12,8 @@ namespace SmartHRM.API.Controllers
     public class DepartmentController : ControllerBase
     {
         //sample
-        private readonly DepartmentServise _DepartmentService;
-        public DepartmentController(DepartmentServise DepartmentService)
+        private readonly DepartmentService _DepartmentService;
+        public DepartmentController(DepartmentService DepartmentService)
         {
             _DepartmentService = DepartmentService;
         }

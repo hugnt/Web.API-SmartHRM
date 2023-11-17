@@ -11,8 +11,8 @@ namespace SmartHRM.API.Controllers
     public class ContractController : ControllerBase
     {
         //sample
-        private readonly ContractServise _ContractService;
-        public ContractController(ContractServise ContractService)
+        private readonly ContractService _ContractService;
+        public ContractController(ContractService ContractService)
         {
             _ContractService = ContractService;
         }

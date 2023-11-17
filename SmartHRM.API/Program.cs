@@ -20,9 +20,9 @@ builder.Services.AddScoped<EmployeeService>();
 
 builder.Services.AddScoped<InsuranceService>();
 
-builder.Services.AddScoped<ContractServise>();
+builder.Services.AddScoped<ContractService>();
 
-builder.Services.AddScoped<DepartmentServise>();
+builder.Services.AddScoped<DepartmentService>();
 
 builder.Services.AddScoped<PositionService>();
 

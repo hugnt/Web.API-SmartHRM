@@ -1,6 +1,7 @@
 ﻿using HUG.CRUD.Services;
 using SmartHRM.Repository;
 using SmartHRM.Repository.Models;
+using SmartHRM.Services.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,12 +10,14 @@ using System.Threading.Tasks;
 
 namespace SmartHRM.Services
 {
-    public class ContractServise 
+    public class ContractService 
     {
         private readonly ContractRepository _contractRepository;
-        public ContractServise(ContractRepository ContractRepository)
+        private readonly EmployeeRepository _employeeRepository;
+        public ContractService(ContractRepository contractRepository, EmployeeRepository employeeRepository)
         {
-            _contractRepository = ContractRepository;
+            _contractRepository = contractRepository;
+            _employeeRepository = employeeRepository;
         }
         public ResponseModel CreateContract(Contract ContractCreate)
         {
@@ -52,10 +55,24 @@ namespace SmartHRM.Services
             return Contract;
         }
 
-        public IEnumerable<Contract> GetContracts()
+        public IEnumerable<ContractDto> GetContracts()
         {
-            return _contractRepository.GetAll();
+            var contractQuerry = from C in _contractRepository.GetAll()
+                                 join E in _employeeRepository.GetAll() on C.EmployeeId equals E.Id
+                                 select new ContractDto
+                                 {
+                                     Id = C.Id,
+                                     Content = C.Content,
+                                     SignedAt = C.SignedAt,
+                                     ExpriedAt = C.ExpriedAt,
+                                     Image = C.Image,
+                                     Employees = E,
+                                     IsDeleted = C.IsDeleted,
+                                 };
+            var cdto = contractQuerry.ToList();
+            return cdto;
         }
+        
 
         public ResponseModel UpdateContract(int ContractId, Contract updatedContract)
         {
@@ -79,12 +96,27 @@ namespace SmartHRM.Services
             return new ResponseModel(204, "");
         }
 
-        public IEnumerable<Contract> Search(string field, string keyWords)
+        public IEnumerable<ContractDto> Search(string field, string keyWords)
         {
-            if (keyWords == "null") return _contractRepository.GetAll();
+            if (keyWords == "null") return GetContracts();
             var res = _contractRepository.Search(field, keyWords);
-            if (res == null) return new List<Contract>();
-            return res;
+            var rescdto = new List<ContractDto>();
+            foreach (var C in res)
+            {
+                rescdto.Add(new ContractDto()
+                {
+
+                    Id = C.Id,
+                    Content = C.Content,
+                    SignedAt = C.SignedAt,
+                    ExpriedAt = C.ExpriedAt,
+                    Image = C.Image,
+                    Employees = _employeeRepository.GetById(C.EmployeeId),
+                    IsDeleted = C.IsDeleted,
+                });
+            }
+            if (rescdto == null) return new List<ContractDto>();
+            return rescdto;
         }
 
     }
