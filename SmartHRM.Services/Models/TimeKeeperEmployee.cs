@@ -12,6 +12,6 @@ namespace SmartHRM.Services.Models
     {
         public DateTime? TimeAttendance { get; set; }
         public string? Note { get; set; }
-        public Employee EmployeeName {  get; set; }
+        public Employee EmployeeDetail {  get; set; }
     }
 }

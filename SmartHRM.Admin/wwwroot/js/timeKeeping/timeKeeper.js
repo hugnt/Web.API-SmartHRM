@@ -16,7 +16,7 @@ $(document).ready(async function () {
             width: '8%'
         },
         {
-            id: "employeeName",
+            id: "employeeDetail",
             name: "Employee Name",
             formatter: function (e) {
                 return e.fullName;
@@ -70,6 +70,8 @@ $(document).ready(async function () {
 
     //Modal
     const myModal = new bootstrap.Modal(document.getElementById('inforModal'));
+    const choicesEmployee = new Choices(document.querySelector('#employeeId'));
+    await loadSelectBox();
     document.getElementById('inforModal').addEventListener('hidden.bs.modal', event => {
         setStatusForm(true);
 
@@ -299,7 +301,7 @@ $(document).ready(async function () {
         //console.log(pond)
         return {
             id: $("#timeKeeper_id").val() == "" ? 0 : $("#timeKeeper_id").val(),
-            employeeId: $("#employeeId").val(),
+            employeeId: choicesEmployee.getValue(true),
             timeAttendance: $("#timeAttendance").val(),
             note: $("#note").val(),
             isDeleted: false,
@@ -309,11 +311,11 @@ $(document).ready(async function () {
     function setDataForm(data) {
         if (data == null) {
             $("#inforModal form :input").val("");
+            choicesEmployee.setChoiceByValue("");
             return;
         }
+        choicesEmployee.setChoiceByValue(data.employeeDetail.id);
         $("#timeKeeper_id").val(data.id);
-        $("#employeeId").val(data.employeeId);
-        
         $("#timeAttendance").val(data.timeAttendance);
         $("#note").val(data.note);
     }
@@ -321,6 +323,13 @@ $(document).ready(async function () {
     function setStatusForm(status) {
         $("#inforModal form :input").prop("disabled", !status);
         $('input[name="id"]').prop("disabled", true);
+        if (status == false) {
+            choicesEmployee.disable();
+        }
+        else {
+            choicesEmployee.enable();
+
+        }
     }
 
     function setTypeForm(type) {
@@ -332,6 +341,18 @@ $(document).ready(async function () {
         else if (type == "edit") {
             $("#btnSave").show();
         }
+
+    }
+    async function loadSelectBox() {
+        var lstEmployee = await getList("/Employee");
+
+        var lstEmployeeChoices = [];
+        console.log(lstEmployee);
+        for (var i = 0; i < lstEmployee.length; i++) {
+            var obj = lstEmployee[i];
+            lstEmployeeChoices.push({ value: obj.id, label: obj.fullName })
+        }
+        choicesEmployee.setChoices(lstEmployeeChoices)
 
     }
 

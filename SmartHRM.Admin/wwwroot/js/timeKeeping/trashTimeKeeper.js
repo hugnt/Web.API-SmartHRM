@@ -16,6 +16,13 @@ $(document).ready(async function () {
             width: '8%'
         },
         {
+            id: "employeeDetail",
+            name: "Employee Name",
+            formatter: function (e) {
+                return e.fullName;
+            },
+        },
+        {
             id: "timeAttendance",
             name: "Time Attendance"
         },

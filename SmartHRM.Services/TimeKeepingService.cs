@@ -4,6 +4,7 @@ using SmartHRM.Services.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.WebSockets;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -48,11 +49,11 @@ namespace SmartHRM.Services
             return new ResponseModel(204, "");
         }
 
-        public TimeKeeping? GetTimeKeeping(int TimeKeepingId)
+        public TimeKeeperEmployee? GetTimeKeeping(int TkesId)
         {
-            if (!_TimeKeepingRepository.IsExists(TimeKeepingId)) return null;
-            var TimeKeeping = _TimeKeepingRepository.GetById(TimeKeepingId);
-            return TimeKeeping;
+            if (!_TimeKeepingRepository.IsExists(TkesId)) return null;
+            var res = GetTimeKeepings().FirstOrDefault(x => x.Id == TkesId);
+            return res;
         }
 
         public IEnumerable<TimeKeeperEmployee> GetTimeKeepings()
@@ -63,7 +64,7 @@ namespace SmartHRM.Services
                                Id = T.Id,
                                TimeAttendance = T.TimeAttendance,
                                Note = T.Note,
-                               EmployeeName = E,
+                               EmployeeDetail = E,
                                IsDeleted = T.IsDeleted,
             };
             var tkes = tkQuerry.ToList();
@@ -103,7 +104,7 @@ namespace SmartHRM.Services
                     Id = T.Id,
                     TimeAttendance = T.TimeAttendance,
                     Note = T.Note,
-                    EmployeeName = _EmployeeRepository.GetById(T.EmployeeId),
+                    EmployeeDetail = _EmployeeRepository.GetById(T.EmployeeId),
                     IsDeleted = T.IsDeleted,
                 });
             }
