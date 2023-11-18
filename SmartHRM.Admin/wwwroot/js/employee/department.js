@@ -65,6 +65,8 @@ $(document).ready(async function () {
     newGrid.addEventListener(".btnDelete", deleteInfor);
 
     //Modal
+    const choicesEmployee = new Choices(document.querySelector('#managerId'));
+    await loadSelectBox();
     const myModal = new bootstrap.Modal(document.getElementById('inforModal'));
     document.getElementById('inforModal').addEventListener('hidden.bs.modal', event => {
         setStatusForm(true);
@@ -296,7 +298,7 @@ $(document).ready(async function () {
         return {
             id: $("#position_id").val() == "" ? 0 : $("#position_id").val(),
             name: $("#name").val(),
-            managerId: $("#managerId").val(),
+            managerId: choicesEmployee.getValue(true),
             description: $("#description").val(),
             isDeleted: false,
         }
@@ -307,15 +309,21 @@ $(document).ready(async function () {
             $("#inforModal form :input").val("");
             return;
         }
+        choicesEmployee.setChoiceByValue(data.manager.id);
         $("#position_id").val(data.id);
         $("#name").val(data.name);
-        $("#managerId").val(data.managerId);
         $("#description").val(data.description);
     }
 
     function setStatusForm(status) {
         $("#inforModal form :input").prop("disabled", !status);
         $('input[name="id"]').prop("disabled", true);
+        if (status == false) {
+            choicesEmployee.disable();
+        }
+        else {
+            choicesEmployee.enable();
+        }
     }
 
     function setTypeForm(type) {
@@ -352,6 +360,18 @@ $(document).ready(async function () {
         }).showToast();
         return true;
     }
+    async function loadSelectBox() {
+        var lstEmployee = await getList("/Employee");
+
+        var lstEmployeeChoices = [];
+        for (var i = 0; i < lstEmployee.length; i++) {
+            var obj = lstEmployee[i];
+            lstEmployeeChoices.push({ value: obj.id, label: obj.fullName })
+        }
+        choicesEmployee.setChoices(lstEmployeeChoices)
+
+    }
+
 
 
 

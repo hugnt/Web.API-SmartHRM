@@ -1,5 +1,5 @@
 ﻿@{
-    ViewData["Title"] = "POSITION";
+    ViewData["Title"] = "CONTRACT";
 }
 @section Styles{
     <!-- gridjs css -->
@@ -165,9 +165,11 @@
                             </div>
                             <div class="col-12">
                                 <div>
-                                    <label for="employeeId" class="form-label">EmployeeId</label>
-                                    <input type="text" class="form-control" id="employeeId"
-                                           placeholder="Enter EmployeeId" />
+                                    <label for="employeeId" class="form-label">Employee Name</label>
+                                    <select class="form-control" id="employeeId">
+                                        <option value="" disabled selected>---Select Employee---</option>
+
+                                    </select>
                                 </div>
                             </div>
                             <div class="col-12">

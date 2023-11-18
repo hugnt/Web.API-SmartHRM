@@ -65,6 +65,8 @@ $(document).ready(async function () {
     newGrid.addEventListener(".btnDelete", deleteInfor);
 
     //Modal
+    const choicesEmployee = new Choices(document.querySelector('#employeeId'));
+    await loadSelectBox();
     const myModal = new bootstrap.Modal(document.getElementById('inforModal'));
     document.getElementById('inforModal').addEventListener('hidden.bs.modal', event => {
         setStatusForm(true);
@@ -296,7 +298,7 @@ $(document).ready(async function () {
         return {
             id: $("#position_id").val() == "" ? 0 : $("#position_id").val(),
             content: $("#content").val(),
-            employeeId: $("#employeeId").val(),
+            employeeId: choicesEmployee.getValue(true),
             image: $("#image").val(),
             isDeleted: false,
         }
@@ -308,14 +310,20 @@ $(document).ready(async function () {
             return;
         }
         $("#position_id").val(data.id);
+        choicesEmployee.setChoiceByValue(data.employees.id);
         $("#content").val(data.content);
-        $("#employeeId").val(data.employeeId);
         $("#image").val(data.image);
     }
 
     function setStatusForm(status) {
         $("#inforModal form :input").prop("disabled", !status);
         $('input[name="id"]').prop("disabled", true);
+        if (status == false) {
+            choicesEmployee.disable();
+        }
+        else {
+            choicesEmployee.enable();
+        }
     }
 
     function setTypeForm(type) {
@@ -352,7 +360,17 @@ $(document).ready(async function () {
         }).showToast();
         return true;
     }
+    async function loadSelectBox() {
+        var lstEmployee = await getList("/Employee");
 
+        var lstEmployeeChoices = [];
+        for (var i = 0; i < lstEmployee.length; i++) {
+            var obj = lstEmployee[i];
+            lstEmployeeChoices.push({ value: obj.id, label: obj.fullName })
+        }
+        choicesEmployee.setChoices(lstEmployeeChoices)
+
+    }
 
 
 

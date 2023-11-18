@@ -48,11 +48,11 @@ namespace SmartHRM.Services
             return new ResponseModel(204, "");
         }
 
-        public Contract? GetContract(int ContractId)
+        public ContractDto? GetContract(int ContractId)
         {
             if (!_contractRepository.IsExists(ContractId)) return null;
-            var Contract = _contractRepository.GetById(ContractId);
-            return Contract;
+            var res = GetContracts().FirstOrDefault(x => x.Id == ContractId);
+            return res;
         }
 
         public IEnumerable<ContractDto> GetContracts()

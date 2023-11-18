@@ -48,11 +48,11 @@ namespace SmartHRM.Services
             return new ResponseModel(204, "");
         }
 
-        public Department? GetDepartment(int DepartmentId)
+        public DepartmentDto? GetDepartment(int DepartmentId)
         {
             if (!_departmentRepository.IsExists(DepartmentId)) return null;
-            var Department = _departmentRepository.GetById(DepartmentId);
-            return Department;
+            var res = GetDepartments().FirstOrDefault(x=>x.Id == DepartmentId);
+            return res;
         }
         
         

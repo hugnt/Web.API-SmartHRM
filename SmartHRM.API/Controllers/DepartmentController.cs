@@ -119,9 +119,9 @@ namespace SmartHRM.API.Controllers
         [ProducesResponseType(200, Type = typeof(IEnumerable<Department>))]
         public IActionResult Search(string field, string keyWords)
         {
-            var contracts = _DepartmentService.Search(field, keyWords);
+            var departments = _DepartmentService.Search(field, keyWords);
             if (!ModelState.IsValid) return BadRequest(ModelState);
-            return Ok(contracts);
+            return Ok(departments);
         }
 
     }
