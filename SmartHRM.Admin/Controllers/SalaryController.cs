@@ -6,9 +6,9 @@ namespace SmartHRM.Admin.Controllers
     {
 
         [Route("Salary/AllowanceList")]
-        public IActionResult Index()
+        public IActionResult Allowance()
         {
-            return View();
+            return View("~/Views/Salary/Allowance.cshtml");
         }
         [Route("Salary/AllowanceList/Trash")]
         public IActionResult AllowanceTrash()
