@@ -8,12 +8,14 @@ using System.Threading.Tasks;
 
 namespace SmartHRM.Repository
 {
-    [Table("tDepartment")]
-    public class Department : BaseModel
+    [Table("tTask")]
+    public class Task : BaseModel
     {
-        public string? Name { get; set; }
-        [Column("manager_id")]
-        public int? Manager_id { get; set; }
+        public string? Name { get; set; }    
+        public DateTime? StartTime { get; set; } 
+        public int? Status { get; set; }
+        public string? Content { get; set; }
         public string? Description {  get; set; }
+
     }
 }

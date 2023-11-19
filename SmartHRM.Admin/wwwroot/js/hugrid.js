@@ -11,7 +11,7 @@ export class huGrid{
             columns: [
                 {
                     id: 'checkBox',
-                    name: html(` <div class="text-center">
+                    name: html(` <div class="text-center noExl">
                                             <input class="form-check-input" type="checkbox" id="checkAll" value="option">
                                         </div>`),
                     sort:false,
@@ -24,7 +24,9 @@ export class huGrid{
                 ...columnsConfig
             ],
             className: {
-                th: "text-muted"
+                th: "text-muted",
+                pagination: "hugrid-pagination",
+                table: "hugrid-table"
             },
             fixedHeader: true,
             pagination: {
@@ -61,7 +63,7 @@ export class huGrid{
         this.#grid = new Grid(this.#config);
         this.#grid.render(document.getElementById(tableId));
         this.#initEventListener(this.#grid, this.#config);
-        console.log(this.#grid);
+       console.log(this.#grid);
     }
 
     updateData(newData){
@@ -80,6 +82,12 @@ export class huGrid{
             data: newData
         }).forceRender();
         $("#pageSize").val(this.#grid.config.pagination.limit);
+    }
+
+    addEventListener(className,callback) {
+        this.#grid.config.store.subscribe(async function (state) {
+            $(className).click(callback);
+        });
     }
 
     getListSelectedId(){
@@ -164,17 +172,18 @@ export class huGrid{
            
         });
         grid.config.store.subscribe(function (state) {
-            console.log('checkbox updated', state.rowSelection);
+            //console.log('checkbox updated', state.rowSelection);
             if(state.rowSelection){
                 for(var i = 0; i<state.rowSelection.rowIds.length; i++){
                     var selecyedId = state.rowSelection.rowIds[i];
-                    console.log('selected id', state.data._rows.find(x => x._id == selecyedId)._cells[1].data);
+                    //console.log('selected id', state.data._rows.find(x => x._id == selecyedId)._cells[1].data);
                 }
             }
             
            
           })
-    
+
+     
     
         //add Plugins
         function selectShowBoxPlugin() {
@@ -324,6 +333,8 @@ function configTheme(grid, config, data) {
         });  
         $("#pageSize").val(grid.config.pagination.limit);
     });
+
+
 
 
     //add Plugins

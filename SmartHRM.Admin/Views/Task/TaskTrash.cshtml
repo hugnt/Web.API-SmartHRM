@@ -1,5 +1,5 @@
 ﻿@{
-    ViewData["Title"] = "PROJECT";
+    ViewData["Title"] = "TRASH - TASKLIST";
 }
 @section Styles{
     <!-- gridjs css -->
@@ -7,7 +7,6 @@
 
     <!-- Sweet Alert css-->
     <link href="~/assets/libs/sweetalert2/sweetalert2.min.css" rel="stylesheet" type="text/css" />
-
 
 }
 <div class="row bodyContent">
@@ -17,10 +16,6 @@
                 <div class="row g-4 align-items-center">
                     <div class="col-sm">
                         <div>
-                            <button type="button" class="btn btn-success btnAddNew me-1">
-                                <i class="ri-user-add-line align-bottom me-1"></i>
-                                Add new
-                            </button>
                             <div class="btn-group">
                                 <button class="btn btn-light" type="button">
                                     Others
@@ -31,8 +26,8 @@
                                         aria-expanded="false"></button>
                                 <div class="dropdown-menu">
                                     <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item" href="/Tasks/Project/Trash">
-                                        <i class="ri-delete-bin-5-line align-middle me-1"></i>Trash
+                                    <a class="dropdown-item" href="/Tasks/TaskList">
+                                        <i class="ri-arrow-left-up-line align-middle me-1"></i>TaskList
                                     </a>
                                 </div>
                             </div>
@@ -41,8 +36,8 @@
                     <div class="col-sm-auto">
                         <div class="d-flex flex-wrap align-items-start gap-2">
                             <button type="button" class="btn btn-outline-primary btnCheckTool"
-                                    id="btnAddToGroup">
-                                +<i class="ri-group-line align-bottom ri-1x"></i>
+                                    id="btnRestoreListCheck">
+                                <i class="ri-refresh-line align-bottom ri-1x"></i>
                             </button>
                             <button type="button" class="btn btn-outline-danger btnCheckTool"
                                     id="btnRemoveListCheck">
@@ -95,9 +90,9 @@
                                                     name="choices-single-default" id="sellectBoxFilter">
                                                 <option value="name" selected>All</option>
                                                 <option value="id">Id</option>
-                                                <option value="leader_id">Leader ID</option>
-                                                <option value="startedAt">Started Date</option>
-                                                <option value="endedAt">Ended Date</option>
+                                                <option value="startTime">Started Date</option>
+                                                <option value="description">Description</option>
+                                                <option value="content">Content</option>
                                                 <option value="status">Status</option>
                                             </select>
                                         </div>
@@ -141,78 +136,9 @@
 </div>
 
 @section Modals{
-    <!-- begin: Modal -->
-    <div class="modal fade" id="inforModal" tabindex="-1" aria-labelledby="inforModal" aria-modal="true"
-         data-bs-backdrop="static">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="inforModal">Details</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <form action="javascript:void(0);">
-                        <div class="row g-3">
-                            <div class="col-2">
-                                <div>
-                                    <label for="id" class="form-label">Id</label>
-                                    <input type="text" class="form-control" name="id" id="project_id" disabled />
-                                </div>
-                            </div>
-                            <div class="col-10">
-                                <div>
-                                    <label for="name" class="form-label">Project Name</label>
-                                    <input type="text" class="form-control" id="name"
-                                           placeholder="Enter name" />
-                                </div>
-                            </div>
-                            <div class="col-2">
-                                <div>
-                                    <label for="leader_id" class="form-label">Leader ID</label>
-                                    <input type="text" class="form-control" id="leader_id" />
-                                </div>
-                            </div>
-                            <div class="col-5">
-                                <div>
-                                    <label for="startedAt" class="form-label">Started Date</label>
-                                    <input type="date" class="form-control" id="startedAt" placeholder="Start Date" />
-                                </div>
-                            </div>
-                            <div class="col-5">
-                                <div>
-                                    <label for="endedAt" class="form-label">Ended Date</label>
-                                    <input type="date" class="form-control" id="endedAt" placeholder="End Date" />
-                                </div>
-                            </div>
-                            <div class="col-12">
-                                <div>
-                                    <label for="projectStatus" class="form-label">Status</label>
-                                    <input type="text" class="form-control" id="projectStatus" placeholder="Enter status" />
-                                </div>
-                            </div>
-                        </div>
-                        <!--end row-->
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <div class="hstack gap-2 justify-content-end">
-                        <button type="button" class="btn btn-light" data-bs-dismiss="modal">
-                            Close
-                        </button>
-                        <button type="button" class="btn btn-primary" id="btnSave">
-                            Save
-                        </button>
-                        <button type="button" class="btn btn-success" id="btnAdd">
-                            Add
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- end: Modal -->
+    @await Html.PartialAsync("~/Views/Shared/Partial/Notification/RestoreModelPartial.cshtml")
 }
+
 @section Scripts{
 
     <!-- Sweet Alerts js -->
@@ -221,10 +147,10 @@
     <script>
         $("#sidebarTasks").addClass("show");
         $('a[href="#sidebarTasks"]').addClass("active");
-        $('a[href="/Tasks/Project"]').addClass("active");
+        $('a[href="/Tasks/TaskList"]').addClass("active");
     </script>
 
     <script src="~/js/table_custom.js"></script>
     <script src="~/js/jquery.table2excel.js"></script>
-    <script type="module" src="~/js/task/projectList.js"></script>
+    <script type="module" src="~/js/task/trashTask.js"></script>
 }

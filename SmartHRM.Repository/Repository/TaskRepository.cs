@@ -8,10 +8,10 @@ using System.Threading.Tasks;
 
 namespace SmartHRM.Repository
 {
-	public class DepartmentRepository : GenericRepository<Department>
+	public class TaskRepository : GenericRepository<Task>
 	{
 		private readonly AppDbContext _dbContext;
-		public DepartmentRepository(AppDbContext dbContext) : base(dbContext)
+		public TaskRepository(AppDbContext dbContext) : base(dbContext)
 		{
 			_dbContext = dbContext;
 		}

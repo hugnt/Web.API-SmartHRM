@@ -1,5 +1,5 @@
 ﻿@{
-    ViewData["Title"] = "PROJECT";
+    ViewData["Title"] = "TASK";
 }
 @section Styles{
     <!-- gridjs css -->
@@ -31,7 +31,7 @@
                                         aria-expanded="false"></button>
                                 <div class="dropdown-menu">
                                     <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item" href="/Tasks/Project/Trash">
+                                    <a class="dropdown-item" href="/Tasks/TaskList/Trash">
                                         <i class="ri-delete-bin-5-line align-middle me-1"></i>Trash
                                     </a>
                                 </div>
@@ -95,9 +95,9 @@
                                                     name="choices-single-default" id="sellectBoxFilter">
                                                 <option value="name" selected>All</option>
                                                 <option value="id">Id</option>
-                                                <option value="leader_id">Leader ID</option>
-                                                <option value="startedAt">Started Date</option>
-                                                <option value="endedAt">Ended Date</option>
+                                                <option value="startTime">Started Date</option>
+                                                <option value="description">Description</option>
+                                                <option value="content">Content</option>
                                                 <option value="status">Status</option>
                                             </select>
                                         </div>
@@ -156,38 +156,40 @@
                             <div class="col-2">
                                 <div>
                                     <label for="id" class="form-label">Id</label>
-                                    <input type="text" class="form-control" name="id" id="project_id" disabled />
+                                    <input type="text" class="form-control" name="id" id="task_id" disabled />
                                 </div>
                             </div>
                             <div class="col-10">
                                 <div>
-                                    <label for="name" class="form-label">Project Name</label>
+                                    <label for="name" class="form-label">Task Name</label>
                                     <input type="text" class="form-control" id="name"
                                            placeholder="Enter name" />
                                 </div>
-                            </div>
-                            <div class="col-2">
+                            </div>                            
+                            <div class="col-6">
                                 <div>
-                                    <label for="leader_id" class="form-label">Leader ID</label>
-                                    <input type="text" class="form-control" id="leader_id" />
+                                    <label for="startTime" class="form-label">Start Time</label>
+                                    <input type="date" class="form-control" id="startTime" placeholder="" />
                                 </div>
-                            </div>
-                            <div class="col-5">
+                            </div>                            
+                            <div class="col-6">
                                 <div>
-                                    <label for="startedAt" class="form-label">Started Date</label>
-                                    <input type="date" class="form-control" id="startedAt" placeholder="Start Date" />
-                                </div>
-                            </div>
-                            <div class="col-5">
-                                <div>
-                                    <label for="endedAt" class="form-label">Ended Date</label>
-                                    <input type="date" class="form-control" id="endedAt" placeholder="End Date" />
+                                    <label for="taskStatus" class="form-label">Status</label>
+                                    <input type="text" class="form-control" id="taskStatus" placeholder="Enter status" />
                                 </div>
                             </div>
                             <div class="col-12">
                                 <div>
-                                    <label for="projectStatus" class="form-label">Status</label>
-                                    <input type="text" class="form-control" id="projectStatus" placeholder="Enter status" />
+                                    <label for="content" class="form-label">Content</label>
+                                    <input type="text" class="form-control" id="content"
+                                           placeholder="Enter content" />
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div>
+                                    <label for="description" class="form-label">Description</label>
+                                    <input type="text" class="form-control" id="description"
+                                           placeholder="Enter description" />
                                 </div>
                             </div>
                         </div>
@@ -221,10 +223,10 @@
     <script>
         $("#sidebarTasks").addClass("show");
         $('a[href="#sidebarTasks"]').addClass("active");
-        $('a[href="/Tasks/Project"]').addClass("active");
+        $('a[href="/Tasks/TaskList"]').addClass("active");
     </script>
 
     <script src="~/js/table_custom.js"></script>
     <script src="~/js/jquery.table2excel.js"></script>
-    <script type="module" src="~/js/task/projectList.js"></script>
+    <script type="module" src="~/js/task/taskList.js"></script>
 }

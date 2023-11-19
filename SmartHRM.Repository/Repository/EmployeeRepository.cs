@@ -8,14 +8,14 @@ using System.Threading.Tasks;
 
 namespace SmartHRM.Repository
 {
-    public class EmployeeRepository: GenericRepository<Employee>
+    public class EmployeeRepository : GenericRepository<Employee>
     {
         private readonly AppDbContext _dbContext;
         public EmployeeRepository(AppDbContext dbContext) : base(dbContext)
         {
             _dbContext = dbContext;
         }
-    //Hoang vua thay doi gi do
-    //cmt 2
+        //Hoang vua thay doi gi do
+        //cmt 2
     }
 }

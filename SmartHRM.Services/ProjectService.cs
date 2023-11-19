@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
+using System.Threading;
 
 namespace SmartHRM.Services
 {
@@ -15,12 +15,12 @@ namespace SmartHRM.Services
 		{
 			_ProjectRepository = ProjectRepository;
 		}
-		public ResponseModel CreateRole(Project ProjectCreate)
+		public ResponseModel CreateProject(Project ProjectCreate)
 		{
-			var Roles = _ProjectRepository.GetAll()
+			var Projects = _ProjectRepository.GetAll()
 							.Where(l => l.Name.Trim().ToLower() == ProjectCreate.Name.Trim().ToLower())
 							.FirstOrDefault();
-			if (Roles != null)
+			if (Projects != null)
 			{
 				return new ResponseModel(422, "Project already exists");
 			}
@@ -33,40 +33,59 @@ namespace SmartHRM.Services
 			return new ResponseModel(201, "Successfully created");
 		}
 
-		public ResponseModel DeleteRole(int RoleId)
+		public ResponseModel DeleteProject(int ProjectId)
 		{
-			if (!_ProjectRepository.IsExists(RoleId)) return new ResponseModel(404, "Not found");
-			var RoleToDelete = _ProjectRepository.GetById(RoleId);
-			if (!_ProjectRepository.Delete(RoleToDelete))
+			if (!_ProjectRepository.IsExists(ProjectId)) return new ResponseModel(404, "Not found");
+			var ProjectToDelete = _ProjectRepository.GetById(ProjectId);
+			if (!_ProjectRepository.Delete(ProjectToDelete))
 			{
 				return new ResponseModel(500, "Something went wrong when deleting Project");
 			}
 			return new ResponseModel(204, "");
 		}
 
-		public Project? GetRole(int RoleId)
+		public Project? GetProject(int ProjectId)
 		{
-			if (!_ProjectRepository.IsExists(RoleId)) return null;
-			var Project = _ProjectRepository.GetById(RoleId);
+			if (!_ProjectRepository.IsExists(ProjectId)) return null;
+			var Project = _ProjectRepository.GetById(ProjectId);
 			return Project;
 		}
 
-		public IEnumerable<Project> GetRoles()
+		public IEnumerable<Project> GetProjects()
 		{
 			return _ProjectRepository.GetAll();
 		}
 
-		public ResponseModel UpdateRole(int RoleId, Project updatedRole)
+		public ResponseModel UpdateProject(int ProjectId, Project updatedProject)
 		{
-			if (!_ProjectRepository.IsExists(RoleId)) return new ResponseModel(404, "Not found");
+			if (!_ProjectRepository.IsExists(ProjectId)) return new ResponseModel(404, "Not found");
 
-			if (!_ProjectRepository.Update(updatedRole))
+			if (!_ProjectRepository.Update(updatedProject))
 			{
 				return new ResponseModel(500, "Something went wrong updating Project");
 			}
 			return new ResponseModel(204, "");
 		}
 
+        public ResponseModel UpdateDeleteStatus(int ProjectId, bool status)
+        {
+            if (!_ProjectRepository.IsExists(ProjectId)) return new ResponseModel(404, "Not found");
+            var updatedProject = _ProjectRepository.GetById(ProjectId);
+            updatedProject.IsDeleted = status;
+            if (!_ProjectRepository.Update(updatedProject))
+            {
+                return new ResponseModel(500, "Something went wrong when change delete status Project");
+            }
+            return new ResponseModel(204, "");
+        }
 
-	}
+        public IEnumerable<Project> Search(string field, string keyWords)
+        {
+            if (keyWords == "null") return _ProjectRepository.GetAll();
+            var res = _ProjectRepository.Search(field, keyWords);
+            if (res == null) return new List<Project>();
+            return res;
+        }
+
+    }
 }

@@ -9,6 +9,25 @@ namespace SmartHRM.Admin.Controllers
 		{
 			return View();
 		}
-	}
+
+        [Route("Tasks/Project/Trash")]
+        public IActionResult ProjectTrash()
+        {
+            return View();
+        }
+
+        [Route("Tasks/TaskList")]
+        public IActionResult Task()
+        {
+            return View();
+        }
+
+        [Route("Tasks/TaskList/Trash")]
+        public IActionResult TaskTrash()
+        {
+            return View();
+        }
+
+    }
 }
 

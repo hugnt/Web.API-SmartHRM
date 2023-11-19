@@ -12,24 +12,19 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddDIServices(builder.Configuration);
 
-//Account
-builder.Services.AddScoped<AccountService>();
 
 //Employee
 builder.Services.AddScoped<EmployeeService>();
 
-//Insurance
-builder.Services.AddScoped<InsuranceService>();
+
 
 //Project
 builder.Services.AddScoped<ProjectService>();
 
-//Department
-builder.Services.AddScoped<DepartmentService>();
 
-//Contract
-builder.Services.AddScoped<ContractService>();
 
+//Task
+builder.Services.AddScoped<TaskService>();
 
 //Enable CORS
 builder.Services.AddCors(p =>

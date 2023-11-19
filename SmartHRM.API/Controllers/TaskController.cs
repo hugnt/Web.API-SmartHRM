@@ -2,49 +2,50 @@
 using Microsoft.AspNetCore.Mvc;
 using SmartHRM.Repository;
 using SmartHRM.Services;
+using Task = SmartHRM.Repository.Task;
 
 namespace SmartHRM.API.Controllers
 {
 	[Route("api/[controller]")]
 	[ApiController]
-	public class ProjectController : ControllerBase
+	public class TaskController : ControllerBase
 	{
 		//sample
-		private readonly ProjectService _ProjectService;
-		public ProjectController(ProjectService ProjectService)
+		private readonly TaskService _TaskService;
+		public TaskController(TaskService TaskService)
 		{
-			_ProjectService = ProjectService;
+			_TaskService = TaskService;
 		}
 
 		[HttpGet]
-		[ProducesResponseType(200, Type = typeof(IEnumerable<Project>))]
-		public IActionResult GetProjects()
+		[ProducesResponseType(200, Type = typeof(IEnumerable<Task>))]
+		public IActionResult GetTasks()
 		{
-			var Projects = _ProjectService.GetProjects();
+			var Tasks = _TaskService.GetTasks();
 			if (!ModelState.IsValid) return BadRequest(ModelState);
 
-			return Ok(Projects);
+			return Ok(Tasks);
 		}
 
-		[HttpGet("{ProjectId}")]
-		[ProducesResponseType(200, Type = typeof(Project))]
+		[HttpGet("{TaskId}")]
+		[ProducesResponseType(200, Type = typeof(Task))]
 		[ProducesResponseType(400)]
-		public IActionResult GetProject(int ProjectId)
+		public IActionResult GetTask(int TaskId)
 		{
-			var Project = _ProjectService.GetProject(ProjectId);
+			var Task = _TaskService.GetTask(TaskId);
 			if (!ModelState.IsValid) return BadRequest();
-			if (Project == null) return NotFound();
-			return Ok(Project);
+			if (Task == null) return NotFound();
+			return Ok(Task);
 		}
 
 		[HttpPost]
 		[ProducesResponseType(201)]
 		[ProducesResponseType(400)]
-		public IActionResult CreateProject([FromBody] Project ProjectCreate)
+		public IActionResult CreateTask([FromBody] Task TaskCreate)
 		{
-			if (ProjectCreate == null) return BadRequest(ModelState);
+			if (TaskCreate == null) return BadRequest(ModelState);
 
-			var res = _ProjectService.CreateProject(ProjectCreate);
+			var res = _TaskService.CreateTask(TaskCreate);
 
 			if (res.Status != 201)
 			{
@@ -57,17 +58,17 @@ namespace SmartHRM.API.Controllers
 			return StatusCode(res.Status, res.StatusMessage);
 		}
 
-		[HttpPut("{ProjectId}")]
+		[HttpPut("{TaskId}")]
 		[ProducesResponseType(400)]
 		[ProducesResponseType(204)]
 		[ProducesResponseType(404)]
-		public IActionResult UpdateProject(int ProjectId, [FromBody] Project updatedProject)
+		public IActionResult UpdateTask(int TaskId, [FromBody] Task updatedTask)
 		{
-			if (updatedProject == null) return BadRequest(ModelState);
-			if (ProjectId != updatedProject.Id) return BadRequest(ModelState);
+			if (updatedTask == null) return BadRequest(ModelState);
+			if (TaskId != updatedTask.Id) return BadRequest(ModelState);
 
 
-			var res = _ProjectService.UpdateProject(ProjectId, updatedProject);
+			var res = _TaskService.UpdateTask(TaskId, updatedTask);
 			if (res.Status != 204)
 			{
 				ModelState.AddModelError("", res.StatusMessage);
@@ -78,13 +79,13 @@ namespace SmartHRM.API.Controllers
 			return NoContent();
 		}
 
-		[HttpDelete("{ProjectId}")]
+		[HttpDelete("{TaskId}")]
 		[ProducesResponseType(400)]
 		[ProducesResponseType(204)]
 		[ProducesResponseType(404)]
-		public IActionResult DeleteProject(int ProjectId)
+		public IActionResult DeleteTask(int TaskId)
 		{
-			var res = _ProjectService.DeleteProject(ProjectId);
+			var res = _TaskService.DeleteTask(TaskId);
 			if (res.Status != 204)
 			{
 				ModelState.AddModelError("", res.StatusMessage);
@@ -96,14 +97,14 @@ namespace SmartHRM.API.Controllers
 			return NoContent();
 		}
 
-        [HttpPut("DeletedStatus/{ProjectId}/{status}")]
+        [HttpPut("DeletedStatus/{TaskId}/{status}")]
         [ProducesResponseType(400)]
         [ProducesResponseType(204)]
         [ProducesResponseType(404)]
-        public IActionResult UpdateDeleteStatus(int ProjectId, bool status)
+        public IActionResult UpdateDeleteStatus(int TaskId, bool status)
         {
 
-            var res = _ProjectService.UpdateDeleteStatus(ProjectId, status);
+            var res = _TaskService.UpdateDeleteStatus(TaskId, status);
             if (res.Status != 204)
             {
                 ModelState.AddModelError("", res.StatusMessage);
@@ -115,12 +116,12 @@ namespace SmartHRM.API.Controllers
         }
 
         [HttpGet("Search/{field}/{keyWords}")]
-        [ProducesResponseType(200, Type = typeof(IEnumerable<Project>))]
+        [ProducesResponseType(200, Type = typeof(IEnumerable<Task>))]
         public IActionResult Search(string field, string keyWords)
         {
-            var Projects = _ProjectService.Search(field, keyWords);
+            var Tasks = _TaskService.Search(field, keyWords);
             if (!ModelState.IsValid) return BadRequest(ModelState);
-            return Ok(Projects);
+            return Ok(Tasks);
         }
 
     }
