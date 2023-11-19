@@ -21,6 +21,13 @@ builder.Services.AddScoped<EmployeeService>();
 //Position
 builder.Services.AddScoped<PositionService>();
 
+//Insurance
+builder.Services.AddScoped<InsuranceService>();
+builder.Services.AddScoped<InsuranceDetailsService>();
+
+//Statistic
+builder.Services.AddScoped<StatisticalService>();
+
 //Enable CORS
 builder.Services.AddCors(p =>
     p.AddPolicy("HUG_LOCAL", build =>

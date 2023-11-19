@@ -80,6 +80,29 @@ namespace SmartHRM.Services
             return new ResponseModel(204, "");
         }
 
+        //Get total record
+        public int GetTotal()
+        {
+            return _employeeRepository.GetAll().Where(x=>x.IsDeleted==false).Count();
+        }
 
+        //Statistic 
+        public object GetStatisticMaleFemale()
+        {
+            var maleCount = _employeeRepository.GetAll().Where(x => x.Gender == true && x.IsDeleted == false).Count();
+            var femaleCount = _employeeRepository.GetAll().Where(x => x.Gender == false && x.IsDeleted == false).Count();
+            return new
+            {
+                Male = maleCount,
+                Female = femaleCount
+            };
+        }
+
+        //Get top / list
+        public IEnumerable<Employee> GetTopYoungest(int limit)
+        {
+            var res = _employeeRepository.GetAll().Where(x => x.IsDeleted == false).OrderByDescending(x => x.Dob).Take(limit);
+            return res ;
+        }
     }
 }

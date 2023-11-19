@@ -35,10 +35,10 @@
     animation-delay: -0.5s;
 }
 
+
 /* .form-label {
     margin-bottom: 0.1rem;
 } */
-
 @keyframes lds-ripple {
     0% {
         top: 3rem;

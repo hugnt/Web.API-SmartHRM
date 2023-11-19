@@ -7,9 +7,9 @@ namespace SmartHRM.Admin.Controllers
 
         [Route("Employee")]
         [Route("Employee/PersonnelFiles")]
-        public IActionResult Index()
+        public IActionResult PersonnelFiles()
         {
-            return View();
+            return View("~/Views/Employee/PersonnelFiles.cshtml");
         }
 
         [Route("Employee/PersonnelFiles/Trash")]

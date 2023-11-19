@@ -13,6 +13,8 @@ namespace SmartHRM.Admin.Controllers
             _logger = logger;
         }
 
+        [Route("/Dashboard")]
+        [Route("")]
         public IActionResult Index()
         {
             return View();

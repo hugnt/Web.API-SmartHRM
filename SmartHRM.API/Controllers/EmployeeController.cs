@@ -115,6 +115,37 @@ namespace SmartHRM.API.Controllers
             return NoContent();
         }
 
+        [HttpGet("Statistic/Total")]
+        [ProducesResponseType(200, Type = typeof(int))]
+        [ProducesResponseType(400)]
+        public IActionResult GetTotalEmployee()
+        {
+            var res = _employeeService.GetTotal();
+            if (!ModelState.IsValid) return BadRequest();
+            if (res == 0) return NotFound();
+            return Ok(res);
+        }
 
+        [HttpGet("Statistic/MaleFemale")]
+        [ProducesResponseType(200, Type = typeof(object))]
+        [ProducesResponseType(400)]
+        public IActionResult GetStatisticMaleFemale()
+        {
+            var res = _employeeService.GetStatisticMaleFemale();
+            if (!ModelState.IsValid) return BadRequest();
+            if (res == null) return NotFound();
+            return Ok(res);
+        }
+
+        [HttpGet("Statistic/TopYoungest/{limit}")]
+        [ProducesResponseType(200, Type = typeof(object))]
+        [ProducesResponseType(400)]
+        public IActionResult GetTopAmountInsurance(int limit)
+        {
+            var res = _employeeService.GetTopYoungest(limit);
+            if (!ModelState.IsValid) return BadRequest();
+            if (res == null) return NotFound();
+            return Ok(res);
+        }
     }
 }
