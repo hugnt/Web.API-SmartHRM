@@ -85,5 +85,28 @@ namespace SmartHRM.Services
             if (res == null) return new List<Bonus>();
             return res;
         }
+        public int GetInsuranceTotal()
+        {
+            return _BonusRepository.GetAll().Where(x => x.IsDeleted == false).Count();
+        }
+
+        //Statistic 
+        public object GetStatisticUsedInsurance()
+        {
+            var ActiveCount = _BonusRepository.GetAll().Where(x => x.IsActive == true && x.IsDeleted == false).Count();
+            var InactiveCount = _BonusRepository.GetAll().Where(x => x.IsActive == false && x.IsDeleted == false).Count();
+            return new
+            {
+                Active = ActiveCount,
+                Inactive = InactiveCount
+            };
+        }
+
+        //Get top / list
+        public IEnumerable<Bonus> GetTopID(int limit)
+        {
+            var res = _BonusRepository.GetAll().Where(x => x.IsDeleted == false).OrderByDescending(x => x.Id).Take(limit);
+            return res;
+        }
     }
 }

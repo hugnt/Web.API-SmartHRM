@@ -12,16 +12,11 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddDIServices(builder.Configuration);
 
-//Account
-builder.Services.AddScoped<AccountService>();
-
 //Employee
 builder.Services.AddScoped<EmployeeService>();
-//Insurance
-builder.Services.AddScoped<InsuranceService>();
 builder.Services.AddScoped<AllowanceService>();
 builder.Services.AddScoped<BonusService>();
-builder.Services.AddScoped<PositionService>();
+
 
 
 //Enable CORS

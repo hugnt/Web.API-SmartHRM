@@ -65,25 +65,6 @@ namespace SmartHRM.Services
             }
             return new ResponseModel(204, "");
         }
-
-        public Role GetRoleById(int roleId)
-        {
-            throw new NotImplementedException();
-        }
-
-        public List<Role> GetRoles()
-        {
-            throw new NotImplementedException();
-        }
-        public Task<ResponseModel> ValidateAllowance(Allowance Allowance)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<ResponseModel> ValidateNameAndPassword(Allowance Allowance)
-        {
-            throw new NotImplementedException();
-        }
         public ResponseModel UpdateDeleteStatus(int BonusId, bool status)
         {
             if (!_AllowanceRepository.IsExists(BonusId)) return new ResponseModel(404, "Not found");

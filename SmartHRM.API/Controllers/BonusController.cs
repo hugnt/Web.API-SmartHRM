@@ -121,6 +121,5 @@ namespace SmartHRM.API.Controllers
             if (!ModelState.IsValid) return BadRequest(ModelState);
             return Ok(Bonuss);
         }
-
     }
 }
