@@ -28,6 +28,8 @@ namespace SmartHRM.Repository
 
 
 
+        public DbSet<Allowance> Allowances { get; set; }
+        public DbSet<Bonus> Bonus { get; set; }
 
     }
 }

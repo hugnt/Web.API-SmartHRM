@@ -17,6 +17,10 @@ builder.Services.AddDIServices(builder.Configuration);
 
 //Employee
 builder.Services.AddScoped<EmployeeService>();
+builder.Services.AddScoped<AllowanceService>();
+builder.Services.AddScoped<BonusService>();
+
+
 
 //Position
 builder.Services.AddScoped<PositionService>();

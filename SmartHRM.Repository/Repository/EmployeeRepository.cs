@@ -14,6 +14,7 @@ namespace SmartHRM.Repository
         public EmployeeRepository(AppDbContext dbContext) : base(dbContext)
         {
             _dbContext = dbContext;
+            //abc
         }
     }
 }
