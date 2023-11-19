@@ -27,10 +27,6 @@ $(document).ready(async function () {
             name: "Content",
         },
         {
-            id: "image",
-            name: "Image"
-        },
-        {
             id: 'Action',
             name: htmlText('<div class="text-center noExl">Action</div>'),
             sort: false,
@@ -299,7 +295,7 @@ $(document).ready(async function () {
             id: $("#position_id").val() == "" ? 0 : $("#position_id").val(),
             content: $("#content").val(),
             employeeId: choicesEmployee.getValue(true),
-            image: $("#image").val(),
+            
             isDeleted: false,
         }
     }
@@ -312,7 +308,7 @@ $(document).ready(async function () {
         $("#position_id").val(data.id);
         choicesEmployee.setChoiceByValue(data.employees.id);
         $("#content").val(data.content);
-        $("#image").val(data.image);
+        
     }
 
     function setStatusForm(status) {

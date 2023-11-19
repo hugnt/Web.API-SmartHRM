@@ -17,7 +17,7 @@ $(document).ready(async function () {
         },
         {
             id: "name",
-            name: "Name",
+            name: "Department Name",
         },
         {
             id: "manager",

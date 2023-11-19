@@ -13,18 +13,16 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddDIServices(builder.Configuration);
 
 //Account
-builder.Services.AddScoped<AccountService>();
+
 
 //Employee
 builder.Services.AddScoped<EmployeeService>();
 
-builder.Services.AddScoped<InsuranceService>();
 
 builder.Services.AddScoped<ContractService>();
 
 builder.Services.AddScoped<DepartmentService>();
 
-builder.Services.AddScoped<PositionService>();
 
 
 

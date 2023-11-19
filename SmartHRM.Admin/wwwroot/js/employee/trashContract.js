@@ -21,15 +21,13 @@ $(document).ready(async function () {
            
         },
         {
-            id: "employeeId",
-            name: "EmployeeId"
-           
-        },
-        {
-            id: "image",
-            name: "Image"
-            
-        },
+            id: "employees",
+            name: "Employee Name",
+            formatter: function (e) {
+                return e.fullName
+            }
+        }, ,
+       
         {
             id: 'Action',
             name: htmlText('<div class="text-center noExl">Action</div>'),

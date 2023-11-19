@@ -97,7 +97,9 @@ namespace SmartHRM.Services
         public IEnumerable<DepartmentDto> Search(string field, string keyWords)
         {
             if (keyWords == "null") return GetDepartments();
+            
             var res = _departmentRepository.Search(field, keyWords);
+            if (res == null) return new List<DepartmentDto>();
             var resDto = new List<DepartmentDto>();
             foreach ( var D in res)
             {
@@ -111,9 +113,16 @@ namespace SmartHRM.Services
                     IsDeleted = D.IsDeleted
                 });
             }
-            if (resDto == null) return new List<DepartmentDto>();
+            
             return resDto;
         }
+        //Get total record
+        public int GetTotal()
+        {
+            return _departmentRepository.GetAll().Where(x => x.IsDeleted == false).Count();
+        }
+        // Thống kê số lượng nhân viên theo phòng ban
+        
 
     }
 }

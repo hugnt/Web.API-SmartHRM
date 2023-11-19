@@ -100,12 +100,12 @@ namespace SmartHRM.Services
         {
             if (keyWords == "null") return GetContracts();
             var res = _contractRepository.Search(field, keyWords);
+            if (res == null) return new List<ContractDto>();
             var rescdto = new List<ContractDto>();
             foreach (var C in res)
             {
                 rescdto.Add(new ContractDto()
                 {
-
                     Id = C.Id,
                     Content = C.Content,
                     SignedAt = C.SignedAt,
@@ -115,8 +115,12 @@ namespace SmartHRM.Services
                     IsDeleted = C.IsDeleted,
                 });
             }
-            if (rescdto == null) return new List<ContractDto>();
+            
             return rescdto;
+        }
+        public int GetTotal()
+        {
+            return _contractRepository.GetAll().Where(x => x.IsDeleted == false).Count();
         }
 
     }

@@ -24,7 +24,9 @@ export class huGrid{
                 ...columnsConfig
             ],
             className: {
-                th: "text-muted"
+                th: "text-muted",
+                pagination: "hugrid-pagination",
+                table: "hugrid-table"
             },
             fixedHeader: true,
             pagination: {

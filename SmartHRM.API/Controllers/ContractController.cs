@@ -122,6 +122,15 @@ namespace SmartHRM.API.Controllers
             if (!ModelState.IsValid) return BadRequest(ModelState);
             return Ok(contracts);
         }
-
+        [HttpGet("Statistic/Total")]
+        [ProducesResponseType(200, Type = typeof(int))]
+        [ProducesResponseType(400)]
+        public IActionResult GetTotalEmployee()
+        {
+            var res = _ContractService.GetTotal();
+            if (!ModelState.IsValid) return BadRequest();
+            if (res == 0) return NotFound();
+            return Ok(res);
+        }
     }
 }
