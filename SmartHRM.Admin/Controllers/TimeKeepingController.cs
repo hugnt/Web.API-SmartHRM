@@ -4,16 +4,11 @@ namespace SmartHRM.Admin.Controllers
 {
     public class TimeKeepingController : Controller
     {
-        public IActionResult Index()
-        {
-            return View();
-        }
-
         [Route("TimeKeeping")]
         [Route("TimeKeeping/TimeKeeper")]
         public IActionResult TimeKeeper()
         {
-            return View();
+            return View("~/Views/TimeKeeping/TimeKeeper.cshtml");
         }
 
         [Route("TimeKeeping")]

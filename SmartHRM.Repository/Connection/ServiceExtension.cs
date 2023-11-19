@@ -18,11 +18,11 @@ namespace SmartHRM.Repository.Connection
                 options.UseSqlServer(configuration.GetConnectionString("DefaultConnection"));
             });
 
-            services.AddScoped<AccountRepository>();
+
             services.AddScoped<EmployeeRepository>();
             services.AddScoped<DeductionRepository>();
             services.AddScoped<TimeKeepingRepository>();
-            services.AddScoped<PositionRepository>();
+
             return services;
         }
     }
