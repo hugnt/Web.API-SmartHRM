@@ -3,60 +3,31 @@ import * as API from '../api.js';
 import * as AJAXCONFIG from '../ajax_config.js';
 
 $(document).ready(async function () {
-    var listData = await getList("/Employee");
+    var listData = await getList("/Contract");
     console.log(listData);
     var columns = [
         {
             id: "id",
             name: htmlText(`<div class="text-center">Id</div>`),
-            sort: false,
+            sort: true,
             formatter: function (e) {
                 return htmlText(`<div class="text-center">${e}</div>`)
-            }
+            },
+            width: '8%'
         },
         {
-            id: "fullName",
-            name: "Full Name",
-            sort: true,
-            data: function (e) {
-                return htmlText(`
-                    <div class= "d-flex align-items-center" >
-                        <div class="flex-shrink-0 me-3">
-                            <div class="avatar-sm bg-light rounded p-1">
-                                <img src="${API.IMAGE_URL}/avatar/${e.avatar}" alt="" class="img-fluid d-block">
-                            </div >
-                        </div>
-                        <div class="flex-grow-1">
-                            <h5 class="fs-14 mb-1">
-                                <a href="apps-ecommerce-product-details.html" class="text-body">${e.fullName}</a>
-                            </h5>
-                            <p class="text-muted mb-0">Department : <span class="fw-medium">${e.department}</span></p>
-                        </div >
-                    </div > `)
-            }
+            id: "content",
+            name: "Content",
+           
         },
         {
-            id: "phoneNumber",
-            name: "Phone Number"
-        },
-        {
-            id: "email",
-            name: "Email"
-        },
-        {
-            id: "dob",
-            name: "Date of birth",
+            id: "employees",
+            name: "Employee Name",
             formatter: function (e) {
-                return new Date(e).toLocaleDateString();
+                return e.fullName
             }
-        },
-        {
-            id: "gender",
-            name: "Gender",
-            formatter: function (e) {
-                return e ? "Male" : "Female";
-            }
-        },
+        }, ,
+       
         {
             id: 'Action',
             name: htmlText('<div class="text-center noExl">Action</div>'),
@@ -93,8 +64,8 @@ $(document).ready(async function () {
     };
     $("#restore-notification").click(async function () {
         var id = localStorage.getItem("selectedId");
-        await putStatus(`/Employee/DeletedStatus/${id}/${false}`);
-        var listData = await getList("/Employee");
+        await putStatus(`/Contract/DeletedStatus/${id}/${false}`);
+        var listData = await getList("/Contract");
         newGrid.updateData(listData);
     });
     $("#btnRestoreListCheck").click(async function () {
@@ -109,9 +80,9 @@ $(document).ready(async function () {
         }
         var listId = newGrid.getListSelectedId();
         for (var i = 0; i < listId.length; i++) {
-            await putStatus(`/Employee/DeletedStatus/${listId[i]}/${false}`);
+            await putStatus(`/Contract/DeletedStatus/${listId[i]}/${false}`);
         };
-        var listData = await getList("/Employee");
+        var listData = await getList("/Contract");
         newGrid.updateData(listData);
     });
 
@@ -123,8 +94,8 @@ $(document).ready(async function () {
     };
     $("#delete-notification").click(async function () {
         var id = localStorage.getItem("selectedId");
-        await deleteData(`/Employee/${id}`);
-        var listData = await getList("/Employee");
+        await deleteData(`/Contract/${id}`);
+        var listData = await getList("/Contract");
         newGrid.updateData(listData)
     });
     $("#btnRemoveListCheck").click(async function () {
@@ -139,9 +110,9 @@ $(document).ready(async function () {
         }
         var listId = newGrid.getListSelectedId();
         for (var i = 0; i < listId.length; i++) {
-            await deleteData(`/Employee/${listId[i]}`);
+            await deleteData(`/Contract/${listId[i]}`);
         };
-        var listData = await getList("/Employee");
+        var listData = await getList("/Contract");
         newGrid.updateData(listData);
     });
    
@@ -161,6 +132,20 @@ $(document).ready(async function () {
             filename: "exportList.xls",
         });
     });
+
+    //Search
+    $("#btnFilter").click(async function () {
+        var field = $("#sellectBoxFilter").val();
+        var keyword = $("#searchBoxFilter").val();
+        keyword = keyword == "" ? null : keyword;
+        console.log(field + " - keyword: " + keyword)
+        var listData = await getList(`/Contract/Search/${field}/${keyword}`);
+        console.log(listData)
+        newGrid.updateData(listData)
+        if (listData.length == 0) $(".noresult").show();
+        else $(".noresult").hide()
+
+    })
 
     //Ajax
     async function getList(endPoint) {

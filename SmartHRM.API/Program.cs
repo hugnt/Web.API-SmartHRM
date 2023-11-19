@@ -13,7 +13,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddDIServices(builder.Configuration);
 
 //Account
-builder.Services.AddScoped<AccountService>();
+
 
 //Employee
 builder.Services.AddScoped<EmployeeService>();
@@ -27,6 +27,15 @@ builder.Services.AddScoped<InsuranceDetailsService>();
 
 //Statistic
 builder.Services.AddScoped<StatisticalService>();
+
+
+builder.Services.AddScoped<ContractService>();
+
+builder.Services.AddScoped<DepartmentService>();
+
+
+
+
 
 //Enable CORS
 builder.Services.AddCors(p =>

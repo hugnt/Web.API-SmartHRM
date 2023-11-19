@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using SmartHRM.Repository.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,13 +15,19 @@ namespace SmartHRM.Repository
           
         }
 
-        public DbSet<Role> Roles { get; set; }
-        public DbSet<Account> Accounts { get; set; }
+
+      
         public DbSet<Employee> Employees { get; set; }
         public DbSet<Position> Positions { get; set; }
         public DbSet<Insurance> Insurances { get; set; }
         public DbSet<InsuranceDetails> InsuranceDetails { get; set; }
  
+
+        public DbSet<Contract> Contracts { get; set; }
+        public DbSet<Department> Departments { get; set; }
+
+
+
 
     }
 }

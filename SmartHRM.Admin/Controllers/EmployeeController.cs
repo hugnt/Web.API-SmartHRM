@@ -29,5 +29,26 @@ namespace SmartHRM.Admin.Controllers
         {
             return View();
         }
+        [Route("Employee/Department")]
+        public IActionResult Department()
+        {
+            return View();
+        }
+        [Route("Employee/Contract")]
+        public IActionResult Contract()
+        {
+            return View();
+        }
+     
+        [Route("Employee/Contract/Trash")]
+        public IActionResult ContractTrash()
+        {
+            return View();
+        }
+        [Route("Employee/Department/Trash")]
+        public IActionResult DepartmentTrash()
+        {
+            return View();
+        }
     }
 }

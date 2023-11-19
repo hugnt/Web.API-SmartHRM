@@ -95,26 +95,6 @@ namespace SmartHRM.API.Controllers
 
             return NoContent();
         }
-
-
-        [HttpPut("DeletedStatus/{employeeId}/{status}")]
-        [ProducesResponseType(400)]
-        [ProducesResponseType(204)]
-        [ProducesResponseType(404)]
-        public IActionResult UpdateDeleteStatus(int employeeId, bool status)
-        {
-
-            var res = _employeeService.UpdateDeleteStatus(employeeId, status);
-            if (res.Status != 204)
-            {
-                ModelState.AddModelError("", res.StatusMessage);
-                return StatusCode(res.Status, ModelState);
-
-            }
-            if (!ModelState.IsValid) return BadRequest(ModelState);
-            return NoContent();
-        }
-
         [HttpGet("Statistic/Total")]
         [ProducesResponseType(200, Type = typeof(int))]
         [ProducesResponseType(400)]
@@ -147,5 +127,25 @@ namespace SmartHRM.API.Controllers
             if (res == null) return NotFound();
             return Ok(res);
         }
+
+        [HttpPut("DeletedStatus/{employeeId}/{status}")]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(204)]
+        [ProducesResponseType(404)]
+        public IActionResult UpdateDeleteStatus(int employeeId, bool status)
+        {
+
+            var res = _employeeService.UpdateDeleteStatus(employeeId, status);
+            if (res.Status != 204)
+            {
+                ModelState.AddModelError("", res.StatusMessage);
+                return StatusCode(res.Status, ModelState);
+
+            }
+            if (!ModelState.IsValid) return BadRequest(ModelState);
+            return NoContent();
+        }
+
+
     }
 }

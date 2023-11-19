@@ -1,12 +1,13 @@
 ﻿@{
-    ViewData["Title"] = "TRASH - PERSONNEL FILES";
+    ViewData["Title"] = "CONTRACT";
 }
 @section Styles{
-<!-- gridjs css -->
-<link rel="stylesheet" href="~/assets/libs/gridjs/theme/mermaid.min.css" />
+    <!-- gridjs css -->
+    <link rel="stylesheet" href="~/assets/libs/gridjs/theme/mermaid.min.css" />
 
-<!-- Sweet Alert css-->
-<link href="~/assets/libs/sweetalert2/sweetalert2.min.css" rel="stylesheet" type="text/css" />
+    <!-- Sweet Alert css-->
+    <link href="~/assets/libs/sweetalert2/sweetalert2.min.css" rel="stylesheet" type="text/css" />
+
 
 }
 <div class="row bodyContent">
@@ -16,6 +17,10 @@
                 <div class="row g-4 align-items-center">
                     <div class="col-sm">
                         <div>
+                            <button type="button" class="btn btn-success btnAddNew me-1">
+                                <i class="ri-user-add-line align-bottom me-1"></i>
+                                Add new
+                            </button>
                             <div class="btn-group">
                                 <button class="btn btn-light" type="button">
                                     Others
@@ -25,11 +30,9 @@
                                         data-bs-toggle="dropdown" aria-haspopup="true"
                                         aria-expanded="false"></button>
                                 <div class="dropdown-menu">
-                                    <a class="dropdown-item" href="/Employee/Department/Trash">Trash Department</a>
-                                    <a class="dropdown-item" href="/Employee/Position/Trash">Trash Position</a>
                                     <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item" href="/Employee/PersonnelFiles">
-                                        <i class="ri-arrow-left-up-line align-middle me-1"></i>Personnel Files
+                                    <a class="dropdown-item" href="/Employee/Contract/Trash">
+                                        <i class="ri-delete-bin-5-line align-middle me-1"></i>Trash
                                     </a>
                                 </div>
                             </div>
@@ -38,8 +41,8 @@
                     <div class="col-sm-auto">
                         <div class="d-flex flex-wrap align-items-start gap-2">
                             <button type="button" class="btn btn-outline-primary btnCheckTool"
-                                    id="btnRestoreListCheck">
-                                <i class="ri-refresh-line align-bottom ri-1x"></i>
+                                    id="btnAddToGroup">
+                                +<i class="ri-group-line align-bottom ri-1x"></i>
                             </button>
                             <button type="button" class="btn btn-outline-danger btnCheckTool"
                                     id="btnRemoveListCheck">
@@ -68,8 +71,8 @@
                         <div class="row g-3">
                             <div class="col-xl-6">
                                 <div class="search-box">
-                                    <input type="text" class="form-control search"
-                                           placeholder="Search for customer, email, phone, status or something..." />
+                                    <input type="text" class="form-control search" id="searchBoxFilter"
+                                           placeholder="Search for something..." />
                                     <i class="ri-search-line search-icon"></i>
                                 </div>
                             </div>
@@ -81,7 +84,7 @@
                                             <input type="text" class="form-control"
                                                    id="datepicker-range" data-provider="flatpickr"
                                                    data-date-format="d M, Y" data-range-date="true"
-                                                   placeholder="Select date" />
+                                                   placeholder="Select date" disabled />
                                         </div>
                                     </div>
                                     <!--end col-->
@@ -89,11 +92,10 @@
                                         <div id="select-status">
                                             <select class="form-control" data-plugin="choices"
                                                     data-choices data-choices-search-false
-                                                    name="choices-single-default" id="idStatus">
-                                                <option value="">Status</option>
-                                                <option value="all" selected>All</option>
-                                                <option value="Active">Active</option>
-                                                <option value="Block">Block</option>
+                                                    name="choices-single-default" id="sellectBoxFilter">
+                                                <option value="content" selected>All</option>
+                                                <option value="id">Id</option>
+                                                <option value="content">Content</option>
                                             </select>
                                         </div>
                                     </div>
@@ -101,8 +103,7 @@
 
                                     <div class="col-sm-4">
                                         <div>
-                                            <button type="button" class="btn btn-primary w-100"
-                                                    onclick="SearchData();">
+                                            <button type="button" class="btn btn-primary w-100" id="btnFilter">
                                                 <i class="ri-equalizer-fill me-2 align-bottom"></i>Filters
                                             </button>
                                         </div>
@@ -137,21 +138,75 @@
 </div>
 
 @section Modals{
-     @await Html.PartialAsync("~/Views/Shared/Partial/Notification/RestoreModelPartial.cshtml")
-}
+    <!-- begin: Modal -->
+    <div class="modal fade" id="inforModal" tabindex="-1" aria-labelledby="inforModal" aria-modal="true"
+         data-bs-backdrop="static">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="inforModal">Details</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form action="javascript:void(0);">
+                        <div class="row g-3">
+                            <div class="col-2">
+                                <div>
+                                    <label for="id" class="form-label">Id</label>
+                                    <input type="text" class="form-control" name="id" id="position_id" disabled />
+                                </div>
+                            </div>
+                            <div class="col-10">
+                                <div>
+                                    <label for="content" class="form-label">Content</label>
+                                    <input type="text" class="form-control" id="content"
+                                           placeholder="Enter Content" />
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div>
+                                    <label for="employeeId" class="form-label">Employee Name</label>
+                                    <select class="form-control" id="employeeId">
+                                        <option value="" disabled selected>---Select Employee---</option>
 
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <!--end row-->
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <div class="hstack gap-2 justify-content-end">
+                        <button type="button" class="btn btn-light" data-bs-dismiss="modal">
+                            Close
+                        </button>
+                        <button type="button" class="btn btn-primary" id="btnSave">
+                            Save
+                        </button>
+                        <button type="button" class="btn btn-success" id="btnAdd">
+                            Add
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- end: Modal -->
+}
 @section Scripts{
 
-<!-- Sweet Alerts js -->
-<script src="~/assets/libs/sweetalert2/sweetalert2.min.js"></script>
+    <!-- Sweet Alerts js -->
+    <script src="~/assets/libs/sweetalert2/sweetalert2.min.js"></script>
 
-<script>
-    $("#sidebarEmployeeRoster").addClass("show");
-    $('a[href="#sidebarEmployeeRoster"]').addClass("active");
-    $('a[href="/Employee/PersonnelFiles"]').addClass("active");
-</script>
+    <script>
+        $("#sidebarEmployeeRoster").addClass("show");
+        $('a[href="#sidebarEmployeeRoster"]').addClass("active");
+        $('a[href="/Employee/Contract"]').addClass("active");
+    </script>
 
-<script src="~/js/table_custom.js"></script>
-<script src="~/js/jquery.table2excel.js"></script>
-<script type="module" src="~/js/employee/trashPersonnelFiles.js"></script>
+    <script src="~/js/table_custom.js"></script>
+    <script src="~/js/jquery.table2excel.js"></script>
+    <script type="module" src="~/js/employee/contract.js"></script>
 }

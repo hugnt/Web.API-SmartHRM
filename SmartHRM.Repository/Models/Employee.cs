@@ -24,6 +24,9 @@ namespace SmartHRM.Repository
         [Column("department_id")]
         public int? DepartmentId { get; set; }
 
+        [Column("position_id")]
+        public int? PositionId { get; set; }
+
         [Column("identificationCard")]
         public string? IdentificationCard { get; set; }
     }

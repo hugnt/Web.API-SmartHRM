@@ -1,5 +1,6 @@
 ﻿using HUG.CRUD.Services;
 using SmartHRM.Repository;
+using SmartHRM.Services.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,9 +12,15 @@ namespace SmartHRM.Services
     public class EmployeeService 
     {
         private readonly EmployeeRepository _employeeRepository;
-        public EmployeeService(EmployeeRepository employeeRepository)
+        private readonly PositionRepository _positionRepository;
+        private readonly DepartmentRepository _departmentRepository;
+        public EmployeeService(EmployeeRepository employeeRepository
+                               ,DepartmentRepository departmentRepository
+                               ,PositionRepository positionRepository)
         {
             _employeeRepository = employeeRepository;
+            _positionRepository = positionRepository;
+            _departmentRepository = departmentRepository;
         }
         public ResponseModel CreateEmployee(Employee employeeCreate)
         {
@@ -46,16 +53,36 @@ namespace SmartHRM.Services
             return new ResponseModel(204, "");
         }
 
-        public Employee? GetEmployee(int employeeId)
+        public EmployeeDto? GetEmployee(int employeeId)
         {
             if (!_employeeRepository.IsExists(employeeId)) return null;
-            var employee = _employeeRepository.GetById(employeeId);
+            var employee = GetEmployees().FirstOrDefault(x=>x.Id == employeeId);
             return employee;
         }
 
-        public IEnumerable<Employee> GetEmployees()
+        public IEnumerable<EmployeeDto> GetEmployees()
         {
-            return _employeeRepository.GetAll();
+            var employeeQuerry = from e in _employeeRepository.GetAll()
+                                 join p in _positionRepository.GetAll() on e.PositionId equals p.Id
+                                 join d in _departmentRepository.GetAll() on e.DepartmentId equals d.Id
+                                 select new EmployeeDto
+                                 {
+                                     Id = e.Id,
+                                     FullName = e.FullName,
+                                     PhoneNumber = e.PhoneNumber,
+                                     Email = e.Email,
+                                     IdentificationCard = e.IdentificationCard,
+                                     Dob = e.Dob,
+                                     Gender = e.Gender,
+                                     Address = e.Address,
+                                     Avatar = e.Avatar,
+                                     PositionId = e.PositionId,
+                                     Position = p.Name,
+                                     DepartmentId = e.DepartmentId,
+                                     Department = d.Name,
+                                     IsDeleted = e.IsDeleted
+                                 };
+            return employeeQuerry.ToList();
         }
 
         public ResponseModel UpdateEmployee(int employeeId, Employee updatedEmployee)
@@ -67,7 +94,7 @@ namespace SmartHRM.Services
             }
             return new ResponseModel(204, "");
         }
-
+      
         public ResponseModel UpdateDeleteStatus(int employeeId, bool status)
         {
             if (!_employeeRepository.IsExists(employeeId)) return new ResponseModel(404, "Not found");

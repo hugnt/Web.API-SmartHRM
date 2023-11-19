@@ -1,12 +1,12 @@
 ﻿@{
-    ViewData["Title"] = "TRASH - PERSONNEL FILES";
+    ViewData["Title"] = "TRASH - CONTRACT";
 }
 @section Styles{
-<!-- gridjs css -->
-<link rel="stylesheet" href="~/assets/libs/gridjs/theme/mermaid.min.css" />
+    <!-- gridjs css -->
+    <link rel="stylesheet" href="~/assets/libs/gridjs/theme/mermaid.min.css" />
 
-<!-- Sweet Alert css-->
-<link href="~/assets/libs/sweetalert2/sweetalert2.min.css" rel="stylesheet" type="text/css" />
+    <!-- Sweet Alert css-->
+    <link href="~/assets/libs/sweetalert2/sweetalert2.min.css" rel="stylesheet" type="text/css" />
 
 }
 <div class="row bodyContent">
@@ -25,11 +25,9 @@
                                         data-bs-toggle="dropdown" aria-haspopup="true"
                                         aria-expanded="false"></button>
                                 <div class="dropdown-menu">
-                                    <a class="dropdown-item" href="/Employee/Department/Trash">Trash Department</a>
-                                    <a class="dropdown-item" href="/Employee/Position/Trash">Trash Position</a>
                                     <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item" href="/Employee/PersonnelFiles">
-                                        <i class="ri-arrow-left-up-line align-middle me-1"></i>Personnel Files
+                                    <a class="dropdown-item" href="/Employee/Contract">
+                                        <i class="ri-arrow-left-up-line align-middle me-1"></i>Contract
                                     </a>
                                 </div>
                             </div>
@@ -68,8 +66,8 @@
                         <div class="row g-3">
                             <div class="col-xl-6">
                                 <div class="search-box">
-                                    <input type="text" class="form-control search"
-                                           placeholder="Search for customer, email, phone, status or something..." />
+                                    <input type="text" class="form-control search" id="searchBoxFilter"
+                                           placeholder="Search for something..." />
                                     <i class="ri-search-line search-icon"></i>
                                 </div>
                             </div>
@@ -81,7 +79,7 @@
                                             <input type="text" class="form-control"
                                                    id="datepicker-range" data-provider="flatpickr"
                                                    data-date-format="d M, Y" data-range-date="true"
-                                                   placeholder="Select date" />
+                                                   placeholder="Select date" disabled />
                                         </div>
                                     </div>
                                     <!--end col-->
@@ -89,11 +87,10 @@
                                         <div id="select-status">
                                             <select class="form-control" data-plugin="choices"
                                                     data-choices data-choices-search-false
-                                                    name="choices-single-default" id="idStatus">
-                                                <option value="">Status</option>
-                                                <option value="all" selected>All</option>
-                                                <option value="Active">Active</option>
-                                                <option value="Block">Block</option>
+                                                    name="choices-single-default" id="sellectBoxFilter">
+                                                <option value="content" selected>All</option>
+                                                <option value="id">Id</option>
+                                                <option value="content">Content</option>
                                             </select>
                                         </div>
                                     </div>
@@ -101,8 +98,7 @@
 
                                     <div class="col-sm-4">
                                         <div>
-                                            <button type="button" class="btn btn-primary w-100"
-                                                    onclick="SearchData();">
+                                            <button type="button" class="btn btn-primary w-100" id="btnFilter">
                                                 <i class="ri-equalizer-fill me-2 align-bottom"></i>Filters
                                             </button>
                                         </div>
@@ -137,21 +133,21 @@
 </div>
 
 @section Modals{
-     @await Html.PartialAsync("~/Views/Shared/Partial/Notification/RestoreModelPartial.cshtml")
+    @await Html.PartialAsync("~/Views/Shared/Partial/Notification/RestoreModelPartial.cshtml")
 }
 
 @section Scripts{
 
-<!-- Sweet Alerts js -->
-<script src="~/assets/libs/sweetalert2/sweetalert2.min.js"></script>
+    <!-- Sweet Alerts js -->
+    <script src="~/assets/libs/sweetalert2/sweetalert2.min.js"></script>
 
-<script>
-    $("#sidebarEmployeeRoster").addClass("show");
-    $('a[href="#sidebarEmployeeRoster"]').addClass("active");
-    $('a[href="/Employee/PersonnelFiles"]').addClass("active");
-</script>
+    <script>
+        $("#sidebarEmployeeRoster").addClass("show");
+        $('a[href="#sidebarEmployeeRoster"]').addClass("active");
+        $('a[href="/Employee/Contract"]').addClass("active");
+    </script>
 
-<script src="~/js/table_custom.js"></script>
-<script src="~/js/jquery.table2excel.js"></script>
-<script type="module" src="~/js/employee/trashPersonnelFiles.js"></script>
+    <script src="~/js/table_custom.js"></script>
+    <script src="~/js/jquery.table2excel.js"></script>
+    <script type="module" src="~/js/employee/trashContract.js"></script>
 }

@@ -1,5 +1,6 @@
 ﻿using HUG.CRUD.Interfaces;
 using HUG.CRUD.Repository;
+using SmartHRM.Repository.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,12 +9,13 @@ using System.Threading.Tasks;
 
 namespace SmartHRM.Repository
 {
-    public class EmployeeRepository: GenericRepository<Employee> 
+    public class DepartmentRepository : GenericRepository<Department>
     {
         private readonly AppDbContext _dbContext;
-        public EmployeeRepository(AppDbContext dbContext) : base(dbContext)
+        public DepartmentRepository(AppDbContext dbContext) : base(dbContext)
         {
             _dbContext = dbContext;
         }
+        
     }
 }

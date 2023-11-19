@@ -34,8 +34,8 @@
                                         data-bs-toggle="dropdown" aria-haspopup="true"
                                         aria-expanded="false"></button>
                                 <div class="dropdown-menu">
-                                    <a class="dropdown-item" href="#">Department List</a>
-                                    <a class="dropdown-item" href="#">Position List</a>
+                                    <a class="dropdown-item" href="/Employee/Department">Department List</a>
+                                    <a class="dropdown-item" href="/Employee/Position">Position List</a>
                                     <div class="dropdown-divider"></div>
                                     <a class="dropdown-item" href="/Employee/PersonnelFiles/Trash">
                                         <i class="ri-delete-bin-5-line align-middle me-1"></i>Trash
@@ -214,23 +214,19 @@
                         <!--end col-->
                         <div class="col-xxl-6">
                             <div>
-                                <label for="position" class="form-label">Position</label>
-                                <select class="form-select mb-3" aria-label="position" id="positionId">
-                                    <option value="0" selected disabled>----Select position---</option>
-                                    <option value="1">One</option>
-                                    <option value="2">Two</option>
-                                    <option value="3">Three</option>
+                                <label for="positionId" class="form-label">Position</label>
+                                <select class="form-control" id="positionId">
+                                    <option value="" disabled selected>---Position---</option>
+
                                 </select>
                             </div>
                         </div>
                         <div class="col-xxl-6">
                             <div>
-                                <label for="department" class="form-label">Department</label>
-                                <select class="form-select mb-3" aria-label="Department" id="departmentId">
-                                    <option value="0" selected disabled>----Select department---</option>
-                                    <option value="1">One</option>
-                                    <option value="2">Two</option>
-                                    <option value="3">Three</option>
+                                <label for="departmentId" class="form-label">Department</label>
+                                <select class="form-control" id="departmentId">
+                                    <option value="" disabled selected>---Department---</option>
+
                                 </select>
                             </div>
                         </div>
