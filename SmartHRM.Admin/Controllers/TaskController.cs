@@ -5,9 +5,9 @@ namespace SmartHRM.Admin.Controllers
 	public class TaskController : Controller
 	{
         [Route("Tasks/Project")]
-        public IActionResult Index()
+        public IActionResult Project()
 		{
-			return View();
+			return View("~/Views/Task/Project.cshtml");
 		}
 
         [Route("Tasks/Project/Trash")]
