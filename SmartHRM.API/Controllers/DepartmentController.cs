@@ -123,6 +123,50 @@ namespace SmartHRM.API.Controllers
             if (!ModelState.IsValid) return BadRequest(ModelState);
             return Ok(departments);
         }
+        [HttpGet("Statistic/Total")]
+        [ProducesResponseType(200, Type = typeof(int))]
+        [ProducesResponseType(400)]
+        public IActionResult GetTotalEmployee()
+        {
+            var res = _DepartmentService.GetTotal();
+            if (!ModelState.IsValid) return BadRequest();
+            if (res == 0) return NotFound();
+            return Ok(res);
+        }
+        [HttpGet("Statistic/EmployeeCount")]
+        [ProducesResponseType(200, Type = typeof(Dictionary<string, int>))]
+        [ProducesResponseType(400)]
+        public IActionResult GetEmployeeCountByDepartment()
+        {
+            var employeeCountByDepartment = _DepartmentService.GetEmployeeCountByDepartment();
+
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            return Ok(employeeCountByDepartment);
+        }
+        [HttpGet("CurrentDepartment/{employeeId}")]
+        [ProducesResponseType(200, Type = typeof(DepartmentDto))]
+        [ProducesResponseType(404)]
+        [ProducesResponseType(400)]
+        public IActionResult GetCurrentDepartment(int employeeId)
+        {
+            var currentDepartment = _DepartmentService.GetCurrentDepartmentForEmployee(employeeId);
+
+            if (currentDepartment == null)
+            {
+                return NotFound();
+            }
+
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            return Ok(currentDepartment);
+        }
 
     }
 }

@@ -97,7 +97,6 @@ namespace SmartHRM.Services
         public IEnumerable<DepartmentDto> Search(string field, string keyWords)
         {
             if (keyWords == "null") return GetDepartments();
-            
             var res = _departmentRepository.Search(field, keyWords);
             if (res == null) return new List<DepartmentDto>();
             var resDto = new List<DepartmentDto>();
@@ -122,7 +121,55 @@ namespace SmartHRM.Services
             return _departmentRepository.GetAll().Where(x => x.IsDeleted == false).Count();
         }
         // Thống kê số lượng nhân viên theo phòng ban
-        
+        public Dictionary<string, int> GetEmployeeCountByDepartment()
+        {
+            var employeeCountByDepartment = new Dictionary<string, int>();
+
+            var departmentQuery = from D in _departmentRepository.GetAll()
+                                  where !(D.IsDeleted ?? false)
+                                  join E in _EmployeeRepository.GetAll() on D.Id equals E.DepartmentId into departmentEmployees
+                                  select new
+                                  {
+                                      DepartmentName = D.Name,
+                                      EmployeeCount = departmentEmployees.Count()
+                                  };
+
+            foreach (var result in departmentQuery)
+            {
+                employeeCountByDepartment[result.DepartmentName] = result.EmployeeCount;
+            }
+
+            return employeeCountByDepartment;
+        }
+        public DepartmentDto GetCurrentDepartmentForEmployee(int employeeId)
+        {
+            var employee = _EmployeeRepository.GetById(employeeId);
+
+            if (employee == null || employee.DepartmentId == null)
+            {
+                return null; // or handle accordingly (e.g., return NotFound)
+            }
+
+            var department = _departmentRepository.GetById(employee.DepartmentId.Value);
+
+            if (department == null)
+            {
+                return null; // or handle accordingly (e.g., return NotFound)
+            }
+
+            var departmentDto = new DepartmentDto
+            {
+                Id = department.Id,
+                Name = department.Name,
+                Description = department.Description,
+                Manager = _EmployeeRepository.GetById(department.ManagerId),
+                IsDeleted = department.IsDeleted
+            };
+
+            return departmentDto;
+        }
+
+
 
     }
 }

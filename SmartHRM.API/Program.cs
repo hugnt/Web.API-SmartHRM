@@ -22,6 +22,8 @@ builder.Services.AddScoped<EmployeeService>();
 builder.Services.AddScoped<ContractService>();
 
 builder.Services.AddScoped<DepartmentService>();
+builder.Services.AddScoped<InsuranceDetailsService>();
+builder.Services.AddScoped<InsuranceService>();
 
 
 

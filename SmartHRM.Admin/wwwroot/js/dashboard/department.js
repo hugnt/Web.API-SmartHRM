@@ -6,17 +6,26 @@ import * as AJAXCONFIG from '../ajax_config.js';
 $(document).ready(async function () {
     //CARD 
     var newCard = new huCard("rowCard");
-    var totalContract = await getData("/Contract/Statistic/Total");
+    var totalDepartment = await getData("/Department/Statistic/Total");
     var card1 = {
-        title: "Total Contract",
-        number: totalContract,
-        unit: "Contract",
-        url: "/Employee/Contract",
+        title: "Total Department",
+        number: totalDepartment,
+        unit: "Department",
+        url: "/Employee/Department",
         icon: "bx bx-user",
         iconColor: "success"
     }
-    
+   
     newCard.add(card1)
+
+    var employeeCountByDepartment = await getData("/Department/Statistic/EmployeeCount");
+
+    // Chart: Display employee count statistics using a bar chart
+    var chartLabels = Object.keys(employeeCountByDepartment);
+    var chartData = Object.values(employeeCountByDepartment);
+
+    var newChart = new huApex("apex-barchar", chartLabels, chartData);
+    newChart.barChart();
     //AJAX
     async function getList(endPoint) {
         try {
