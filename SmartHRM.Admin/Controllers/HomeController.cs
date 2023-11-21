@@ -19,7 +19,7 @@ namespace SmartHRM.Admin.Controllers
         [Route("/Dashboard/Hung")]
         public IActionResult DashboardHung()
         {
-            return View();
+            return View("~/Views/Home/Index.cshtml");
         }
 
         public IActionResult Privacy()
