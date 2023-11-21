@@ -26,7 +26,10 @@ $(document).ready(async function () {
 
         {
             id: "status",
-            name: "Status"
+            name: "Status",
+            formatter: function (e) {
+                return toStatus(e)
+            }
         },
 
         {
@@ -107,7 +110,7 @@ $(document).ready(async function () {
     //Remove
     async function deleteInfor() {
         var id = $(this).data("id");
-        localStorage.setItem("selectedId",id)
+        localStorage.setItem("selectedId", id)
     };
     $("#delete-notification").click(async function () {
         var id = localStorage.getItem("selectedId");
@@ -132,7 +135,7 @@ $(document).ready(async function () {
         var listData = await getList("/Project");
         newGrid.updateData(listData);
     });
-   
+
     $(".btnTestModal").click(function () {
         Toastify({
             text: "This is a toast",
@@ -255,10 +258,20 @@ $(document).ready(async function () {
         var hours = now.getHours();
         var minutes = now.getMinutes();
 
-        var formattedDate = day + '/' + month + '/' + year;
+        var formattedDate = month + '/' + day + '/' + year;
         var formattedTime = hours + ':' + (minutes < 10 ? '0' + minutes : minutes);
 
         return formattedDate + '  ' + formattedTime;
+
     }
-    
-});
+
+    //Status format
+    function toStatus(status) {
+        var s = status;
+        if (s == 0) return "Not started";
+        if (s == 1) return "In progress";
+        if (s == 2) return "Finished";
+    }
+}   
+
+);

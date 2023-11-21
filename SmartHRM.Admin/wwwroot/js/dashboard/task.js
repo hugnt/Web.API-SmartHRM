@@ -5,29 +5,30 @@ import * as AJAXCONFIG from '../ajax_config.js';
 
 $(document).ready(async function () {
     //CARD 
-    var newCard = new huCard("rowCard-employee");
-    var totalEmployee = await getData("/Employee/Statistic/Total");
+    var newCard = new huCard("rowCard-task");
+    var totalTask = await getData("/Task/Statistic/Total");
+    var totalTaskTime = await getData("/Task/Statistic/TotalTaskTime");
     var card1 = {
-        title: "Total Employee",
-        number: totalEmployee,
-        unit: "people",
-        url: "/Employee/PersonnelFiles",
-        icon: "bx bx-user",
+        title: "Total Task",
+        number: totalTask,
+        unit: "task",
+        url: "/Tasks/TaskList",
+        icon: "bx bx-task",
         iconColor: "success"
     }
     var card2 = {
-        title: "Total Bonus",
-        number: 10000000,
-        unit: "VND",
-        url: "/Salary/BonusList",
-        icon: "bx bx-dollar",
+        title: "Total Time",
+        number: totalTaskTime,
+        unit: "hours",
+        url: "/Tasks/TaskList",
+        icon: "bx bx-time",
         iconColor: "warning"
     }
     newCard.add(card1)
     newCard.add(card2)
 
-    //TABLE EMPLOYEE
-    var listData = await getList("/Employee/Statistic/TopYoungest/12");
+    //TABLE
+    var listData = await getList("/Task/Statistic/TopEarliest/3");
     var columns = [
         {
             id: "id",
@@ -38,39 +39,48 @@ $(document).ready(async function () {
             }
         },
         {
-            id: "fullName",
-            name: "Full Name"
+            id: "name",
+            name: "Name",
+            sort: true
         },
+
         {
-            id: "dob",
-            name: "Date of birth",
+            id: "status",
+            name: "Status"
+        },
+
+        {
+            id: "startTime",
+            name: "StartTime",
             formatter: function (e) {
-                return new Date(e).toLocaleDateString();
+                return toDateTime(e)
             }
         },
         {
-            id: "gender",
-            name: "Gender",
-            formatter: function (e) {
-                return e ? "Male" : "Female";
-            }
-        }];
-    var newGrid = new huGrid("table-employee", columns, listData);
+            id: "content",
+            name: "Content"
+        },
+        {
+            id: "description",
+            name: "Description"
+        }
+    ];
+    var newGrid = new huGrid("table-task", columns, listData);
 
 
     //CHART
-    var dataObj = await getData("/Employee/Statistic/MaleFemale");
+    var dataObj = await getData("/Task/Statistic/Task");
 
-    var chartLabels = ["Male", "Female"];
-    var newChart = new huApex("apex-barchar-employee", chartLabels, dataObj);
+    var chartLabels = ["NotStarted", "Progressing", "Finished"];
+    var newChart = new huApex("apex-barchar-task", chartLabels, dataObj);
     newChart.barChart();
 
-    var chartLabels2 = ["Male", "Female"];
-    var newChart2 = new huApex("apex-piechart-employee", chartLabels2, dataObj);
+    var chartLabels2 = ["NotStarted", "Progressing", "Finished"];
+    var newChart2 = new huApex("apex-piechart-task", chartLabels2, dataObj);
     newChart2.pieChart();
 
-    var chartLabels3 = ["Male", "Female"];
-    var newChart3 = new huApex("apex-donutchart-employee", chartLabels3, dataObj);
+    var chartLabels3 = ["NotStarted", "Progressing", "Finished"];
+    var newChart3 = new huApex("apex-donutchart-task", chartLabels3, dataObj);
     newChart3.donutChart();
 
 
@@ -117,5 +127,23 @@ $(document).ready(async function () {
         finally {
             AJAXCONFIG.ajaxAfterSend();
         }
+    }
+
+    //format dateTime
+    function toDateTime(stringDateTime) {
+        var now = new Date(stringDateTime);
+
+        var day = now.getDate();
+        var month = now.getMonth() + 1;
+        var year = now.getFullYear();
+
+        var hours = now.getHours();
+        var minutes = now.getMinutes();
+
+        var formattedDate = month + '/' + day + '/' + year;
+        var formattedTime = hours + ':' + (minutes < 10 ? '0' + minutes : minutes);
+
+        return formattedDate + '  ' + formattedTime;
+
     }
 });

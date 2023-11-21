@@ -124,5 +124,48 @@ namespace SmartHRM.API.Controllers
             return Ok(Tasks);
         }
 
+        [HttpGet("Statistic/Total")]
+        [ProducesResponseType(200, Type = typeof(int))]
+        [ProducesResponseType(400)]
+        public IActionResult GetTotalEmployee()
+        {
+            var res = _TaskService.GetTotal();
+            if (!ModelState.IsValid) return BadRequest();
+            if (res == 0) return NotFound();
+            return Ok(res);
+        }
+
+        [HttpGet("Statistic/TotalTaskTime")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public IActionResult GetTotalTaskTime()
+        {
+            var totalDuration = _TaskService.GetTotalTaskTime();
+            if (!ModelState.IsValid) return BadRequest();
+            if (totalDuration == null) return NotFound();
+            return Ok(totalDuration);
+        }
+
+        [HttpGet("Statistic/Task")]
+        [ProducesResponseType(200, Type = typeof(object))]
+        [ProducesResponseType(400)]
+        public IActionResult GetStatisticTask()
+        {
+            var res = _TaskService.GetStatisticTask();
+            if (!ModelState.IsValid) return BadRequest();
+            if (res == null) return NotFound();
+            return Ok(res);
+        }
+
+        [HttpGet("Statistic/TopEarliest/{limit}")]
+        [ProducesResponseType(200, Type = typeof(object))]
+        [ProducesResponseType(400)]
+        public IActionResult GetTopRecently(int limit)
+        {
+            var res = _TaskService.GetTopRecently(limit);
+            if (!ModelState.IsValid) return BadRequest();
+            if (res == null) return NotFound();
+            return Ok(res);
+        }
     }
 }

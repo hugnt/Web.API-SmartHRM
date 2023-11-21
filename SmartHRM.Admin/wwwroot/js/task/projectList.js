@@ -26,7 +26,10 @@ $(document).ready(async function () {
         
         {
             id: "status",
-            name: "Status"            
+            name: "Status",
+            formatter: function (e) {
+                return toStatus(e)
+            }
         },
 
         {
@@ -78,6 +81,8 @@ $(document).ready(async function () {
     newGrid.addEventListener(".btnDelete", deleteInfor);
 
     //Modal
+    const choicesStatus = new Choices(document.querySelector('#projectStatus'));
+    await loadSelectBox()
     const myModal = new bootstrap.Modal(document.getElementById('inforModal'));
     document.getElementById('inforModal').addEventListener('hidden.bs.modal', event => {
         setStatusForm(true);
@@ -304,20 +309,17 @@ $(document).ready(async function () {
     //Form action
     function getDataForm() {
         //console.log(pond)
-        var statusVal = $("#projectStatus").val();
-        var endedDateVal = $("#endedAt").val();
+        var statusVal = choicesStatus.getValue(true);
         if (statusVal == "" || statusVal == null) {
             statusVal = 0;
         }
-        if (endedDateVal == "") {
-            endedDateVal = null;
-        }
+              
         return {
             id: $("#project_id").val() == "" ? 0 : $("#project_id").val(),
             name: $("#name").val(),
             leader_id: $("#leader_id").val(),
             startedAt: $("#startedAt").val(),
-            endedAt: endedDateVal,
+            endedAt: $("#endedAt").val() == "" ? null : $("#endedAt").val(),
             status: statusVal,
             isDeleted: false,
         }
@@ -327,36 +329,27 @@ $(document).ready(async function () {
         if (data == null) {
             $("#inforModal form :input").val("");
             return;
-        }
-
-        var statusVal = $("#projectStatus").val(data.status);
-
-        if (statusVal == 0) {
-            $("#projectStatus").val("Not started");
-        }
-        else if (statusVal == 1) {
-            $("#projectStatus").val("On progress");
-        }
-        else if (statusVal == 2) {
-            $("#projectStatus").val("Finished");
-        }
+        }        
+        var endDate = data.endedAt != null ? data.endedAt.split("T")[0] : null
+       
+        choicesStatus.setChoiceByValue(data.status);
 
         $("#project_id").val(data.id);
         $("#name").val(data.name);
         $("#leader_id").val(data.leader_id);
         $("#startedAt").val(data.startedAt.split("T")[0]);
-        if ($("#endedAt").val(data.endedAt) == null || $("#endedAt").val(data.endedAt) == "") {
-    
-            $("#endedAt").val(data.endedAt);
-        }
-        else { 
-            $("#endedAt").val(data.endedAt.split("T")[0]);
-        }
+        endDate == null ? $("#endedAt").val(data.endedAt) : $("#endedAt").val(data.endedAt.split("T")[0]);
     }
 
     function setStatusForm(status) {
         $("#inforModal form :input").prop("disabled", !status);
         $('input[name="id"]').prop("disabled", true);
+        if (status == false) {
+            choicesStatus.disable();
+        }
+        else {
+            choicesStatus.enable();
+        }
     }
 
     function setTypeForm(type) {
@@ -403,21 +396,42 @@ $(document).ready(async function () {
     //DateTime Format
     function toDateTime(stringDateTime) {
         var now = new Date(stringDateTime);
-        if ($("#endedAt").val() == null || $("#endedAt").val() == "") {
-            return stringDateTime;
-        }
-        else {
+        
             var day = now.getDate();
             var month = now.getMonth() + 1;
             var year = now.getFullYear();
 
+
             var hours = now.getHours();
             var minutes = now.getMinutes();
 
-            var formattedDate = day + '/' + month + '/' + year;
+            var formattedDate = month + '/' + day + '/' + year;
             var formattedTime = hours + ':' + (minutes < 10 ? '0' + minutes : minutes);
 
             return formattedDate + '  ' + formattedTime;
-        }
     }
-});
+
+    //Status format
+    function toStatus(status) {
+        var s = status;
+        if (s == 0) return "Not started";
+        if (s == 1) return "In progress";
+        if (s == 2) return "Finished";
+    }
+
+    //load select box
+    async function loadSelectBox() {
+
+
+        var lstStatusChoices = [
+            { value: 0, label: "Not started" },
+            { value: 1, label: "In progress" },
+            { value: 2, label: "Finished" }
+        ];
+
+        choicesStatus.setChoices(lstStatusChoices)
+
+    }
+
+}
+);

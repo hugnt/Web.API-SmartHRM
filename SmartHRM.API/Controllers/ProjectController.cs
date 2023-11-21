@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using SmartHRM.Repository;
 using SmartHRM.Services;
 
@@ -123,5 +124,48 @@ namespace SmartHRM.API.Controllers
             return Ok(Projects);
         }
 
+        [HttpGet("Statistic/Total")]
+        [ProducesResponseType(200, Type = typeof(int))]
+        [ProducesResponseType(400)]
+        public IActionResult GetTotalEmployee()
+        {
+            var res = _ProjectService.GetTotal();
+            if (!ModelState.IsValid) return BadRequest();
+            if (res == 0) return NotFound();
+            return Ok(res);
+        }
+
+        [HttpGet("Statistic/TotalProjectTime")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public IActionResult GetTotalProjectTime()
+        {
+            var totalDuration = _ProjectService.GetTotalProjectTime();
+            if (!ModelState.IsValid) return BadRequest();
+            if (totalDuration == null) return NotFound();
+            return Ok(totalDuration);
+        }
+
+        [HttpGet("Statistic/Project")]
+        [ProducesResponseType(200, Type = typeof(object))]
+        [ProducesResponseType(400)]
+        public IActionResult GetStatisticMaleFemale()
+        {
+            var res = _ProjectService.GetStatisticProject();
+            if (!ModelState.IsValid) return BadRequest();
+            if (res == null) return NotFound();
+            return Ok(res);
+        }
+
+        [HttpGet("Statistic/TopFastest/{limit}")]
+        [ProducesResponseType(200, Type = typeof(object))]
+        [ProducesResponseType(400)]
+        public IActionResult GetTopAmountInsurance(int limit)
+        {
+            var res = _ProjectService.GetTopFastest(limit);
+            if (!ModelState.IsValid) return BadRequest();
+            if (res == null) return NotFound();
+            return Ok(res);
+        }
     }
 }

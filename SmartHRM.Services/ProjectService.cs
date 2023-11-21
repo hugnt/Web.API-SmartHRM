@@ -1,4 +1,5 @@
 ﻿using HUG.CRUD.Services;
+using Microsoft.EntityFrameworkCore;
 using SmartHRM.Repository;
 using System;
 using System.Collections.Generic;
@@ -87,5 +88,50 @@ namespace SmartHRM.Services
             return res;
         }
 
+        //Get total record
+        public int GetTotal()
+        {
+            return _ProjectRepository.GetAll().Where(x => x.IsDeleted == false).Count();
+        }
+
+        //Get total Time /Project
+        /*public TimeSpan getTotalProjectTime(List<Project> projects)
+        {
+            TimeSpan totalDuration = new TimeSpan();
+
+            foreach (var project in projects)
+            {
+                TimeSpan projectDuration = (TimeSpan)(project.EndedAt - project.StartedAt);
+                totalDuration += projectDuration;
+            }
+
+            return totalDuration;
+        }*/
+
+        public int GetTotalProjectTime()
+        {
+            return _ProjectRepository.GetTotalProjectTime();
+        }
+
+        //Statistic not started, progressing, finished
+        public object GetStatisticProject()
+        {
+            var notStartedCount = _ProjectRepository.GetAll().Where(x => x.Status == 0 && x.IsDeleted == false).Count();
+            var progressingCount = _ProjectRepository.GetAll().Where(x => x.Status == 1 && x.IsDeleted == false).Count();
+            var finishedCount = _ProjectRepository.GetAll().Where(x => x.Status == 2 && x.IsDeleted == false).Count();
+            return new
+            {
+                NotStarted = notStartedCount,
+                Progressing = progressingCount,
+                Finished = finishedCount
+            };
+        }
+
+        //Get top / list / fastest
+        public IEnumerable<Project> GetTopFastest(int limit)
+        {		
+            var res = _ProjectRepository.GetAll().Where(x => x.Status == 2 && x.IsDeleted == false).OrderBy(x => x.EndedAt - x.StartedAt).Take(limit);
+            return res;
+        }
     }
 }

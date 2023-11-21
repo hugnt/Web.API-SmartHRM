@@ -5,29 +5,31 @@ import * as AJAXCONFIG from '../ajax_config.js';
 
 $(document).ready(async function () {
     //CARD 
-    var newCard = new huCard("rowCard-employee");
-    var totalEmployee = await getData("/Employee/Statistic/Total");
+    var newCard = new huCard("rowCard-project");
+    var totalProject = await getData("/Project/Statistic/Total");
+    var totalProjectTime = await getData("/Project/Statistic/TotalProjectTime");
     var card1 = {
-        title: "Total Employee",
-        number: totalEmployee,
-        unit: "people",
-        url: "/Employee/PersonnelFiles",
-        icon: "bx bx-user",
+        title: "Total Project",
+        number: totalProject,
+        unit: "project",
+        url: "/Tasks/Project",
+        icon: "bx bxs-bar-chart-square",
         iconColor: "success"
     }
     var card2 = {
-        title: "Total Bonus",
-        number: 10000000,
-        unit: "VND",
-        url: "/Salary/BonusList",
-        icon: "bx bx-dollar",
+
+        title: "Total Days of Project",
+        number: totalProjectTime,
+        unit: "days",
+        url: "/Tasks/Project",
+        icon: "bx bx-time",
         iconColor: "warning"
     }
     newCard.add(card1)
     newCard.add(card2)
 
-    //TABLE EMPLOYEE
-    var listData = await getList("/Employee/Statistic/TopYoungest/12");
+    //TABLE
+    var listData = await getList("/Project/Statistic/TopFastest/3");
     var columns = [
         {
             id: "id",
@@ -38,39 +40,48 @@ $(document).ready(async function () {
             }
         },
         {
-            id: "fullName",
-            name: "Full Name"
+            id: "name",
+            name: "Name",
+            sort: true
         },
         {
-            id: "dob",
-            name: "Date of birth",
+            id: "leader_id",
+            name: "Leader ID"
+        },
+
+
+        {
+            id: "startedAt",
+            name: "StartedAt",
             formatter: function (e) {
-                return new Date(e).toLocaleDateString();
+                return toDateTime(e)
             }
         },
+
         {
-            id: "gender",
-            name: "Gender",
+            id: "endedAt",
+            name: "EndedAt",
             formatter: function (e) {
-                return e ? "Male" : "Female";
+                return toDateTime(e)
             }
-        }];
-    var newGrid = new huGrid("table-employee", columns, listData);
+        }
+    ];
+    var newGrid = new huGrid("table-project", columns, listData);
 
 
     //CHART
-    var dataObj = await getData("/Employee/Statistic/MaleFemale");
+    var dataObj = await getData("/Project/Statistic/Project");
 
-    var chartLabels = ["Male", "Female"];
-    var newChart = new huApex("apex-barchar-employee", chartLabels, dataObj);
+    var chartLabels = ["NotStarted", "Progressing", "Finished"];
+    var newChart = new huApex("apex-barchar-project", chartLabels, dataObj);
     newChart.barChart();
 
-    var chartLabels2 = ["Male", "Female"];
-    var newChart2 = new huApex("apex-piechart-employee", chartLabels2, dataObj);
+    var chartLabels2 = ["NotStarted", "Progressing", "Finished"];
+    var newChart2 = new huApex("apex-piechart-project", chartLabels2, dataObj);
     newChart2.pieChart();
 
-    var chartLabels3 = ["Male", "Female"];
-    var newChart3 = new huApex("apex-donutchart-employee", chartLabels3, dataObj);
+    var chartLabels3 = ["NotStarted", "Progressing", "Finished"];
+    var newChart3 = new huApex("apex-donutchart-project", chartLabels3, dataObj);
     newChart3.donutChart();
 
 
@@ -117,5 +128,23 @@ $(document).ready(async function () {
         finally {
             AJAXCONFIG.ajaxAfterSend();
         }
+    }
+
+    //format dateTime
+    function toDateTime(stringDateTime) {
+        var now = new Date(stringDateTime);
+     
+            var day = now.getDate();
+            var month = now.getMonth() + 1;
+            var year = now.getFullYear();
+
+            var hours = now.getHours();
+            var minutes = now.getMinutes();
+
+            var formattedDate = month + '/' + day + '/' + year;
+            var formattedTime = hours + ':' + (minutes < 10 ? '0' + minutes : minutes);
+
+            return formattedDate + '  ' + formattedTime;
+        
     }
 });

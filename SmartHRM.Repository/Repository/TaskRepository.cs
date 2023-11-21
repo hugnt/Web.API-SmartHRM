@@ -16,5 +16,24 @@ namespace SmartHRM.Repository
 			_dbContext = dbContext;
 		}
 
-	}
+        //Get total Time /Task
+        public double GetTotalTaskTime()
+        {
+            List<Task> tasks = _dbContext.Tasks.ToList();
+            TimeSpan totalDuration = new TimeSpan();
+
+            foreach (var task in tasks)
+            {
+                if (task.StartTime.HasValue && task.IsDeleted == false)
+                {
+                    if (DateTime.Now > task.StartTime.Value)
+                    {
+                        TimeSpan projectDuration = DateTime.Now - task.StartTime.Value;
+                        totalDuration += projectDuration;
+                    }
+                }
+            }
+            return (double)Math.Round(totalDuration.TotalHours);
+        }
+    }
 }
