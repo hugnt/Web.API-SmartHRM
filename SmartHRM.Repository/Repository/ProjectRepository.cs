@@ -24,7 +24,7 @@ namespace SmartHRM.Repository
 
             foreach (var project in projects)
             {
-                if (project.StartedAt.HasValue && project.IsDeleted == false)
+                if (project.StartedAt.HasValue && project.IsDeleted == false && project.Status != 0)
                 {
                     DateTime endDate = project.EndedAt.HasValue ? project.EndedAt.Value : DateTime.Now;
                     if (endDate > project.StartedAt.Value)
