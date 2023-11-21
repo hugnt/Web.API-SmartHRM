@@ -16,18 +16,18 @@ $(document).ready(async function () {
         iconColor: "success"
     }
     
-    var employeeId = getEmployeeId();
-    var currentDepartment = await getCurrentDepartment(employeeId);
-    var newCard = new huCard("rowCard-Current");
-    var cardCurrent = {
-        title: "Department",
-        text: currentDepartment.name,
-        unit: "Department",
-        url: `/Department/CurrentDepartment/${employeeId}`,
-        icon: "bx bx-building",
-        iconColor: "info"
-    };
-    newCard.add(cardCurrent);
+    //var employeeId = getEmployeeId();
+    //var currentDepartment = await getCurrentDepartment(employeeId);
+    //var newCard = new huCard("rowCard-Current");
+    //var cardCurrent = {
+    //    title: "Department",
+    //    text: currentDepartment.name,
+    //    unit: "Department",
+    //    url: `/Department/CurrentDepartment/${employeeId}`,
+    //    icon: "bx bx-building",
+    //    iconColor: "info"
+    //};
+    //newCard.add(cardCurrent);
     newCard.add(card4)
     
     //Bar chart
