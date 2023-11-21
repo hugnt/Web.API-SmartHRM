@@ -24,10 +24,11 @@ builder.Services.AddScoped<ContractService>();
 builder.Services.AddScoped<DepartmentService>();
 builder.Services.AddScoped<InsuranceDetailsService>();
 builder.Services.AddScoped<InsuranceService>();
-
-
-
-
+//Project
+builder.Services.AddScoped<ProjectService>();
+//Task
+builder.Services.AddScoped<TaskService>();
+builder.Services.AddScoped<TaskDetailsService>();
 
 //Enable CORS
 builder.Services.AddCors(p =>

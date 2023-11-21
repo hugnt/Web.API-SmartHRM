@@ -118,16 +118,30 @@
             </div><!-- end card -->
         </div>
     </div>
-</div>
-
-
+    @*contrac*@
+        <div class="row" id="rowCard-Contract"></div>
+        @*Department*@
+        <div class="row" id="rowCard-Department"></div>
+        <div class="row" id="rowCard-Current"></div>
+        <div class="row">
+            <div class="col-xl-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="card-title mb-0">Bar Chart</h4>
+                    </div><!-- end card header -->
+                    <div class="card-body">
+                        <div id="barchar-Department" data-colors='["--vz-primary", "--vz-success", "--vz-warning", "--vz-danger", "--vz-info"]' class="apex-charts" dir="ltr"></div>
+                    </div><!-- end card-body -->
+                </div><!-- end card -->
+            </div>
+        </div>
 @section Modals{
 
 }
 
 @section Scripts{
     @*<script type="module" src="~/js/dashboard/example.js"></script>*@
-    @*<script type="module" src="~/js/dashboard/employee.js"></script>*@
+    <script type="module" src="~/js/dashboard/employee.js"></script>
     <script type="module" src="~/js/dashboard/contract.js"></script>
     <script type="module" src="~/js/dashboard/department.js"></script>
 

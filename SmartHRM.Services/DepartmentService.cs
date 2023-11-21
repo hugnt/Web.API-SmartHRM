@@ -159,10 +159,7 @@ namespace SmartHRM.Services
 
             var departmentDto = new DepartmentDto
             {
-                Id = department.Id,
                 Name = department.Name,
-                Description = department.Description,
-                Manager = _EmployeeRepository.GetById(department.ManagerId),
                 IsDeleted = department.IsDeleted
             };
 

@@ -2,50 +2,49 @@
 using Microsoft.AspNetCore.Mvc;
 using SmartHRM.Repository;
 using SmartHRM.Services;
-using SmartHRM.Services.Models;
 
 namespace SmartHRM.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class InsuranceController : ControllerBase
+    public class TaskDetailsController : ControllerBase
     {
         //sample
-        private readonly InsuranceService _insuranceService;
-        public InsuranceController(InsuranceService insuranceService)
+        private readonly TaskDetailsService _TaskDetailsService;
+        public TaskDetailsController(TaskDetailsService TaskDetailsService)
         {
-            _insuranceService = insuranceService;
+            _TaskDetailsService = TaskDetailsService;
         }
 
         [HttpGet]
-        [ProducesResponseType(200, Type = typeof(IEnumerable<Insurance>))]
-        public IActionResult GetInsurances()
+        [ProducesResponseType(200, Type = typeof(IEnumerable<TaskDetails>))]
+        public IActionResult GetTaskDetailss()
         {
-            var insurances = _insuranceService.GetInsurances();
+            var TaskDetailss = _TaskDetailsService.GetTaskDetailss();
             if (!ModelState.IsValid) return BadRequest(ModelState);
 
-            return Ok(insurances);
+            return Ok(TaskDetailss);
         }
 
-        [HttpGet("{insuranceId}")]
-        [ProducesResponseType(200, Type = typeof(Insurance))]
+        [HttpGet("{TaskDetailsId}")]
+        [ProducesResponseType(200, Type = typeof(TaskDetails))]
         [ProducesResponseType(400)]
-        public IActionResult GetInsurance(int insuranceId)
+        public IActionResult GetTaskDetails(int TaskDetailsId)
         {
-            var insurance = _insuranceService.GetInsurance(insuranceId);
+            var TaskDetails = _TaskDetailsService.GetTaskDetails(TaskDetailsId);
             if (!ModelState.IsValid) return BadRequest();
-            if (insurance == null) return NotFound();
-            return Ok(insurance);
+            if (TaskDetails == null) return NotFound();
+            return Ok(TaskDetails);
         }
 
         [HttpPost]
         [ProducesResponseType(201)]
         [ProducesResponseType(400)]
-        public IActionResult CreateInsurance([FromBody] Insurance insuranceCreate)
+        public IActionResult CreateTaskDetails([FromBody] TaskDetails TaskDetailsCreate)
         {
-            if (insuranceCreate == null) return BadRequest(ModelState);
+            if (TaskDetailsCreate == null) return BadRequest(ModelState);
 
-            var res = _insuranceService.CreateInsurance(insuranceCreate);
+            var res = _TaskDetailsService.CreateTaskDetails(TaskDetailsCreate);
 
             if (res.Status != 201)
             {
@@ -58,17 +57,17 @@ namespace SmartHRM.API.Controllers
             return StatusCode(res.Status, res.StatusMessage);
         }
 
-        [HttpPut("{insuranceId}")]
+        [HttpPut("{TaskDetailsId}")]
         [ProducesResponseType(400)]
         [ProducesResponseType(204)]
         [ProducesResponseType(404)]
-        public IActionResult UpdateInsurance(int insuranceId, [FromBody] Insurance updatedInsurance)
+        public IActionResult UpdateTaskDetails(int TaskDetailsId, [FromBody] TaskDetails updatedTaskDetails)
         {
-            if (updatedInsurance == null) return BadRequest(ModelState);
-            if (insuranceId != updatedInsurance.Id) return BadRequest(ModelState);
+            if (updatedTaskDetails == null) return BadRequest(ModelState);
+            if (TaskDetailsId != updatedTaskDetails.Id) return BadRequest(ModelState);
 
 
-            var res = _insuranceService.UpdateInsurance(insuranceId, updatedInsurance);
+            var res = _TaskDetailsService.UpdateTaskDetails(TaskDetailsId, updatedTaskDetails);
             if (res.Status != 204)
             {
                 ModelState.AddModelError("", res.StatusMessage);
@@ -79,13 +78,13 @@ namespace SmartHRM.API.Controllers
             return NoContent();
         }
 
-        [HttpDelete("{insuranceId}")]
+        [HttpDelete("{TaskDetailsId}")]
         [ProducesResponseType(400)]
         [ProducesResponseType(204)]
         [ProducesResponseType(404)]
-        public IActionResult DeleteInsurance(int insuranceId)
+        public IActionResult DeleteTaskDetails(int TaskDetailsId)
         {
-            var res = _insuranceService.DeleteInsurance(insuranceId);
+            var res = _TaskDetailsService.DeleteTaskDetails(TaskDetailsId);
             if (res.Status != 204)
             {
                 ModelState.AddModelError("", res.StatusMessage);
@@ -98,14 +97,14 @@ namespace SmartHRM.API.Controllers
         }
 
 
-        [HttpPut("DeletedStatus/{insuranceId}/{status}")]
+        [HttpPut("DeletedStatus/{TaskDetailsId}/{status}")]
         [ProducesResponseType(400)]
         [ProducesResponseType(204)]
         [ProducesResponseType(404)]
-        public IActionResult UpdateDeleteStatus(int insuranceId, bool status)
+        public IActionResult UpdateDeleteStatus(int TaskDetailsId, bool status)
         {
 
-            var res = _insuranceService.UpdateDeleteStatus(insuranceId, status);
+            var res = _TaskDetailsService.UpdateDeleteStatus(TaskDetailsId, status);
             if (res.Status != 204)
             {
                 ModelState.AddModelError("", res.StatusMessage);
@@ -117,12 +116,12 @@ namespace SmartHRM.API.Controllers
         }
 
         [HttpGet("Search/{field}/{keyWords}")]
-        [ProducesResponseType(200, Type = typeof(IEnumerable<Insurance>))]
+        [ProducesResponseType(200, Type = typeof(IEnumerable<TaskDetails>))]
         public IActionResult Search(string field, string keyWords)
         {
-            var insurances = _insuranceService.Search(field, keyWords);
+            var TaskDetailss = _TaskDetailsService.Search(field, keyWords);
             if (!ModelState.IsValid) return BadRequest(ModelState);
-            return Ok(insurances);
+            return Ok(TaskDetailss);
         }
 
 

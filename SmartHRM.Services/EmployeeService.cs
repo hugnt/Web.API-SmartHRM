@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace SmartHRM.Services
 {
-    public class EmployeeService 
+    public class EmployeeService
     {
         private readonly EmployeeRepository _employeeRepository;
         public EmployeeService(EmployeeRepository employeeRepository)
@@ -18,7 +18,7 @@ namespace SmartHRM.Services
         public ResponseModel CreateEmployee(Employee employeeCreate)
         {
             var employees = _employeeRepository.GetAll()
-                            .Where(l => 
+                            .Where(l =>
                                     l.FullName.Trim().ToLower() == employeeCreate.FullName.Trim().ToLower()
                                     && l.IdentificationCard.Trim().ToLower() == employeeCreate.IdentificationCard.Trim().ToLower())
                             .FirstOrDefault();
@@ -90,6 +90,18 @@ namespace SmartHRM.Services
         {
             var res = _employeeRepository.GetAll().Where(x => x.IsDeleted == false).OrderByDescending(x => x.Dob).Take(limit);
             return res;
+        }
+
+        public ResponseModel UpdateDeleteStatus(int employeeId, bool status)
+        {
+            if (!_employeeRepository.IsExists(employeeId)) return new ResponseModel(404, "Not found");
+            var updatedEmployee = _employeeRepository.GetById(employeeId);
+            updatedEmployee.IsDeleted = status;
+            if (!_employeeRepository.Update(updatedEmployee))
+            {
+                return new ResponseModel(500, "Something went wrong when change delete status employee");
+            }
+            return new ResponseModel(204, "");
         }
 
     }
