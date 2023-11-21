@@ -35,5 +35,5 @@ namespace SmartHRM.Repository
             }
             return (double)Math.Round(totalDuration.TotalHours);
         }
-    }
+    } 
 }

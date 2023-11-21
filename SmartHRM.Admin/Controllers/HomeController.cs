@@ -13,9 +13,8 @@ namespace SmartHRM.Admin.Controllers
             _logger = logger;
         }
 
-        [Route("/Dashboard")]
-        [Route("")]
-        public IActionResult HoangIndex()
+        [Route("/Dashboard/Hoang")]
+        public IActionResult HoangDashboard()
         {
             return View("~/Views/Home/HoangIndex.cshtml");
         }
