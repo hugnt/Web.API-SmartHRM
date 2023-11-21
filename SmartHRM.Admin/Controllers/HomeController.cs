@@ -16,8 +16,7 @@ namespace SmartHRM.Admin.Controllers
         }
 
         
-        [Route("/Dashboard")]
-        [Route("")]
+        [Route("/Hung/Dashboard")]
         public IActionResult Index()
         {
             return View();
