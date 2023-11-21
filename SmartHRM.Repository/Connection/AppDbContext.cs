@@ -16,6 +16,10 @@ namespace SmartHRM.Repository
         public DbSet<Employee> Employees { get; set; }
         public DbSet<Allowance> Allowances { get; set; }
         public DbSet<Bonus> Bonus { get; set; }
+        public DbSet<AllowanceDetails> AllowanceDetails { get; set; }
+        public DbSet<BonusDetails> BonusDetails { get; set; }
+        public DbSet<Deduction> Deductions { get; set; }
+        public DbSet<DeductionDetails> DeductionDetails { get; set; }
 
     }
 }

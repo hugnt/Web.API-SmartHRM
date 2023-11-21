@@ -7,44 +7,43 @@ namespace SmartHRM.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class AllowanceController : ControllerBase
+    public class DeductionController : ControllerBase
     {
-        //sample
-        private readonly AllowanceService _AllowanceService;
-        public AllowanceController(AllowanceService AllowanceService)
+        private readonly DeductionService _DeductionService;
+        public DeductionController(DeductionService DeductionService)
         {
-            _AllowanceService = AllowanceService;
+            _DeductionService = DeductionService;
         }
 
         [HttpGet]
-        [ProducesResponseType(200, Type = typeof(IEnumerable<Allowance>))]
-        public IActionResult GetAllowances()
+        [ProducesResponseType(200, Type = typeof(IEnumerable<Deduction>))]
+        public IActionResult GetDeductions()
         {
-            var Allowances = _AllowanceService.GetAllowances();
+            var Deductions = _DeductionService.GetDeductions();
             if (!ModelState.IsValid) return BadRequest(ModelState);
 
-            return Ok(Allowances);
+            return Ok(Deductions);
         }
 
-        [HttpGet("{AllowanceId}")]
-        [ProducesResponseType(200, Type = typeof(Allowance))]
+        [HttpGet("{DeductionId}")]
+        [ProducesResponseType(200, Type = typeof(Deduction))]
         [ProducesResponseType(400)]
-        public IActionResult GetAllowance(int AllowanceId)
+        public IActionResult GetDeduction(int DeductionId)
         {
-            var Allowance = _AllowanceService.GetAllowance(AllowanceId);
+            var Deduction = _DeductionService.GetDeduction(DeductionId);
             if (!ModelState.IsValid) return BadRequest();
-            if (Allowance == null) return NotFound();
-            return Ok(Allowance);
+            if (Deduction == null) return NotFound();
+            return Ok(Deduction);
         }
 
         [HttpPost]
         [ProducesResponseType(201)]
         [ProducesResponseType(400)]
-        public IActionResult CreateAllowance([FromBody] Allowance AllowanceCreate)
+        public IActionResult CreateDeduction([FromBody] Deduction DeductionCreate)
         {
-            if (AllowanceCreate == null) return BadRequest(ModelState);
+            if (DeductionCreate == null) return BadRequest(ModelState);
 
-            var res = _AllowanceService.CreateAllowance(AllowanceCreate);
+            var res = _DeductionService.CreateDeduction(DeductionCreate);
 
             if (res.Status != 201)
             {
@@ -57,17 +56,17 @@ namespace SmartHRM.API.Controllers
             return StatusCode(res.Status, res.StatusMessage);
         }
 
-        [HttpPut("{AllowanceId}")]
+        [HttpPut("{DeductionId}")]
         [ProducesResponseType(400)]
         [ProducesResponseType(204)]
         [ProducesResponseType(404)]
-        public IActionResult UpdateAllowance(int AllowanceId, [FromBody] Allowance updatedAllowance)
+        public IActionResult UpdateDeduction(int DeductionId, [FromBody] Deduction updatedDeduction)
         {
-            if (updatedAllowance == null) return BadRequest(ModelState);
-            if (AllowanceId != updatedAllowance.Id) return BadRequest(ModelState);
+            if (updatedDeduction == null) return BadRequest(ModelState);
+            if (DeductionId != updatedDeduction.Id) return BadRequest(ModelState);
 
 
-            var res = _AllowanceService.UpdateAllowance(AllowanceId, updatedAllowance);
+            var res = _DeductionService.UpdateDeduction(DeductionId, updatedDeduction);
             if (res.Status != 204)
             {
                 ModelState.AddModelError("", res.StatusMessage);
@@ -78,13 +77,13 @@ namespace SmartHRM.API.Controllers
             return NoContent();
         }
 
-        [HttpDelete("{AllowanceId}")]
+        [HttpDelete("{DeductionId}")]
         [ProducesResponseType(400)]
         [ProducesResponseType(204)]
         [ProducesResponseType(404)]
-        public IActionResult DeleteAllowance(int AllowanceId)
+        public IActionResult DeleteDeduction(int DeductionId)
         {
-            var res = _AllowanceService.DeleteAllowance(AllowanceId);
+            var res = _DeductionService.DeleteDeduction(DeductionId);
             if (res.Status != 204)
             {
                 ModelState.AddModelError("", res.StatusMessage);
@@ -96,14 +95,14 @@ namespace SmartHRM.API.Controllers
             return NoContent();
         }
 
-        [HttpPut("DeletedStatus/{AllowanceId}/{status}")]
+        [HttpPut("DeletedStatus/{DeductionId}/{status}")]
         [ProducesResponseType(400)]
         [ProducesResponseType(204)]
         [ProducesResponseType(404)]
-        public IActionResult UpdateDeleteStatus(int AllowanceId, bool status)
+        public IActionResult UpdateDeleteStatus(int DeductionId, bool status)
         {
 
-            var res = _AllowanceService.UpdateDeleteStatus(AllowanceId, status);
+            var res = _DeductionService.UpdateDeleteStatus(DeductionId, status);
             if (res.Status != 204)
             {
                 ModelState.AddModelError("", res.StatusMessage);
@@ -115,41 +114,41 @@ namespace SmartHRM.API.Controllers
         }
 
         [HttpGet("Search/{field}/{keyWords}")]
-        [ProducesResponseType(200, Type = typeof(IEnumerable<Allowance>))]
+        [ProducesResponseType(200, Type = typeof(IEnumerable<Deduction>))]
         public IActionResult Search(string field, string keyWords)
         {
-            var Allowances = _AllowanceService.Search(field, keyWords);
+            var Deductions = _DeductionService.Search(field, keyWords);
             if (!ModelState.IsValid) return BadRequest(ModelState);
-            return Ok(Allowances);
+            return Ok(Deductions);
         }
-        [HttpGet("Statistic/TotalAllowance")]
+        [HttpGet("Statistic/TotalDeduction")]
         [ProducesResponseType(200, Type = typeof(int))]
         [ProducesResponseType(400)]
-        public IActionResult GetTotalAllowance()
+        public IActionResult GetTotalDeduction()
         {
-            var res = _AllowanceService.GetTotalAllowance();
+            var res = _DeductionService.GetTotal();
             if (!ModelState.IsValid) return BadRequest();
             if (res == 0) return NotFound();
             return Ok(res);
         }
 
-        [HttpGet("Statistic/Month")]
+        [HttpGet("Statistic/{Month}")]
         [ProducesResponseType(200, Type = typeof(object))]
         [ProducesResponseType(400)]
         public IActionResult GetStatisticMonth()
         {
-            var res = _AllowanceService.GetStatisticMonth();
+            var res = _DeductionService.GetStatisticMonth();
             if (!ModelState.IsValid) return BadRequest();
             if (res == null) return NotFound();
             return Ok(res);
         }
 
-        [HttpGet("Statistic/TopAllowanceHighest/{limit}")]
+        [HttpGet("Statistic/TopDeductionHighest/{limit}")]
         [ProducesResponseType(200, Type = typeof(object))]
         [ProducesResponseType(400)]
-        public IActionResult GetTopAmountAllowance(int limit)
+        public IActionResult GetTopAmountDeduction(int limit)
         {
-            var res = _AllowanceService.GetTopAllowanceHighest(limit);
+            var res = _DeductionService.GetTopDeductionHighest(limit);
             if (!ModelState.IsValid) return BadRequest();
             if (res == null) return NotFound();
             return Ok(res);

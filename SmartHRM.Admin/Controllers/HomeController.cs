@@ -14,9 +14,9 @@ namespace SmartHRM.Admin.Controllers
         }
         [Route("/Dashboard")]
         [Route("")]
-        public IActionResult Index()
+        public IActionResult KhanhIndex()
         {
-            return View();
+            return View("~/Views/Home/KhanhIndex.cshtml");
         }
 
         public IActionResult Privacy()

@@ -16,6 +16,9 @@ builder.Services.AddDIServices(builder.Configuration);
 builder.Services.AddScoped<EmployeeService>();
 builder.Services.AddScoped<AllowanceService>();
 builder.Services.AddScoped<BonusService>();
+builder.Services.AddScoped<DeductionService>();
+
+
 
 
 

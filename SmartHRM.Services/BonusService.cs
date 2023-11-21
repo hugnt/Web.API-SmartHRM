@@ -11,9 +11,13 @@ namespace SmartHRM.Services
     public class BonusService
     {
         private readonly BonusRepository _BonusRepository;
-        public BonusService(BonusRepository BonusRepository)
+        public readonly EmployeeRepository _EmployeeRepository;
+        public readonly BonusDetailsRepository _BonusDetailsRepository;
+        public BonusService(BonusRepository BonusRepository, EmployeeRepository EmployeeRepository, BonusDetailsRepository BonusDetails)
         {
             _BonusRepository = BonusRepository;
+            _EmployeeRepository = EmployeeRepository;
+            _BonusDetailsRepository = BonusDetails;
         }
         public ResponseModel CreateBonus(Bonus BonusCreate)
         {
@@ -106,6 +110,33 @@ namespace SmartHRM.Services
         public IEnumerable<Bonus> GetTopID(int limit)
         {
             var res = _BonusRepository.GetAll().Where(x => x.IsDeleted == false).OrderByDescending(x => x.Id).Take(limit);
+            return res;
+        }
+        //Số lượng Bonus
+        public int GetTotal()
+        {
+            return _BonusRepository.GetAll().Where(x => x.IsDeleted == false).Count();
+        }
+
+        //Statistic 
+        public decimal? GetStatisticMonth()
+        {
+            var totalAmount = _BonusRepository.GetAll()
+        .Join(
+        _BonusDetailsRepository.GetAll(),
+        Bonus => Bonus.Id,
+        detail => detail.BonusID,
+        (Bonus, detail) => new { Bonus = Bonus, Detail = detail }
+        )
+        .Where(x => x.Detail.StartAt.Month == 11)
+        .Sum(x => x.Bonus.amount);
+            return totalAmount;
+        }
+
+        //Get top / list
+        public IEnumerable<Bonus> GetTopBonusHighest(int limit)
+        {
+            var res = _BonusRepository.GetAll().Where(x => x.IsDeleted == false).OrderByDescending(x => x.amount).Take(limit);
             return res;
         }
     }

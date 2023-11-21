@@ -4,31 +4,32 @@ import * as API from '../api.js';
 import * as AJAXCONFIG from '../ajax_config.js';
 
 $(document).ready(async function () {
-    //CARD 
-    var newCard = new huCard("rowCard");
-    var totalEmployee = await getData("/Employee/Statistic/Total");
-    var cart1 = {
-        title: "Total Employee",
-        number: totalEmployee,
-        unit: "people",
-        url: "/Employee/PersonnelFiles",
+    //CARD
+/*    var newCard = new huCard("rowCard4");
+    var DeductionQuantity = await getData("/Deduction/Statistic/TotalDeduction");
+    var DeductionTotal = await getData("/Deduction/Statistic/11");
+    var card1 = {
+        title: "Deduction Quantity",
+        number: DeductionQuantity,
+        unit: "deduction",
+        url: "/Salary/DeductionList",
         icon: "bx bx-user",
         iconColor: "success"
     }
-    var cart2 = {
-        title: "Total Bonus",
-        number: 10000000,
+    var card2 = {
+        title: "Deduction total in month",
+        number: DeductionTotal,
         unit: "VND",
-        url: "/Salary/BonusList",
+        url: "/Salary/DeductionList",
         icon: "bx bx-dollar",
         iconColor: "warning"
     }
-    newCard.add(cart1)
-    newCard.add(cart2)
+    newCard.add(card1)
+    newCard.add(card2)*/
 
     //TABLE
-    var listData = await getList("/Employee/Statistic/TopYoungest/12");
-    var columns = [
+/*    var listData4 = await getList("/Deduction/Statistic/TopDeductionHighest/8");
+    var columns4 = [
         {
             id: "id",
             name: htmlText(`<div class="text-center">Id</div>`),
@@ -38,41 +39,51 @@ $(document).ready(async function () {
             }
         },
         {
-            id: "fullName",
-            name: "Full Name"
+            id: "name",
+            name: "Bonus Name",
+            sort: true
         },
         {
-            id: "dob",
-            name: "Date of birth",
+            id: "amount",
+            name: "Amount",
+            sort: true,
             formatter: function (e) {
-                return new Date(e).toLocaleDateString();
+                return e == null ? "0 VND" : e + " VND";
             }
         },
         {
+            id: "note",
+            name: "Note"
+        },
+    ];*/
+        /*{
             id: "gender",
             name: "Gender",
             formatter: function (e) {
                 return e ? "Male" : "Female";
             }
-        }];
-    var newGrid = new huGrid("table-product-list-all", columns, listData);
+        }*/
+/*    var newGrid2 = new huGrid("table-product-list-all4", columns4, listData4);*/
 
 
     //CHART
-    var dataObj = await getData("/Employee/Statistic/MaleFemale");
-
-    var chartLabels = ["Male", "Female"];
-    var newChart = new huApex("apex-barchar", chartLabels, dataObj);
+    //Total
+    var dataObj1 = await getData("/Allowance/Statistic/TotalAllowance");
+    var dataObj2 = await getData("/Bonus/Statistic/TotalBonus");
+    var dataObj3 = await getData("/Deduction/Statistic/TotalDeduction");
+    var data1 = { dataObj1, dataObj2, dataObj3 }
+    //Bar chart
+    var chartLabels1 = ["Allowance", "Bonus", "Deduction"];
+    var newChart = new huApex("apex-barchar-salary", chartLabels1, data1);
     newChart.barChart();
-
-    var chartLabels2 = ["Male", "Female"];
-    var newChart2 = new huApex("apex-piechart", chartLabels2, dataObj);
+    //Pie chart
+    var chartLabels2 = ["Allowance", "Bonus", "Deduction"];
+    var newChart2 = new huApex("apex-piechart-salary", chartLabels2, data1);
     newChart2.pieChart();
-
-    var chartLabels3 = ["Male", "Female"];
-    var newChart3 = new huApex("apex-donutchart", chartLabels3, dataObj);
+    //Donut chart
+    var chartLabels3 = ["Allowance", "Bonus", "Deduction"];
+    var newChart3 = new huApex("apex-donutchart-salary", chartLabels3, data1);
     newChart3.donutChart();
-
 
     //AJAX
     async function getList(endPoint) {
@@ -112,8 +123,8 @@ $(document).ready(async function () {
             }
         } catch (e) {
             console.log(e);
-            AJAXCONFIG.ajaxFail(e);
-        }
+/*            AJAXCONFIG.ajaxFail(e);
+*/        }
         finally {
             AJAXCONFIG.ajaxAfterSend();
         }

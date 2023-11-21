@@ -121,5 +121,37 @@ namespace SmartHRM.API.Controllers
             if (!ModelState.IsValid) return BadRequest(ModelState);
             return Ok(Bonuss);
         }
+        [HttpGet("Statistic/TotalBonus")]
+        [ProducesResponseType(200, Type = typeof(int))]
+        [ProducesResponseType(400)]
+        public IActionResult GetTotalEmployee()
+        {
+            var res = _BonusService.GetTotal();
+            if (!ModelState.IsValid) return BadRequest();
+            if (res == 0) return NotFound();
+            return Ok(res);
+        }
+
+        [HttpGet("Statistic/Month")]
+        [ProducesResponseType(200, Type = typeof(object))]
+        [ProducesResponseType(400)]
+        public IActionResult GetStatisticMonth()
+        {
+            var res = _BonusService.GetStatisticMonth();
+            if (!ModelState.IsValid) return BadRequest();
+            if (res == null) return NotFound();
+            return Ok(res);
+        }
+
+        [HttpGet("Statistic/TopBonusHighest/{limit}")]
+        [ProducesResponseType(200, Type = typeof(object))]
+        [ProducesResponseType(400)]
+        public IActionResult GetTopAmountInsurance(int limit)
+        {
+            var res = _BonusService.GetTopBonusHighest(limit);
+            if (!ModelState.IsValid) return BadRequest();
+            if (res == null) return NotFound();
+            return Ok(res);
+        }
     }
 }
