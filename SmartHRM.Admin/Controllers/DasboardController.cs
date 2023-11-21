@@ -9,5 +9,11 @@ namespace SmartHRM.Admin.Controllers
         {
             return View("~/Views/Dasboard/SuIndex.cshtml");
         }
+
+        [Route("Hoang-Dashboard")]
+        public IActionResult HoangIndex()
+        {
+            return View("~/Views/Dasboard/HoangIndex.cshtml");
+        }
     }
 }

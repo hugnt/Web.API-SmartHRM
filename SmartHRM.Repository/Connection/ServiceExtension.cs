@@ -68,6 +68,7 @@ namespace SmartHRM.Repository.Connection
             //services.AddScoped<IQRCodeService, QRCodeService>();
             services.AddScoped<TaskRepository>();
             services.AddScoped<TaskDetailsRepository>();
+            services.AddScoped<ProjectRepository>();
 
             return services;
         }

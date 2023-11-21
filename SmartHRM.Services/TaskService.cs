@@ -88,5 +88,37 @@ namespace SmartHRM.Services
             return res;
         }
 
+        //Get total record
+        public int GetTotal()
+        {
+            return _TaskRepository.GetAll().Where(x => x.IsDeleted == false).Count();
+        }
+
+        //Get total Time /Task
+        public double GetTotalTaskTime()
+        {
+            return _TaskRepository.GetTotalTaskTime();
+        }
+
+        //Statistic 
+        public object GetStatisticTask()
+        {
+            var notStartedCount = _TaskRepository.GetAll().Where(x => x.Status == 0 && x.IsDeleted == false).Count();
+            var progressingCount = _TaskRepository.GetAll().Where(x => x.Status == 1 && x.IsDeleted == false).Count();
+            var finishedCount = _TaskRepository.GetAll().Where(x => x.Status == 2 && x.IsDeleted == false).Count();
+            return new
+            {
+                NotStarted = notStartedCount,
+                Progressing = progressingCount,
+                Finished = finishedCount
+            };
+        }
+
+        //Get top / list
+        public IEnumerable<Task> GetTopRecently(int limit)
+        {
+            var res = _TaskRepository.GetAll().Where(x => x.IsDeleted == false).OrderBy(x => x.CreatedAt).Take(limit);
+            return res;
+        }
     }
 }

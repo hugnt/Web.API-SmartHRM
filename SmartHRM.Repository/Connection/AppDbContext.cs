@@ -29,6 +29,7 @@ namespace SmartHRM.Repository
 
         public DbSet<Task> Tasks { get; set; }
         public DbSet<TaskDetails> TaskDetails { get; set; }
+        public DbSet<Project> Projects { get; set; }
 
         public DbSet<Allowance> Allowances { get; set; }
         public DbSet<AllowanceDetails> AllowanceDetails { get; set; }

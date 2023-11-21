@@ -48,6 +48,7 @@ builder.Services.AddScoped<TimeKeepingService>();
 //Task
 builder.Services.AddScoped<TaskService>();
 builder.Services.AddScoped<TaskDetailsService>();
+builder.Services.AddScoped<ProjectService>();
 
 //Enable CORS
 builder.Services.AddCors(p =>

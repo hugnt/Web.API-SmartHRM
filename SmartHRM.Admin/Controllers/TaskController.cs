@@ -13,24 +13,24 @@ namespace SmartHRM.Admin.Controllers
         [Route("Tasks/Project/Trash")]
         public IActionResult ProjectTrash()
         {
-            return View();
+            return View("~/Views/Task/ProjectTrash.cshtml");
         }
 
         [Route("Tasks/TaskList")]
         public IActionResult Task()
         {
-            return View();
+            return View("~/Views/Task/Task.cshtml");
         }
 
         [Route("Tasks/TaskList/Trash")]
         public IActionResult TaskTrash()
         {
-            return View();
+            return View("~/Views/Task/TaskTrash.cshtml");
         }
         [Route("/Tasks/TasksOfEmployee")]
         public IActionResult TasksOfEmployee()
         {
-            return View();
+            return View("~/Views/Task/TasksOfEmployee.cshtml");
         }
     }
 }
