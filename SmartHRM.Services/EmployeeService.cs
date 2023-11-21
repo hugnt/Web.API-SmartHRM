@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace SmartHRM.Services
 {
-    public class EmployeeService 
+    public class EmployeeService
     {
         private readonly EmployeeRepository _employeeRepository;
         private readonly PositionRepository _positionRepository;
@@ -25,7 +25,7 @@ namespace SmartHRM.Services
         public ResponseModel CreateEmployee(Employee employeeCreate)
         {
             var employees = _employeeRepository.GetAll()
-                            .Where(l => 
+                            .Where(l =>
                                     l.FullName.Trim().ToLower() == employeeCreate.FullName.Trim().ToLower()
                                     && l.IdentificationCard.Trim().ToLower() == employeeCreate.IdentificationCard.Trim().ToLower())
                             .FirstOrDefault();

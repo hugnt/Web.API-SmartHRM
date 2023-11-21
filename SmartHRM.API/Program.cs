@@ -45,6 +45,10 @@ builder.Services.AddScoped<DeductionService>();
 //TimeKeeping
 builder.Services.AddScoped<TimeKeepingService>();
 
+//Task
+builder.Services.AddScoped<TaskService>();
+builder.Services.AddScoped<TaskDetailsService>();
+
 //Enable CORS
 builder.Services.AddCors(p =>
     p.AddPolicy("HUG_LOCAL", build =>

@@ -5,18 +5,18 @@ import * as AJAXCONFIG from '../ajax_config.js';
 
 $(document).ready(async function () {
     //CARD 
-    var newCard = new huCard("rowCard");
-    var totalEmployee = await getData("/Contract/Statistic/Total");
-    var cart1 = {
+    var newCard = new huCard("rowCard-Contract");
+    var totalContract = await getData("/Contract/Statistic/Total");
+    var card3 = {
         title: "Total Contract",
         number: totalContract,
-        unit: "people",
+        unit: "Contract",
         url: "/Employee/Contract",
-        icon: "bx bx-user",
+        icon: "bx bxs-contact",
         iconColor: "success"
     }
     
-    newCard.add(cart1)
+    newCard.add(card3)
     //AJAX
     async function getList(endPoint) {
         try {
