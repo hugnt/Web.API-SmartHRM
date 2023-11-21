@@ -15,5 +15,17 @@ namespace SmartHRM.Repository
         {
             _dbContext = dbContext;
         }
+        public bool IsExists(Deduction Deduction)
+        {
+            var user = _dbContext.Deductions.SingleOrDefault(a =>
+                a.Name == Deduction.Name
+            );
+            return user != null;
+        }
+
+        public Deduction GetDeduction(Deduction Deduction)
+        {
+            return _dbContext.Deductions.SingleOrDefault(a => a.Name == Deduction.Name);
+        }
     }
 }

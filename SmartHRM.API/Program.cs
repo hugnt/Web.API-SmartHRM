@@ -26,6 +26,9 @@ builder.Services.AddScoped<SalaryService>();
 
 //Position
 builder.Services.AddScoped<PositionService>();
+builder.Services.AddScoped<DeductionService>();
+
+
 
 //Insurance
 builder.Services.AddScoped<InsuranceService>();

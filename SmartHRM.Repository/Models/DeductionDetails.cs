@@ -13,7 +13,7 @@ namespace SmartHRM.Repository
     public class DeductionDetails : BaseModel
     {
 
-        [Column("deduction_id")]
+		[Column("deduction_id")]
         public int DeductionId { get; set; }
 
         [Column("employee_id")]

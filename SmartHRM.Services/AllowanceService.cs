@@ -1,5 +1,6 @@
 ﻿using HUG.CRUD.Services;
 using SmartHRM.Repository;
+using SmartHRM.Services.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,9 +12,13 @@ namespace SmartHRM.Services
     public class AllowanceService
     {
         private readonly AllowanceRepository _AllowanceRepository;
-        public AllowanceService(AllowanceRepository AllowanceRepository)
+        public readonly EmployeeRepository _EmployeeRepository;
+        public readonly AllowanceDetailsRepository _AllowanceDetailsRepository;
+        public AllowanceService(AllowanceRepository AllowanceRepository, EmployeeRepository EmployeeRepository, AllowanceDetailsRepository AllowanceDetails)
         {
             _AllowanceRepository = AllowanceRepository;
+            _EmployeeRepository = EmployeeRepository;
+            _AllowanceDetailsRepository = AllowanceDetails;
         }
         public ResponseModel CreateAllowance(Allowance AllowanceCreate)
         {
@@ -82,6 +87,32 @@ namespace SmartHRM.Services
             if (keyWords == "null") return _AllowanceRepository.GetAll();
             var res = _AllowanceRepository.Search(field, keyWords);
             if (res == null) return new List<Allowance>();
+            return res;
+        }
+        //Get total record
+        public int GetTotalAllowance()
+        {
+            return _AllowanceRepository.GetAll().Where(x => x.IsDeleted == false).Count();
+        }
+
+        //Statistic 
+        public decimal? GetStatisticMonth()
+        {
+            var totalAmount = _AllowanceRepository.GetAll() 
+    .Join(
+        _AllowanceDetailsRepository.GetAll(),
+        allowance => allowance.Id,
+        detail => detail.AllowanceId,
+        (allowance, detail) => new { Allowance = allowance, Detail = detail }
+    )
+    .Where(x => x.Detail.StartAt.Month == 11)
+    .Sum(x => x.Allowance.Amount);
+            return totalAmount;
+        }
+        //Get top / list
+        public IEnumerable<Allowance> GetTopAllowanceHighest(int limit)
+        {
+            var res = _AllowanceRepository.GetAll().Where(x => x.IsDeleted == false).OrderByDescending(x => x.Amount).Take(limit);
             return res;
         }
     }

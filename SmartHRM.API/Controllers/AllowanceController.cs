@@ -96,14 +96,14 @@ namespace SmartHRM.API.Controllers
             return NoContent();
         }
 
-        [HttpPut("DeletedStatus/{BonusId}/{status}")]
+        [HttpPut("DeletedStatus/{AllowanceId}/{status}")]
         [ProducesResponseType(400)]
         [ProducesResponseType(204)]
         [ProducesResponseType(404)]
-        public IActionResult UpdateDeleteStatus(int BonusId, bool status)
+        public IActionResult UpdateDeleteStatus(int AllowanceId, bool status)
         {
 
-            var res = _AllowanceService.UpdateDeleteStatus(BonusId, status);
+            var res = _AllowanceService.UpdateDeleteStatus(AllowanceId, status);
             if (res.Status != 204)
             {
                 ModelState.AddModelError("", res.StatusMessage);
@@ -115,12 +115,44 @@ namespace SmartHRM.API.Controllers
         }
 
         [HttpGet("Search/{field}/{keyWords}")]
-        [ProducesResponseType(200, Type = typeof(IEnumerable<Bonus>))]
+        [ProducesResponseType(200, Type = typeof(IEnumerable<Allowance>))]
         public IActionResult Search(string field, string keyWords)
         {
-            var Bonuss = _AllowanceService.Search(field, keyWords);
+            var Allowances = _AllowanceService.Search(field, keyWords);
             if (!ModelState.IsValid) return BadRequest(ModelState);
-            return Ok(Bonuss);
+            return Ok(Allowances);
+        }
+        [HttpGet("Statistic/TotalAllowance")]
+        [ProducesResponseType(200, Type = typeof(int))]
+        [ProducesResponseType(400)]
+        public IActionResult GetTotalAllowance()
+        {
+            var res = _AllowanceService.GetTotalAllowance();
+            if (!ModelState.IsValid) return BadRequest();
+            if (res == 0) return NotFound();
+            return Ok(res);
+        }
+
+        [HttpGet("Statistic/Month")]
+        [ProducesResponseType(200, Type = typeof(object))]
+        [ProducesResponseType(400)]
+        public IActionResult GetStatisticMonth()
+        {
+            var res = _AllowanceService.GetStatisticMonth();
+            if (!ModelState.IsValid) return BadRequest();
+            if (res == null) return NotFound();
+            return Ok(res);
+        }
+
+        [HttpGet("Statistic/TopAllowanceHighest/{limit}")]
+        [ProducesResponseType(200, Type = typeof(object))]
+        [ProducesResponseType(400)]
+        public IActionResult GetTopAmountAllowance(int limit)
+        {
+            var res = _AllowanceService.GetTopAllowanceHighest(limit);
+            if (!ModelState.IsValid) return BadRequest();
+            if (res == null) return NotFound();
+            return Ok(res);
         }
     }
 }

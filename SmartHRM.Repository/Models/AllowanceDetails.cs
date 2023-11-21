@@ -13,13 +13,13 @@ namespace SmartHRM.Repository
     public class AllowanceDetails : BaseModel
     {
 
-        [Column("allowance_id")]
+		[Column("allowance_id")]
         public int AllowanceId { get; set; }
-
         [Column("employee_id")]
         public int EmployeeId { get; set; }
+        [Column("startAt")]
         public DateTime StartAt { get; set; }
         public DateTime? ExpriredAt { get; set; }
-       
+
     }
 }

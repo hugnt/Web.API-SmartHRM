@@ -14,11 +14,11 @@ namespace SmartHRM.Repository
         [Column("name")]
         public string? Name { get; set; }
         [Column("amount")]
-        public decimal? amount { get; set; }
+        public decimal? Amount { get; set; }
         [Column("expriredAt")]
-        public DateTime? expriredAt { get; set; }
+        public DateTime? ExpriredAt { get; set; }
         [Column("note")]
-        public string? note { get; set; }
+        public string? Note { get; set; }
 
     }
 }

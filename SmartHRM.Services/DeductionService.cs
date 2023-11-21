@@ -8,12 +8,16 @@ using System.Threading.Tasks;
 
 namespace SmartHRM.Services
 {
-    public class DeductionService 
+    public class DeductionService
     {
         private readonly DeductionRepository _DeductionRepository;
-        public DeductionService(DeductionRepository DeductionRepository)
+        public readonly EmployeeRepository _EmployeeRepository;
+        public readonly DeductionDetailsRepository _DeductionDetailsRepository;
+        public DeductionService(DeductionRepository DeductionRepository, EmployeeRepository EmployeeRepository, DeductionDetailsRepository DeductionDetails)
         {
             _DeductionRepository = DeductionRepository;
+            _EmployeeRepository = EmployeeRepository;
+            _DeductionDetailsRepository = DeductionDetails;
         }
         public ResponseModel CreateDeduction(Deduction DeductionCreate)
         {
@@ -65,14 +69,15 @@ namespace SmartHRM.Services
             }
             return new ResponseModel(204, "");
         }
-        public ResponseModel UpdateDeleteStatus(int positionId, bool status)
+
+        public ResponseModel UpdateDeleteStatus(int DeductionId, bool status)
         {
-            if (!_DeductionRepository.IsExists(positionId)) return new ResponseModel(404, "Not found");
-            var updatedPosition = _DeductionRepository.GetById(positionId);
-            updatedPosition.IsDeleted = status;
-            if (!_DeductionRepository.Update(updatedPosition))
+            if (!_DeductionRepository.IsExists(DeductionId)) return new ResponseModel(404, "Not found");
+            var updatedDeduction = _DeductionRepository.GetById(DeductionId);
+            updatedDeduction.IsDeleted = status;
+            if (!_DeductionRepository.Update(updatedDeduction))
             {
-                return new ResponseModel(500, "Something went wrong when change delete status position");
+                return new ResponseModel(500, "Something went wrong when change delete status Deduction");
             }
             return new ResponseModel(204, "");
         }
@@ -84,6 +89,55 @@ namespace SmartHRM.Services
             if (res == null) return new List<Deduction>();
             return res;
         }
+        public int GetInsuranceTotal()
+        {
+            return _DeductionRepository.GetAll().Where(x => x.IsDeleted == false).Count();
+        }
 
+        //Statistic 
+        public object GetStatisticUsedInsurance()
+        {
+            var ActiveCount = _DeductionRepository.GetAll().Where(x => x.IsActive == true && x.IsDeleted == false).Count();
+            var InactiveCount = _DeductionRepository.GetAll().Where(x => x.IsActive == false && x.IsDeleted == false).Count();
+            return new
+            {
+                Active = ActiveCount,
+                Inactive = InactiveCount
+            };
+        }
+
+        //Get top / list
+        public IEnumerable<Deduction> GetTopID(int limit)
+        {
+            var res = _DeductionRepository.GetAll().Where(x => x.IsDeleted == false).OrderByDescending(x => x.Id).Take(limit);
+            return res;
+        }
+        //Số lượng Deduction
+        public int GetTotal()
+        {
+            return _DeductionRepository.GetAll().Where(x => x.IsDeleted == false).Count();
+        }
+
+        //Statistic 
+        public decimal? GetStatisticMonth()
+        {
+            var totalAmount = _DeductionRepository.GetAll()
+        .Join(
+        _DeductionDetailsRepository.GetAll(),
+        Deduction => Deduction.Id,
+        detail => detail.DeductionId,
+        (Deduction, detail) => new { Deduction = Deduction, Detail = detail }
+        )
+        .Where(x => x.Detail.StartAt.Month == 11)
+        .Sum(x => x.Deduction.Amount);
+            return totalAmount;
+        }
+
+        //Get top / list
+        public IEnumerable<Deduction> GetTopDeductionHighest(int limit)
+        {
+            var res = _DeductionRepository.GetAll().Where(x => x.IsDeleted == false).OrderByDescending(x => x.Amount).Take(limit);
+            return res;
+        }
     }
 }

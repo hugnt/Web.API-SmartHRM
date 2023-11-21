@@ -95,14 +95,15 @@ namespace SmartHRM.API.Controllers
 
             return NoContent();
         }
-        [HttpPut("DeletedStatus/{deductionId}/{status}")]
+
+        [HttpPut("DeletedStatus/{DeductionId}/{status}")]
         [ProducesResponseType(400)]
         [ProducesResponseType(204)]
         [ProducesResponseType(404)]
-        public IActionResult UpdateDeleteStatus(int deductionId, bool status)
+        public IActionResult UpdateDeleteStatus(int DeductionId, bool status)
         {
 
-            var res = _DeductionService.UpdateDeleteStatus(deductionId, status);
+            var res = _DeductionService.UpdateDeleteStatus(DeductionId, status);
             if (res.Status != 204)
             {
                 ModelState.AddModelError("", res.StatusMessage);
@@ -117,11 +118,41 @@ namespace SmartHRM.API.Controllers
         [ProducesResponseType(200, Type = typeof(IEnumerable<Deduction>))]
         public IActionResult Search(string field, string keyWords)
         {
-            var deductions = _DeductionService.Search(field, keyWords);
+            var Deductions = _DeductionService.Search(field, keyWords);
             if (!ModelState.IsValid) return BadRequest(ModelState);
-            return Ok(deductions);
+            return Ok(Deductions);
+        }
+        [HttpGet("Statistic/TotalDeduction")]
+        [ProducesResponseType(200, Type = typeof(int))]
+        [ProducesResponseType(400)]
+        public IActionResult GetTotalDeduction()
+        {
+            var res = _DeductionService.GetTotal();
+            if (!ModelState.IsValid) return BadRequest();
+            if (res == 0) return NotFound();
+            return Ok(res);
         }
 
+        [HttpGet("Statistic/{Month}")]
+        [ProducesResponseType(200, Type = typeof(object))]
+        [ProducesResponseType(400)]
+        public IActionResult GetStatisticMonth()
+        {
+            var res = _DeductionService.GetStatisticMonth();
+            if (!ModelState.IsValid) return BadRequest();
+            if (res == null) return NotFound();
+            return Ok(res);
+        }
 
+        [HttpGet("Statistic/TopDeductionHighest/{limit}")]
+        [ProducesResponseType(200, Type = typeof(object))]
+        [ProducesResponseType(400)]
+        public IActionResult GetTopAmountDeduction(int limit)
+        {
+            var res = _DeductionService.GetTopDeductionHighest(limit);
+            if (!ModelState.IsValid) return BadRequest();
+            if (res == null) return NotFound();
+            return Ok(res);
+        }
     }
 }
