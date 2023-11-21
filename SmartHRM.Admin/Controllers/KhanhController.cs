@@ -4,11 +4,11 @@ using System.Diagnostics;
 
 namespace SmartHRM.Admin.Controllers
 {
-    public class HomeController : Controller
+    public class KhanhController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+        private readonly ILogger<KhanhController> _logger;
 
-        public HomeController(ILogger<HomeController> logger)
+        public KhanhController(ILogger<KhanhController> logger)
         {
             _logger = logger;
         }
