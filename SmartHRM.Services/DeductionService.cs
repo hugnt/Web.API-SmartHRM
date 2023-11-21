@@ -109,7 +109,7 @@ namespace SmartHRM.Services
 
             return resQuery;
         }
-        public decimal? GetAmount()
+        public decimal? GetTotalAmountDeduction()
         {
             decimal? res = 0;
             foreach(var item in _DeductionRepository.GetAll())

@@ -5,21 +5,33 @@ import * as AJAXCONFIG from '../ajax_config.js';
 
 $(document).ready(async function () {
     //CARD 
-    var newCard = new huCard("employeeCard");
-    var totalDeduction = await getData("/Deduction/Statistic/GetAmountDeduction");
-    var card1 = {
+    var newCardDeduction = new huCard("employeeCard");
+    var totalDeduction1 = await getData("/Deduction/Statistic/GetAmountDeduction");
+    var cardDeduction1 = {
         title: "Total Deduction",
-        number: totalDeduction,
+        number: totalDeduction1,
         unit: "Deduction",
         url: "/Salary/DeductionList",
         icon: "bx bx-dollar",
         iconColor: "warning"
     }
-    newCard.add(card1)
+    
+    var totalDeduction2 = await getData("/Deduction/Statistic/GetTotalAmountDeduction");
+    var cardDeduction2 = {
+        title: "Total Amount Deduction",
+        number: totalDeduction2,
+        unit: "VND",
+        url: "/Salary/DeductionList",
+        icon: "bx bx-dollar",
+        iconColor: "warning"
+    }
+    newCardDeduction.add(cardDeduction1)
+    newCardDeduction.add(cardDeduction2)
+
 
     //TABLE
-    var listData = await getList("/Deduction/Statistic/GetTopDeduction/5");
-    var columns = [
+    var listDataDeduction = await getList("/Deduction/Statistic/GetTopDeduction/5");
+    var columnsDeduction = [
         {
             id: "id",
             name: htmlText(`<div class="text-center">Id</div>`),
@@ -40,7 +52,7 @@ $(document).ready(async function () {
             id: "note",
             name: "Note",
         }];
-    var newGrid = new huGrid("list5Deduction", columns, listData);
+    var newGridDeduction = new huGrid("list5Deduction", columnsDeduction, listDataDeduction);
 
     //AJAX
     async function getList(endPoint) {

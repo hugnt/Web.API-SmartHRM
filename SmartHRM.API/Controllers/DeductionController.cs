@@ -131,7 +131,18 @@ namespace SmartHRM.API.Controllers
             if(!ModelState.IsValid) return BadRequest(ModelState);  
             if(res == 0)   return NotFound();
             return Ok(res);
-        }/*
+        }
+        [HttpGet("Statistic/GetTotalAmountDeduction")]
+        [ProducesResponseType(200, Type = typeof(decimal))]
+        [ProducesResponseType(400)]
+        public IActionResult GetTotalAmountDeduction()
+        {
+            var res = _DeductionService.GetTotalAmountDeduction();
+            if (!ModelState.IsValid) return BadRequest(ModelState);
+            if (res == 0) return NotFound();
+            return Ok(res);
+        }
+        /*
         [HttpGet("Statistic/GetTotalDeduction/{month}")]
         [ProducesResponseType(200, Type = typeof(object))]
         [ProducesResponseType(400)]

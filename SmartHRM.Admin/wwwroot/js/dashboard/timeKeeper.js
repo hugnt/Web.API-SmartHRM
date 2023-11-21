@@ -5,53 +5,48 @@ import * as AJAXCONFIG from '../ajax_config.js';
 
 $(document).ready(async function () {
     //CARD 
-    var newCard = new huCard("timeKeepingCard");
-    var numberEmployeeLate = await getData("/TimeKeeping/Statistic/GetNumberOnTimeEmployee/46");
-    var card1 = {
+    var newCardTime = new huCard("timeKeepingCard");
+    var numberEmployeeTime1 = await getData("/TimeKeeping/Statistic/GetNumberOnTimeEmployee/46");
+    var cardTime1 = {
         title: "Total Employee Late",
-        number: numberEmployeeLate,
+        number: numberEmployeeTime1,
         unit: "people",
         url: "/TimeKeeping/TimeKeeper",
         icon: "bx bx-user",
         iconColor: "success"
     }
-    var newCard2 = new huCard("timeKeepingCard2")
-    var numberLate = await getData("/TimeKeeping/Statistic/GetNumberEmployeeNoWork/46")
-    var card2 = {
+    var numberEmployeeTime2 = await getData("/TimeKeeping/Statistic/GetNumberEmployeeNoWork/46")
+    var cardTime2 = {
         title: "Total Number Employee No Work",
-        number: numberLate,
+        number: numberEmployeeTime2,
         unit: "people",
         url: "/TimeKeeping/TimeKeeper",
         icon: "bx bx-user",
         iconColor: "success"
     }
-    newCard.add(card1)
-    newCard.add(card2)
+    newCardTime.add(cardTime1)
+    newCardTime.add(cardTime2)
 
     //TABLE
-    var listDataOnTime = await getList("/TimeKeeping/Statistic/GetUsuallyLate/5");
-    var columns = [
+    var listDataTime = await getList("/TimeKeeping/Statistic/GetUsuallyLate/5");
+    var columnsTime = [
         {
-            id: "id",
-            name: htmlText(`<div class="text-center">Id</div>`),
-            sort: false,
-            formatter: function (e) {
-                return htmlText(`<div class="text-center">${e}</div>`)
-            }
+            id: "timesName",
+            name: "Employee Name"
         },
         {
-            id: "name",
-            name: "Name"
+            id: "timesCount",
+            name: "Times"
         }];
-    var newGrid = new huGrid("list5Deduction", columns, listData);
+    var newGridTime = new huGrid("list5Late", columnsTime, listDataTime);
 
 
     //CHART
-    var dataObj = await getData("/TimeKeeping/Statistic/GetListOnTime/46");
+    var dataTime = await getData("/TimeKeeping/Statistic/GetListOnTime/46");
 
-    var chartLabels = ["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"];
-    var newChart = new huApex("DetailChart", chartLabels, dataObj);
-    newChart.barChart();
+    var chartTime = ["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"];
+    var newChartTime = new huApex("DetailChartTimeKeeping", chartTime, dataTime);
+    newChartTime.barChart();
 
 
     //AJAX

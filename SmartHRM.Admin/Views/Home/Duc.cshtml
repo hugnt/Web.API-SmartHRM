@@ -80,8 +80,6 @@
     @*TimeKeeping*@
     <div class="row" id="timeKeepingCard">
     </div>
-    <div class="row" id="timeKeepingCard2">
-    </div>
 
     <div class="row">
         <div class="col-xl-6">
@@ -91,7 +89,7 @@
                 </div><!-- end card header -->
 
                 <div class="card-body">
-                    <div id="list5Deduction" class="table-card gridjs-border-none"></div>
+                    <div id="list5Late" class="table-card gridjs-border-none"></div>
                     <div class="noresult" style="display: none">
                         <div class="text-center">
                             <lord-icon src="https://cdn.lordicon.com/msoeawqm.json" trigger="loop"
@@ -113,10 +111,10 @@
         <div class="col-xl-6">
             <div class="card">
                 <div class="card-header">
-                    <h4 class="card-title mb-0">Bar Chart</h4>
+                    <h4 class="card-title mb-0">Employee Late Chart</h4>
                 </div><!-- end card header -->
                 <div class="card-body">
-                    <div id="DetailChart" data-colors='["--vz-primary", "--vz-success", "--vz-warning", "--vz-danger", "--vz-info"]' class="apex-charts" dir="ltr"></div>
+                    <div id="DetailChartTimeKeeping" data-colors='["--vz-primary", "--vz-success", "--vz-warning", "--vz-danger", "--vz-info"]' class="apex-charts" dir="ltr"></div>
                 </div><!-- end card-body -->
             </div><!-- end card -->
         </div>
@@ -130,5 +128,5 @@
 
 @section Scripts{
    <script type="module" src="~/js/dashboard/timeKeeper.js"></script>
-    <script type="module" src="~/js/dashboard/deduction.js"></script>
+   <script type="module" src="~/js/dashboard/deduction.js"></script>
 }

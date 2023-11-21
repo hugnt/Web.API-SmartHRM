@@ -213,17 +213,16 @@ namespace SmartHRM.Services
             var resQuery = from E in _EmployeeRepository.GetAll()
                            join T in _TimeKeepingRepository.GetAll()
                            on E.Id equals T.EmployeeId
-                           where getTime(T.TimeAttendance) >= startTime && T.IsDeleted == false
+                           where getTime(T.TimeAttendance) >= startTime && E.IsDeleted == false
                            group E by E.FullName into eGroup
-                           where eGroup.Count() > 1 
-                           select new
+                           where eGroup.Count() > 0 
+                           select new 
                            {
-                               EmployeeName = eGroup.Key,
-                               Times = eGroup.Count(),
-                               
+                               TimesName = eGroup.Key,
+                               TimesCount = eGroup.Count(),                               
                            };
             var res = resQuery.ToList();
-            return res.OrderByDescending(x=>x.Times).Take(limit);
+            return res.OrderByDescending(x=>x.TimesCount).Take(limit);
         }
 
         //number of employee late by id by week
