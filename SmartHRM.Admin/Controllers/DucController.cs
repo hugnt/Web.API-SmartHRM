@@ -4,19 +4,13 @@ using System.Diagnostics;
 
 namespace SmartHRM.Admin.Controllers
 {
-    public class HomeController : Controller
+    public class DucController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
-
-        public HomeController(ILogger<HomeController> logger)
-        {
-            _logger = logger;
-        }
         [Route("/Dashboard/Duc")]
         [Route("")]
         public IActionResult Duc()
         {
-            return View("~/Views/Home/Duc.cshtml");
+            return View("~/Views/Duc/Duc.cshtml");
         }
 
         public IActionResult Privacy()
