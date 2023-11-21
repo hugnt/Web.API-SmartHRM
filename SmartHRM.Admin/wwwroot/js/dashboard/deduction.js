@@ -5,29 +5,20 @@ import * as AJAXCONFIG from '../ajax_config.js';
 
 $(document).ready(async function () {
     //CARD 
-    var newCard = new huCard("rowCard");
-    var totalEmployee = await getData("/Employee/Statistic/Total");
+    var newCard = new huCard("employeeCard");
+    var totalDeduction = await getData("/Deduction/Statistic/GetAmountDeduction");
     var card1 = {
-        title: "Total Employee",
-        number: totalEmployee,
-        unit: "people",
-        url: "/Employee/PersonnelFiles",
-        icon: "bx bx-user",
-        iconColor: "success"
-    }
-    var card2 = {
-        title: "Total Bonus",
-        number: 10000000,
-        unit: "VND",
-        url: "/Salary/BonusList",
+        title: "Total Deduction",
+        number: totalDeduction,
+        unit: "Deduction",
+        url: "/Salary/DeductionList",
         icon: "bx bx-dollar",
         iconColor: "warning"
     }
     newCard.add(card1)
-    newCard.add(card2)
 
     //TABLE
-    var listData = await getList("/Employee/Statistic/TopYoungest/12");
+    var listData = await getList("/Deduction/Statistic/GetTopDeduction/5");
     var columns = [
         {
             id: "id",
@@ -38,41 +29,18 @@ $(document).ready(async function () {
             }
         },
         {
-            id: "fullName",
-            name: "Full Name"
+            id: "name",
+            name: "Deduction Name"
         },
         {
-            id: "dob",
-            name: "Date of birth",
-            formatter: function (e) {
-                return new Date(e).toLocaleDateString();
-            }
+            id: "amount",
+            name: "Amount",
         },
         {
-            id: "gender",
-            name: "Gender",
-            formatter: function (e) {
-                return e ? "Male" : "Female";
-            }
+            id: "note",
+            name: "Note",
         }];
-    var newGrid = new huGrid("table-product-list-all", columns, listData);
-
-
-    //CHART
-    var dataObj = await getData("/Employee/Statistic/MaleFemale");
-
-    var chartLabels = ["Male", "Female"];
-    var newChart = new huApex("apex-barchar", chartLabels, dataObj);
-    newChart.barChart();
-
-    var chartLabels2 = ["Male", "Female"];
-    var newChart2 = new huApex("apex-piechart", chartLabels2, dataObj);
-    newChart2.pieChart();
-
-    var chartLabels3 = ["Male", "Female"];
-    var newChart3 = new huApex("apex-donutchart", chartLabels3, dataObj);
-    newChart3.donutChart();
-
+    var newGrid = new huGrid("list5Deduction", columns, listData);
 
     //AJAX
     async function getList(endPoint) {

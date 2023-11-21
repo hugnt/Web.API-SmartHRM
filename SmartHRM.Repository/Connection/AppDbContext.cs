@@ -17,6 +17,7 @@ namespace SmartHRM.Repository
         public DbSet<Employee> Employees { get; set; }
         public DbSet<Deduction> Deductions { get; set;}
         public DbSet<TimeKeeping> TimeKeepings { get; set; }
+        public DbSet<DeductionDetails> DeductionDetails { get; set;}
 
     }
 }

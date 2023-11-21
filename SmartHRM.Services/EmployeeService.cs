@@ -89,7 +89,8 @@ namespace SmartHRM.Services
         //Get top / list
         public IEnumerable<Employee> GetTopYoungest(int limit)
         {
-            var res = _employeeRepository.GetAll().Where(x => x.IsDeleted == false).OrderByDescending(x => x.Dob).Take(limit);
+            var res = _employeeRepository.GetAll().Where(x => x.IsDeleted == false)
+                .OrderByDescending(x => x.Dob).Take(limit);
             return res;
         }
 

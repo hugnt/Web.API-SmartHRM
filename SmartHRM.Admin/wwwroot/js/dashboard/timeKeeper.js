@@ -5,29 +5,31 @@ import * as AJAXCONFIG from '../ajax_config.js';
 
 $(document).ready(async function () {
     //CARD 
-    var newCard = new huCard("rowCard");
-    var totalEmployee = await getData("/Employee/Statistic/Total");
+    var newCard = new huCard("timeKeepingCard");
+    var numberEmployeeLate = await getData("/TimeKeeping/Statistic/GetNumberOnTimeEmployee/46");
     var card1 = {
-        title: "Total Employee",
-        number: totalEmployee,
+        title: "Total Employee Late",
+        number: numberEmployeeLate,
         unit: "people",
-        url: "/Employee/PersonnelFiles",
+        url: "/TimeKeeping/TimeKeeper",
         icon: "bx bx-user",
         iconColor: "success"
     }
+    var newCard2 = new huCard("timeKeepingCard2")
+    var numberLate = await getData("/TimeKeeping/Statistic/GetNumberEmployeeNoWork/46")
     var card2 = {
-        title: "Total Bonus",
-        number: 10000000,
-        unit: "VND",
-        url: "/Salary/BonusList",
-        icon: "bx bx-dollar",
-        iconColor: "warning"
+        title: "Total Number Employee No Work",
+        number: numberLate,
+        unit: "people",
+        url: "/TimeKeeping/TimeKeeper",
+        icon: "bx bx-user",
+        iconColor: "success"
     }
     newCard.add(card1)
     newCard.add(card2)
 
     //TABLE
-    var listData = await getList("/Employee/Statistic/TopYoungest/12");
+    var listDataOnTime = await getList("/TimeKeeping/Statistic/GetUsuallyLate/5");
     var columns = [
         {
             id: "id",
@@ -38,40 +40,18 @@ $(document).ready(async function () {
             }
         },
         {
-            id: "fullName",
-            name: "Full Name"
-        },
-        {
-            id: "dob",
-            name: "Date of birth",
-            formatter: function (e) {
-                return new Date(e).toLocaleDateString();
-            }
-        },
-        {
-            id: "gender",
-            name: "Gender",
-            formatter: function (e) {
-                return e ? "Male" : "Female";
-            }
+            id: "name",
+            name: "Name"
         }];
-    var newGrid = new huGrid("table-product-list-all", columns, listData);
+    var newGrid = new huGrid("list5Deduction", columns, listData);
 
 
     //CHART
-    var dataObj = await getData("/Employee/Statistic/MaleFemale");
+    var dataObj = await getData("/TimeKeeping/Statistic/GetListOnTime/46");
 
-    var chartLabels = ["Male", "Female"];
-    var newChart = new huApex("apex-barchar", chartLabels, dataObj);
+    var chartLabels = ["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"];
+    var newChart = new huApex("DetailChart", chartLabels, dataObj);
     newChart.barChart();
-
-    var chartLabels2 = ["Male", "Female"];
-    var newChart2 = new huApex("apex-piechart", chartLabels2, dataObj);
-    newChart2.pieChart();
-
-    var chartLabels3 = ["Male", "Female"];
-    var newChart3 = new huApex("apex-donutchart", chartLabels3, dataObj);
-    newChart3.donutChart();
 
 
     //AJAX

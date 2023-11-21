@@ -24,9 +24,8 @@ $(document).ready(async function () {
         {
             id: "amount",
             name: "Amount",
-            sort: true,
-             formatter: function (e) {
-                return e == null ? "0 VND": + " VND";
+            formatter: function (e) {
+                return e == null ? "0 VND" : + e + " VND";
             }
         },
         {

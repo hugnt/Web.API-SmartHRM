@@ -8,10 +8,10 @@ using System.Threading.Tasks;
 
 namespace SmartHRM.Services.Models
 {
-    public class TimeKeeperEmployee:BaseModel
+    public class DeductionDetailsModel : BaseModel
     {
-        public DateTime TimeAttendance { get; set; }
-        public string? Note { get; set; }
+        public Deduction DeductionDetail { get; set; }
         public Employee EmployeeDetail {  get; set; }
+        public DateTime StartAt { get; set; }   
     }
 }

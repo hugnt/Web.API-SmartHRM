@@ -14,9 +14,9 @@ namespace SmartHRM.Admin.Controllers
         }
         [Route("/Dashboard")]
         [Route("")]
-        public IActionResult Index()
+        public IActionResult Duc()
         {
-            return View();
+            return View("~/Views/Home/Duc.cshtml");
         }
 
         public IActionResult Privacy()
