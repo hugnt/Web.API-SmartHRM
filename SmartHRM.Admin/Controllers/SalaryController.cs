@@ -5,6 +5,11 @@ namespace SmartHRM.Admin.Controllers
     public class SalaryController : Controller
     {
 
+        [Route("Salary/SalaryOfEmployee")]
+        public IActionResult SalaryOfEmployee()
+        {
+            return View("~/Views/Salary/SalaryOfEmployee.cshtml");
+        }
         [Route("Salary/AllowanceList")]
         public IActionResult Allowance()
         {
@@ -22,8 +27,22 @@ namespace SmartHRM.Admin.Controllers
         }
         [Route("Salary/BonusList/Trash")]
         public IActionResult BonusTrash()
+        { 
+            return View(); 
+        }
+
+        [Route("Salary")]
+        [Route("Salary/DeductionList")]
+        public IActionResult DeductionList()
+        {
+            return View("~/Views/Salary/DeductionList.cshtml");
+        }
+        [Route("Salary")]
+        [Route("Salary/DeductionList/Trash")]
+        public IActionResult DeductionListTrash()
         {
             return View();
         }
     }
+
 }

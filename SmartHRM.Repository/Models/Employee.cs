@@ -29,5 +29,11 @@ namespace SmartHRM.Repository
 
         [Column("identificationCard")]
         public string? IdentificationCard { get; set; }
+
+        [Column("coefficient_salary")]
+        public double? CoefficientSalary { get; set; }
+
+        [Column("basic_salary")]
+        public decimal? BasicSalary { get; set; }
     }
 }

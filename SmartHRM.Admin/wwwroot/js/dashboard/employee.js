@@ -13,14 +13,14 @@ $(document).ready(async function () {
         unit: "people",
         url: "/Employee/PersonnelFiles",
         icon: "bx bx-user",
-        iconColor: "success"
+        iconColor: "warning"
     }
     var card2 = {
         title: "Total Bonus",
         number: 10000000,
         unit: "VND",
         url: "/Salary/BonusList",
-        icon: "bx bx-dollar",
+        icon: "bx bx-time",
         iconColor: "warning"
     }
     newCard.add(card1)
@@ -55,7 +55,7 @@ $(document).ready(async function () {
                 return e ? "Male" : "Female";
             }
         }];
-    var newGrid = new huGrid("table-product-list-all", columns, listData);
+    var newGrid = new huGrid("hoang", columns, listData);
 
 
     //CHART

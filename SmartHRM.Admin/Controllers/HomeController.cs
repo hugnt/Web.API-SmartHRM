@@ -1,9 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using SmartHRM.Admin.Attributes;
 using SmartHRM.Admin.Models;
 using System.Diagnostics;
 
 namespace SmartHRM.Admin.Controllers
 {
+    [CustomAuthorize]
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
@@ -13,6 +15,7 @@ namespace SmartHRM.Admin.Controllers
             _logger = logger;
         }
 
+        
         [Route("/Dashboard")]
         [Route("")]
         public IActionResult Index()

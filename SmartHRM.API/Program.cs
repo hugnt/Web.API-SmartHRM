@@ -13,12 +13,14 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddDIServices(builder.Configuration);
 
 //Account
-
+builder.Services.AddScoped<AccountService>();
 
 //Employee
 builder.Services.AddScoped<EmployeeService>();
 builder.Services.AddScoped<AllowanceService>();
 builder.Services.AddScoped<BonusService>();
+//SALARY
+builder.Services.AddScoped<SalaryService>();
 
 
 
@@ -37,9 +39,11 @@ builder.Services.AddScoped<ContractService>();
 
 builder.Services.AddScoped<DepartmentService>();
 
+//Deduction
+builder.Services.AddScoped<DeductionService>();
 
-
-
+//TimeKeeping
+builder.Services.AddScoped<TimeKeepingService>();
 
 //Enable CORS
 builder.Services.AddCors(p =>
@@ -78,6 +82,8 @@ app.UseCors(options => options.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin(
 app.UseStaticFiles();// Add middleware for specify the static files in wwwroot
 
 app.UseRouting();
+
+app.UseAuthentication();
 
 app.UseAuthorization();
 

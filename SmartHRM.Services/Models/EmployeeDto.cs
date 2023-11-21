@@ -14,5 +14,6 @@ namespace SmartHRM.Services.Models
     {  
         public string? Position { get; set; }
         public string? Department { get; set; }
+  
     }
 }

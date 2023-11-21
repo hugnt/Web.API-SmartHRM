@@ -15,8 +15,9 @@ namespace SmartHRM.Repository
           
         }
 
-
-      
+        public DbSet<Role> Roles { get; set; }
+        public DbSet<Account> Accounts { get; set; }
+        public DbSet<RefeshToken> RefeshTokens { get; set; }
         public DbSet<Employee> Employees { get; set; }
         public DbSet<Position> Positions { get; set; }
         public DbSet<Insurance> Insurances { get; set; }
@@ -29,7 +30,12 @@ namespace SmartHRM.Repository
 
 
         public DbSet<Allowance> Allowances { get; set; }
+        public DbSet<AllowanceDetails> AllowanceDetails { get; set; }
         public DbSet<Bonus> Bonus { get; set; }
+        public DbSet<BonusDetails> BonusDetails { get; set; }
+        public DbSet<Deduction> Deductions { get; set;}
+        public DbSet<DeductionDetails> DeductionDetails { get; set; }
+        public DbSet<TimeKeeping> TimeKeepings { get; set; }
 
     }
 }

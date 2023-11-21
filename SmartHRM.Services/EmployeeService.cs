@@ -107,6 +107,8 @@ namespace SmartHRM.Services
             return new ResponseModel(204, "");
         }
 
+        
+
         //Get total record
         public int GetTotal()
         {
