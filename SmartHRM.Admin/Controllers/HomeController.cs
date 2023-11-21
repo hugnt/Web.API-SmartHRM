@@ -12,7 +12,7 @@ namespace SmartHRM.Admin.Controllers
         {
             _logger = logger;
         }
-        [Route("/Dashboard")]
+        [Route("/Dashboard/Su")]
         [Route("")]
         public IActionResult SuIndex()
         {
