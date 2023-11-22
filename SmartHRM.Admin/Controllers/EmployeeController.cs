@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using SmartHRM.Admin.Attributes;
 
 namespace SmartHRM.Admin.Controllers
 {
+    [CustomAuthorize("Employee")]
     public class EmployeeController : Controller
     {
 

@@ -13,10 +13,12 @@ namespace SmartHRM.Admin.Attributes
 		private readonly HttpClient _httpClient;
 		private readonly string _apiUrl;
 		private const string HOST = "https://localhost:7062";
+		private readonly string[] allowedRoles;
 
-		public CustomAuthorizeAttribute()
+		public CustomAuthorizeAttribute(params string[] roles)
 		{
 			_httpClient = new HttpClient();
+			allowedRoles = roles;
 		}
 
 
@@ -49,10 +51,23 @@ namespace SmartHRM.Admin.Attributes
 					context.Result = new ChallengeResult(CookieAuthenticationDefaults.AuthenticationScheme);
 					return;
 				}
+			
 
+                
+				
+             
 				context.HttpContext.Response.Cookies.Append("AccessToken", newAccessToken.Data.AccessToken);
 				context.HttpContext.Response.Cookies.Append("RefreshToken", newAccessToken.Data.RefeshToken);
 			}
+
+			var userRoles = context.HttpContext.Request.Cookies["Role"];
+			var isExistRole = allowedRoles.Any(r => r.ToLower() == userRoles?.ToLower());
+			if (userRoles?.ToLower() != "admin" && !isExistRole)
+			{
+				context.Result = new RedirectResult("/NotPermission");
+				return;
+			}
+
 
 		}
 

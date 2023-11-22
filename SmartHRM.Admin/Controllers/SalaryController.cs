@@ -1,10 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using SmartHRM.Admin.Attributes;
 
 namespace SmartHRM.Admin.Controllers
 {
     public class SalaryController : Controller
     {
-
+        [CustomAuthorize("Admin")]
         [Route("Salary/SalaryOfEmployee")]
         public IActionResult SalaryOfEmployee()
         {

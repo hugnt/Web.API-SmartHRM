@@ -21,5 +21,11 @@ namespace SmartHRM.Admin.Controllers
         {
             return View("~/Views/Dasboard/KhanhIndex.cshtml");
         }
+
+        [Route("Duc-Dashboard")]
+        public IActionResult DucIndex()
+        {
+            return View("~/Views/Dasboard/DucIndex.cshtml");
+        }
     }
 }

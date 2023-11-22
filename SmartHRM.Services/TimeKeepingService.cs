@@ -3,8 +3,10 @@ using SmartHRM.Repository;
 using SmartHRM.Services.Models;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Net.WebSockets;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -14,6 +16,8 @@ namespace SmartHRM.Services
     {
         private readonly TimeKeepingRepository _TimeKeepingRepository;
         private readonly EmployeeRepository _EmployeeRepository;
+        public TimeOnly startTime = new TimeOnly(7, 0, 0);
+        public TimeOnly endTime = new TimeOnly(17, 0, 0);
         public TimeKeepingService(TimeKeepingRepository TimeKeepingRepository, EmployeeRepository EmployeeRepository)
         {
             _TimeKeepingRepository = TimeKeepingRepository;
@@ -113,5 +117,140 @@ namespace SmartHRM.Services
             return resTkes;
         }
 
+        public int getWeek(DateTime? _date)
+        {
+            var date = _TimeKeepingRepository.GetAll().FirstOrDefault(x => x.TimeAttendance == _date);
+
+            CultureInfo culture = CultureInfo.CurrentCulture;
+            CalendarWeekRule weekRule = culture.DateTimeFormat.CalendarWeekRule;
+            DayOfWeek firstWeekDay = culture.DateTimeFormat.FirstDayOfWeek;
+            Calendar calendar = culture.Calendar;
+
+            int week = calendar.GetWeekOfYear(date.TimeAttendance, weekRule, firstWeekDay);
+            return week;
+        }
+        
+        public TimeOnly getTime(DateTime _date)
+        {
+            TimeOnly _time = TimeOnly.FromDateTime(_date);
+            
+            return _time;
+        }
+
+        //number of employee work from 7am to 5pm by week
+        public object GetNumberOnTimeEmployee(int _date)
+        { 
+            return GetTimeKeepings().Where(x => 
+            getTime(x.TimeAttendance) <= startTime 
+                && x.IsDeleted == false
+                && getWeek(x.TimeAttendance) == _date).Count();
+
+        }
+
+        //list ontime employee by week
+        public object GetListOnTime(int _date)
+        {
+            DateTime day = new DateTime(2023,1,1);
+            var mon = GetTimeKeepings().Where(x=>
+                x.IsDeleted == false
+                && getTime(x.TimeAttendance) <= startTime
+                && x.TimeAttendance.Date == day.AddDays((_date-1)*7+1)
+            ).Count();
+            var tue = GetTimeKeepings().Where(x =>
+                x.IsDeleted == false
+                && getTime(x.TimeAttendance) <= startTime
+                && x.TimeAttendance.Date == day.Date.AddDays((_date - 1) * 7 + 2)
+            ).Count();
+            var wed = GetTimeKeepings().Where(x =>
+                x.IsDeleted == false
+                && getTime(x.TimeAttendance) <= startTime
+                && x.TimeAttendance.Date == day.Date.AddDays((_date - 1) * 7 + 3)
+            ).Count();
+            var thu = GetTimeKeepings().Where(x =>
+                 x.IsDeleted == false
+                && getTime(x.TimeAttendance) <= startTime
+                && x.TimeAttendance.Date == day.Date.AddDays((_date - 1) * 7 + 4)
+            ).Count();
+            var fri = GetTimeKeepings().Where(x =>
+                x.IsDeleted == false
+                && getTime(x.TimeAttendance) <= startTime
+                && x.TimeAttendance.Date == day.Date.AddDays((_date - 1) * 7 + 5)
+            ).Count();
+            var sat = GetTimeKeepings().Where(x =>
+                x.IsDeleted == false
+                && getTime(x.TimeAttendance) <= startTime
+                && x.TimeAttendance.Date == day.Date.AddDays((_date - 1) * 7 + 6)
+            ).Count();
+            var sun = GetTimeKeepings().Where(x =>
+                x.IsDeleted == false
+                && getTime(x.TimeAttendance) <= startTime
+                && x.TimeAttendance.Date == day.Date.AddDays((_date - 1) * 7 + 7)
+            ).Count();
+            return new
+            {
+                Monday = mon,
+                Tuesday = tue,
+                Wednesday = wed,
+                Thursday = thu,
+                Friday = fri,
+                Saturday = sat,
+                Sunday = sun
+            };
+        }
+
+        //top late
+        public object GetTopLateTimeEmployee(int limit)
+        {
+            var res = GetTimeKeepings().Where(x=>
+            x.IsDeleted == false &&
+            getTime(x.TimeAttendance) >= startTime).
+            OrderByDescending(x=>getTime(x.TimeAttendance)).Take(limit);
+            return res;
+        }
+        //top usually late
+        public object GetListUsuallyLate(int limit)
+        {
+            var resQuery = from E in _EmployeeRepository.GetAll()
+                           join T in _TimeKeepingRepository.GetAll()
+                           on E.Id equals T.EmployeeId
+                           where getTime(T.TimeAttendance) >= startTime && E.IsDeleted == false
+                           group E by E.FullName into eGroup
+                           where eGroup.Count() > 0 
+                           select new 
+                           {
+                               TimesName = eGroup.Key,
+                               TimesCount = eGroup.Count(),                               
+                           };
+            var res = resQuery.ToList();
+            return res.OrderByDescending(x=>x.TimesCount).Take(limit);
+        }
+
+        //number of employee late by id by week
+        public int GetNumberLate(int id, int _date)
+        {
+            int res = GetTimeKeepings().Where(x=>
+            x.IsDeleted==false 
+            && x.Id == id
+            && getWeek(x.TimeAttendance) ==_date
+            && getTime(x.TimeAttendance) >= startTime).Count();
+            return res; 
+        }
+
+        //number of employee haven't work
+        public int GetNumberEmployeeNoWork(int _date)
+        {
+            var resQuery = from E in _EmployeeRepository.GetAll()
+                           join T in _TimeKeepingRepository.GetAll()
+                           on new { Id = E.Id, Time = _date }
+                           equals new {Id = T.EmployeeId, Time = getWeek(T.TimeAttendance) }    
+                           into timeKeepings
+                           from subTimeKeeping in timeKeepings.DefaultIfEmpty()
+                                where subTimeKeeping == null 
+                                select new {
+                Name = E.FullName, isDelete = E.IsDeleted
+            };
+            int res = resQuery.Count();
+            return res;
+        }
     }
 }

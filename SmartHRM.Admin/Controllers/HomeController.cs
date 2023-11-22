@@ -5,12 +5,12 @@ using System.Diagnostics;
 
 namespace SmartHRM.Admin.Controllers
 {
-    [CustomAuthorize]
+    [CustomAuthorize("Admin", "Employee")]
     public class HomeController : Controller
     {
         
-        [Route("/Dashboard/Hung")]
-        public IActionResult DashboardHung()
+        [Route("/Dashboard")]
+        public IActionResult Dashboard()
         {
             return View("~/Views/Home/Index.cshtml");
         }

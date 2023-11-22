@@ -122,5 +122,62 @@ namespace SmartHRM.API.Controllers
             return Ok(timeKeepings);
         }
 
+
+        [HttpGet("Statistic/GetNumberOnTimeEmployee/{week}")]
+        [ProducesResponseType(200, Type = typeof(int))]
+        [ProducesResponseType(400)]
+        public IActionResult GetNumberOnTimeEmployee(int week)
+        {
+            
+            var res = _TimeKeepingService.GetNumberOnTimeEmployee(week);
+            if (!ModelState.IsValid) return BadRequest();
+            if (res == null) return NotFound();
+            return Ok(res);
+            
+        }
+        [HttpGet("Statistic/GetListOnTime/{week}")]
+        [ProducesResponseType(200, Type = typeof(object))]
+        [ProducesResponseType(400)]
+        public IActionResult GetListOnTime(int week)
+        {
+            var res = _TimeKeepingService.GetListOnTime(week);
+            if (!ModelState.IsValid) return BadRequest();
+            if (res == null) return NotFound();
+            return Ok(res);
+
+        }
+
+        [HttpGet("Statistic/GetUsuallyLate/{limit}")]
+        [ProducesResponseType(200, Type = typeof(object))]
+        [ProducesResponseType(400)]
+        public IActionResult GetListUsuallyLate(int limit)
+        {
+            var res = _TimeKeepingService.GetListUsuallyLate(limit);
+            if(!ModelState.IsValid) return BadRequest();
+            if (res == null) return NotFound();
+            return Ok(res);
+        }
+
+        [HttpGet("Statistic/GetNumberLate/{id}/{week}")]
+        [ProducesResponseType(200, Type = typeof(int))]
+        [ProducesResponseType(400)]
+        public IActionResult GetNumberLate(int id, int week)
+        {
+            var res = _TimeKeepingService.GetNumberLate(id, week);
+            if (!ModelState.IsValid) return BadRequest();
+            if (res == 0) return NotFound();
+            return Ok(res);
+        }
+
+        [HttpGet("Statistic/GetNumberEmployeeNoWork/{week}")]
+        [ProducesResponseType(200, Type = typeof(int))]
+        [ProducesResponseType(400)]
+        public IActionResult GetNumberEmployeeNoWork(int week)
+        {
+            var res = _TimeKeepingService.GetNumberEmployeeNoWork(week);
+            if (!ModelState.IsValid) return BadRequest();
+            if (res == 0) return NotFound();
+            return Ok(res);
+        }
     }
 }

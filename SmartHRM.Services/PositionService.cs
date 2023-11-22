@@ -86,5 +86,10 @@ namespace SmartHRM.Services
             if(res==null) return new List<Position>();
             return res;
         }
+
+        public int GetTotal()
+        {
+            return _positionRepository.GetAll().Where(x => x.IsDeleted == false).Count();
+        }
     }
 }

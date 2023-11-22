@@ -3,6 +3,7 @@ using SmartHRM.Repository;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -110,6 +111,43 @@ namespace SmartHRM.Services
         public IEnumerable<Deduction> GetTopID(int limit)
         {
             var res = _DeductionRepository.GetAll().Where(x => x.IsDeleted == false).OrderByDescending(x => x.Id).Take(limit);
+            return res;
+        }
+        public int GetAmountDeduction()
+        {
+            return _DeductionRepository.GetAll().Where(x=>x.IsDeleted == false).Count();
+        }
+        public object GetTotalDeduction(int month)
+        {
+            var resQuery = (from D in _DeductionRepository.GetAll()
+                            join D2 in _DeductionDetailsRepository.GetAll()
+                            on D.Id equals D2.DeductionId
+                            where D2.StartAt.Month == month
+                            select D.Amount).Sum();
+            decimal? res = resQuery;
+
+            var totalDeduction = _DeductionRepository.GetAll()
+                .Join(_DeductionDetailsRepository.GetAll(),
+                D => D.Id, D2 => D2.DeductionId,
+                (D, D2) => new { Deduction = D, Detail = D2 })
+                .Where(x => x.Detail.StartAt.Month == month)
+                .Sum(x => x.Deduction.Amount);
+
+            return resQuery;
+        }
+        public decimal? GetTotalAmountDeduction()
+        {
+            decimal? res = 0;
+            foreach(var item in _DeductionRepository.GetAll())
+            {
+                res += item.Amount;
+            }
+            return res;
+        }
+        public object GetTopDeduction(int limit)
+        {
+            var res = _DeductionRepository.GetAll().Where(x=>
+            x.IsDeleted == false).OrderByDescending(x=>x.Amount).Take(limit);
             return res;
         }
         //Số lượng Deduction

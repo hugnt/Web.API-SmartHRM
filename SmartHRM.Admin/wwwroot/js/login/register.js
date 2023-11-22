@@ -60,13 +60,12 @@ $(document).ready(async function () {
 			});
 			if (res) {
 				console.log(res);
-				Swal.fire({
-					Contract: "top",
-					icon: "success",
-					title: "Created Account Successfully",
-					showConfirmButton: false,
-					timer: 1500
-				});
+				Toastify({
+					text: "Register successfully!",
+					close: true,
+					className: "bg-success",
+					duration: 2500
+				}).showToast();
 
 				var account = {
 					Username: data.username,

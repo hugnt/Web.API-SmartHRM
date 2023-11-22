@@ -124,6 +124,15 @@ namespace SmartHRM.API.Controllers
             return Ok(positions);
         }
 
+        [HttpGet("Statistic/Total")]
+        [ProducesResponseType(200, Type = typeof(int))]
+        [ProducesResponseType(400)]
+        public IActionResult GetTotalPosition()
+        {
+            var res = _positionService.GetTotal();
+            if (!ModelState.IsValid) return BadRequest();
+            return Ok(res);
+        }
 
     }
 }

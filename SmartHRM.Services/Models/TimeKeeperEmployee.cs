@@ -10,7 +10,7 @@ namespace SmartHRM.Services.Models
 {
     public class TimeKeeperEmployee:BaseModel
     {
-        public DateTime? TimeAttendance { get; set; }
+        public DateTime TimeAttendance { get; set; }
         public string? Note { get; set; }
         public Employee EmployeeDetail {  get; set; }
     }

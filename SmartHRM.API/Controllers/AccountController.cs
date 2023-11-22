@@ -72,6 +72,18 @@ namespace SmartHRM.API.Controllers
             return Ok(account);
         }
 
+        [HttpGet("AccountInfor/{accountId}")]
+        [ProducesResponseType(200, Type = typeof(Account))]
+        [ProducesResponseType(400)]
+        public IActionResult GetAccountInfor(int accountId)
+        {
+            var account = _accountService.GetAccountInfoById(accountId);
+            if (!ModelState.IsValid) return BadRequest();
+            if (account == null) return NotFound();
+            return Ok(account);
+        }
+
+
         [HttpPost]
         [ProducesResponseType(201)]
         [ProducesResponseType(400)]

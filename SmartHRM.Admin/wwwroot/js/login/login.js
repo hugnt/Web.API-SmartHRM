@@ -34,13 +34,12 @@ $(document).ready(function () {
 			});
 			if (res && res.length > 0) {
 				console.log(res);
-				Swal.fire({
-					Contract: "top",
-					icon: "success",
-					title: "Login Successfully",
-					showConfirmButton: false,
-					timer: 1500
-				});
+				Toastify({
+					text: "Login successfully!",
+					close: true,
+					className: "bg-success",
+					duration: 2500
+				}).showToast();
 				window.location.href = res;
             }
 			

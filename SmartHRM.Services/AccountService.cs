@@ -320,7 +320,22 @@ namespace SmartHRM.Services
 
         }
 
-
+        public object GetAccountInfoById(int accountId)
+        {
+            var selectedAccount = _accountRepository.GetById(accountId);
+            var infor = new
+            {
+                Id = accountId,
+                Username = selectedAccount.Username,
+                FullName = selectedAccount.FullName,
+                Avatar = selectedAccount.Avatar,
+                RoleId = selectedAccount.RoleId,
+                RoleName = _roleRepository.GetById(selectedAccount.RoleId).Name,
+                Email = selectedAccount.Email,
+                PhoneNumber = selectedAccount.PhoneNumber
+            };
+            return infor;
+        }
     }
 
 

@@ -9,5 +9,11 @@ namespace SmartHRM.Admin.Controllers
         {
             return View();
         }
+
+        [Route("/NotPermission")]
+        public IActionResult NotPermission()
+        {
+            return View();
+        }
     }
 }

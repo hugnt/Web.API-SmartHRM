@@ -1,5 +1,5 @@
 ﻿@{
-    ViewData["Title"] = "Dashboard | Home";
+    ViewData["Title"] = "Dashboard | Duc";
 }
 @section Styles{
     <!-- gridjs css -->
@@ -48,18 +48,19 @@
         </div>
         <!--end col-->
     </div>
-    <!--Allowance Total-->
-    <div class="row" id="rowCard-allowance"> </div>
-    <!--Allowance List-->
+
+    <div class="row" id="employeeCard">
+    </div>
+
     <div class="row">
         <div class="col-xl-6">
             <div class="card">
                 <div class="card-header align-items-center d-flex">
-                    <h4 class="card-title mb-0 flex-grow-1">Top Allowance</h4>
+                    <h4 class="card-title mb-0 flex-grow-1">Top 5 Deduction</h4>
                 </div><!-- end card header -->
 
                 <div class="card-body">
-                    <div id="table-product-list-all-allowance" class="table-card gridjs-border-none"></div>
+                    <div id="list5Deduction" class="table-card gridjs-border-none"></div>
                     <div class="noresult" style="display: none">
                         <div class="text-center">
                             <lord-icon src="https://cdn.lordicon.com/msoeawqm.json" trigger="loop"
@@ -76,18 +77,19 @@
             </div>
         </div>
     </div>
-    <!--Bonus Total-->
-    <div class="row" id="rowCard-bonus"> </div>
-    <!--Bonus List-->
+    @*TimeKeeping*@
+    <div class="row" id="timeKeepingCard">
+    </div>
+
     <div class="row">
         <div class="col-xl-6">
             <div class="card">
                 <div class="card-header align-items-center d-flex">
-                    <h4 class="card-title mb-0 flex-grow-1">Top Bonus</h4>
+                    <h4 class="card-title mb-0 flex-grow-1">Top TimeKeeping</h4>
                 </div><!-- end card header -->
 
                 <div class="card-body">
-                    <div id="table-product-list-all-bonus" class="table-card gridjs-border-none"></div>
+                    <div id="list5Late" class="table-card gridjs-border-none"></div>
                     <div class="noresult" style="display: none">
                         <div class="text-center">
                             <lord-icon src="https://cdn.lordicon.com/msoeawqm.json" trigger="loop"
@@ -104,84 +106,27 @@
             </div>
         </div>
     </div>
-    <!--Deduction Total-->
-    <div class="row" id="rowCard-deduction"> </div>
-    <!--Deduction List-->
-    <div class="row">
-        <div class="col-xl-6">
-            <div class="card">
-                <div class="card-header align-items-center d-flex">
-                    <h4 class="card-title mb-0 flex-grow-1">Top Deduction</h4>
-                </div><!-- end card header -->
 
-                <div class="card-body">
-                    <div id="table-product-list-all-deduction" class="table-card gridjs-border-none"></div>
-                    <div class="noresult" style="display: none">
-                        <div class="text-center">
-                            <lord-icon src="https://cdn.lordicon.com/msoeawqm.json" trigger="loop"
-                                       colors="primary:#121331,secondary:#08a88a"
-                                       style="width: 75px; height: 75px"></lord-icon>
-                            <h5 class="mt-2">Sorry! No Result Found</h5>
-                            <p class="text-muted mb-0">
-                                We've searched more than 150+ customer We did not find
-                                any customer for you search.
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!--Pie chart of 3 items-->
     <div class="row">
         <div class="col-xl-6">
             <div class="card">
                 <div class="card-header">
-                    <h4 class="card-title mb-0">Pie Chart Of 3 Items</h4>
-                </div><!-- end card header -->
-
-                <div class="card-body">
-                    <div id="apex-piechart-salary" data-colors='["--vz-primary", "--vz-success", "--vz-warning", "--vz-danger", "--vz-info"]' class="apex-charts" dir="ltr">
-                    </div>
-                </div><!-- end card-body -->
-            </div><!-- end card -->
-        </div>
-    </div>
-    <!--Bar chart of 3 items -->
-    <div class="row">
-        <div class="col-xl-6">
-            <div class="card">
-                <div class="card-header">
-                    <h4 class="card-title mb-0">Bar Chart Of 3 Items</h4>
+                    <h4 class="card-title mb-0">Employee Late Chart</h4>
                 </div><!-- end card header -->
                 <div class="card-body">
-                    <div id="apex-barchar-salary" data-colors='["--vz-primary", "--vz-success", "--vz-warning", "--vz-danger", "--vz-info"]' class="apex-charts" dir="ltr"></div>
+                    <div id="DetailChartTimeKeeping" data-colors='["--vz-primary", "--vz-success", "--vz-warning", "--vz-danger", "--vz-info"]' class="apex-charts" dir="ltr"></div>
                 </div><!-- end card-body -->
             </div><!-- end card -->
         </div>
     </div>
 </div>
-<!--Donut chart of 3 items-->
-<div class="row">
-    <div class="col-xl-6">
-        <div class="card">
-            <div class="card-header">
-                <h4 class="card-title mb-0">Donut Chart Of 3 Items</h4>
-            </div><!-- end card header -->
-            <div class="card-body">
-                <div id="apex-donutchart-salary" data-colors='["--vz-primary", "--vz-success", "--vz-warning", "--vz-danger", "--vz-info"]' class="apex-charts" dir="ltr"></div>
-            </div><!-- end card-body -->
-        </div><!-- end card -->
-    </div>
-</div>
+
 
 @section Modals{
 
 }
 
 @section Scripts{
-    <script type="module" src="~/js/dashboard/allowance.js"></script>
-    <script type="module" src="~/js/dashboard/bonus.js"></script>
-    <script type="module" src="~/js/dashboard/deduction.js"></script>
-    <script type="module" src="~/js/dashboard/salary.js"></script>
+    <script type="module" src="~/js/dashboard/timeKeeper.js"></script>
+    <script type="module" src="~/js/dashboard/deduction2.js"></script>
 }

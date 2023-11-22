@@ -15,16 +15,8 @@ $(document).ready(async function () {
         icon: "bx bx-user",
         iconColor: "warning"
     }
-    var card2 = {
-        title: "Total Bonus",
-        number: 10000000,
-        unit: "VND",
-        url: "/Salary/BonusList",
-        icon: "bx bx-time",
-        iconColor: "warning"
-    }
     newCard.add(card1)
-    newCard.add(card2)
+
 
     //TABLE
     var listData = await getList("/Employee/Statistic/TopYoungest/12");

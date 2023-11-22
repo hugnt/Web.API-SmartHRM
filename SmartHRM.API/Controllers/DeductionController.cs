@@ -122,6 +122,7 @@ namespace SmartHRM.API.Controllers
             if (!ModelState.IsValid) return BadRequest(ModelState);
             return Ok(Deductions);
         }
+
         [HttpGet("Statistic/TotalDeduction")]
         [ProducesResponseType(200, Type = typeof(int))]
         [ProducesResponseType(400)]
@@ -133,6 +134,36 @@ namespace SmartHRM.API.Controllers
             return Ok(res);
         }
 
+        [HttpGet("Statistic/GetAmountDeduction")]
+        [ProducesResponseType(200, Type = typeof(int))]
+        [ProducesResponseType(400)]
+        public IActionResult GetAmountDeduction()
+        {
+            var res = _DeductionService.GetAmountDeduction();
+            if(!ModelState.IsValid) return BadRequest(ModelState);  
+            if(res == 0)   return NotFound();
+            return Ok(res);
+        }
+        [HttpGet("Statistic/GetTotalAmountDeduction")]
+        [ProducesResponseType(200, Type = typeof(decimal))]
+        [ProducesResponseType(400)]
+        public IActionResult GetTotalAmountDeduction()
+        {
+            var res = _DeductionService.GetTotalAmountDeduction();
+            if (!ModelState.IsValid) return BadRequest(ModelState);
+            if (res == 0) return NotFound();
+            return Ok(res);
+        }
+        [HttpGet("Statistic/GetTopDeduction/{limit}")]
+        [ProducesResponseType(200, Type = typeof(object))]
+        [ProducesResponseType(400)]
+        public IActionResult GetTopDeduction(int limit)
+        {
+            var res = _DeductionService.GetTopDeduction(limit);
+            if (!ModelState.IsValid) return BadRequest(ModelState);
+            if (res == null) return NotFound();
+            return Ok(res);
+        }
         [HttpGet("Statistic/{Month}")]
         [ProducesResponseType(200, Type = typeof(object))]
         [ProducesResponseType(400)]

@@ -54,23 +54,23 @@ builder.Services.AddScoped<TaskDetailsService>();
 builder.Services.AddScoped<ProjectService>();
 
 //Enable CORS
-builder.Services.AddCors(p =>
-    p.AddPolicy("HUG_LOCAL", build =>
-    {
-        //build.WithOrigins("https://localhost:7034",
-        //                  "http://localhost:5034",
-        //                  "https://localhost:7289",
-        //                  "http://localhost:5289",
-        //                  "http://localhost:3000")
-        //     .AllowAnyMethod()
-        //     .AllowAnyHeader()
-        //    .AllowCredentials()
-        //    .SetIsOriginAllowed((hosts) => true);
-        build.WithOrigins("*")
-             .AllowAnyMethod()
-             .AllowAnyHeader();
-    })
-);
+//builder.Services.AddCors(p =>
+//    p.AddPolicy("HUG_LOCAL", build =>
+//    {
+//        //build.WithOrigins("https://localhost:7034",
+//        //                  "http://localhost:5034",
+//        //                  "https://localhost:7289",
+//        //                  "http://localhost:5289",
+//        //                  "http://localhost:3000")
+//        //     .AllowAnyMethod()
+//        //     .AllowAnyHeader()
+//        //    .AllowCredentials()
+//        //    .SetIsOriginAllowed((hosts) => true);
+//        build.WithOrigins("*")
+//             .AllowAnyMethod()
+//             .AllowAnyHeader();
+//    })
+//);
 
 var app = builder.Build();
 
@@ -83,7 +83,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-app.UseCors("HUG_LOCAL");
+//app.UseCors("HUG_LOCAL");
 
 app.UseCors(options => options.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin());
 
