@@ -1,0 +1,26 @@
+{
+  "Version": 1,
+  "ProjectMap": {
+    "8e93c181-f97c-49a7-8bd1-3582b705666b": {
+      "ProjectGuid": "8e93c181-f97c-49a7-8bd1-3582b705666b",
+      "DisplayName": "SmartHRM.API",
+      "ColorIndex": 0
+    },
+    "2b73d00b-c243-4a9a-b2c6-84dd24810ccb": {
+      "ProjectGuid": "2b73d00b-c243-4a9a-b2c6-84dd24810ccb",
+      "DisplayName": "SmartHRM.Services",
+      "ColorIndex": 1
+    },
+    "b1c17214-6675-41ff-9ced-d91747f87ecd": {
+      "ProjectGuid": "b1c17214-6675-41ff-9ced-d91747f87ecd",
+      "DisplayName": "SmartHRM.Repository",
+      "ColorIndex": 2
+    },
+    "a2fe74e1-b743-11d0-ae1a-00a0c90fffc3": {
+      "ProjectGuid": "a2fe74e1-b743-11d0-ae1a-00a0c90fffc3",
+      "DisplayName": "Miscellaneous Files",
+      "ColorIndex": -1
+    }
+  },
+  "NextColorIndex": 3
+}
