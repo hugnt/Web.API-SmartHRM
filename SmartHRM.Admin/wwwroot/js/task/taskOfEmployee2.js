@@ -1,64 +1,60 @@
 ﻿import { htmlText, huGrid } from '../hugrid.js';
 import * as API from '../api.js';
 import * as AJAXCONFIG from '../ajax_config.js';
+import '../layout/jqueryCookie.js'
+import jwt_decode from '../layout/decodeJWT.js';
 
 $(document).ready(async function () {
-    const choicesPosition = new Choices(document.querySelector('#positionId'));
-    const choicesDepartment = new Choices(document.querySelector('#departmentId'));
+    const choicesEmployee = new Choices(document.querySelector('#assigneeId'));
+    const choicesAssignerId = new Choices(document.querySelector('#assignerId'));
+    const choicesTask = new Choices(document.querySelector('#taskId'));
     await loadSelectBox();
-    var listData = await getList("/Employee");
+
+    var accessToken = $.cookie('AccessToken');
+    var decoded = jwt_decode(accessToken);
+
+    const ACCOUNT_ID = decoded.Id;
+    console.log(ACCOUNT_ID);
+
+    const ACCOUNT_INFOR = await getData(`/Account/AccountInfor/${ACCOUNT_ID}`);
+    console.log(ACCOUNT_INFOR);
+
+    var listData = await getList(`/TaskDetails/EmployeeDepartment/${ACCOUNT_INFOR.employeeId}`);
     console.log(listData);
     var columns = [
         {
             id: "id",
             name: htmlText(`<div class="text-center">Id</div>`),
-            sort: false,
+            sort: true,
             formatter: function (e) {
                 return htmlText(`<div class="text-center">${e}</div>`)
-            }
+            },
+            width: '8%'
         },
         {
-            id: "fullName",
-            name: "Full Name",
-            sort: true,
-            data: function (e) {
-                return htmlText(`
-                    <div class= "d-flex align-items-center" >
-                        <div class="flex-shrink-0 me-3">
-                            <div class="avatar-sm bg-light rounded p-1">
-                                <img src="${API.IMAGE_URL}/avatar/${e.avatar}" alt="" class="img-fluid d-block">
-                            </div >
-                        </div>
-                        <div class="flex-grow-1">
-                            <h5 class="fs-14 mb-1">
-                                <a href="apps-ecommerce-product-details.html" class="text-body">${e.fullName}</a>
-                            </h5>
-                            <p class="text-muted mb-0">Department : <span class="fw-medium">${e.department}</span></p>
-                        </div >
-                    </div > `)
-            }
+            id: "assigneeName",
+            name: "Assgnee Name",
+            sort: true
         },
         {
-            id: "phoneNumber",
-            name: "Phone Number"
+            id: "assignerName",
+            name: "Assgner Name",
+            sort: true
         },
         {
-            id: "email",
-            name: "Email"
+            id: "taskName",
+            name: "Task Name",
+            sort: true
         },
         {
-            id: "dob",
-            name: "Date of birth",
-            formatter: function (e) {
-                return new Date(e).toLocaleDateString();
-            }
+            id: "content",
+            name: "Content",
+            sort: true
         },
         {
-            id: "gender",
-            name: "Gender",
-            formatter: function (e) {
-                return e ? "Male" : "Female";
-            }
+            id: "description",
+            name: "Description",
+            sort: true
         },
         {
             id: 'Action',
@@ -88,6 +84,7 @@ $(document).ready(async function () {
             }
         }];
 
+
     //1st render
     var newGrid = new huGrid("table-product-list-all", columns, listData);
     newGrid.addEventListener(".btnDetails", getDetails);
@@ -104,7 +101,7 @@ $(document).ready(async function () {
     //Details
     async function getDetails() {
         var id = $(this).data("id");
-        var selectedData = await getData(`/Employee/${id}`);
+        var selectedData = await getData(`/TaskDetails/${id}`);
         setDataForm(selectedData);
         setTypeForm("details");
         setStatusForm(false);
@@ -121,9 +118,8 @@ $(document).ready(async function () {
         var dataInsert = getDataForm();
         if (!await isValidForm(dataInsert)) return;
         myModal.hide();
-        await postData("/Employee", dataInsert);
-        pond.getFiles().length != 0 && await postDataImage("/Utils/Avatar", pond.getFile().file);
-        var listData = await getList("/Employee");
+        await postData("/TaskDetails", dataInsert);
+        var listData = await getList("/TaskDetails/EmployeeDepartment/4");
         newGrid.updateData(listData)
     });
 
@@ -131,7 +127,7 @@ $(document).ready(async function () {
     //Update
     async function updateInfor() {
         var id = $(this).data("id");
-        var selectedData = await getData(`/Employee/${id}`);
+        var selectedData = await getData(`/TaskDetails/${id}`);
         setDataForm(selectedData);
         setTypeForm("edit");
         myModal.show()
@@ -139,11 +135,10 @@ $(document).ready(async function () {
     $("#btnSave").click(async function () {
         var updatedData = getDataForm();
         console.log(updatedData)
-        if (!await isValidForm(updatedData)) return;
+        if (!await isValidForm(updatedData, "update")) return;
         myModal.hide();
-        await putData(`/Employee/${updatedData.id}`, updatedData);
-        pond.getFiles().length != 0 && await postDataImage("/Utils/Avatar", pond.getFile().file);
-        var listData = await getList("/Employee");
+        await putData(`/TaskDetails/${updatedData.id}`, updatedData);
+        var listData = await getList("/TaskDetails");
         newGrid.updateData(listData)
     });
 
@@ -151,13 +146,30 @@ $(document).ready(async function () {
     //Remove
     async function deleteInfor() {
         var id = $(this).data("id");
-        localStorage.setItem("selectedId",id)
+        localStorage.setItem("selectedId", id)
     };
     $("#delete-notification").click(async function () {
         var id = localStorage.getItem("selectedId");
-        await putStatus(`/Employee/DeletedStatus/${id}/${true}`);
-        var listData = await getList("/Employee");
+        await deleteData(`/TaskDetails/${id}`);
+        var listData = await getList("/TaskDetails");
         newGrid.updateData(listData)
+    });
+    $("#btnRemoveListCheck").click(async function () {
+        if (newGrid.getListSelectedId().length == 0) {
+            Toastify({
+                text: "Please choose at least 1 item!",
+                close: true,
+                className: "bg-danger",
+                duration: 1500
+            }).showToast();
+            return;
+        }
+        var listId = newGrid.getListSelectedId();
+        for (var i = 0; i < listId.length; i++) {
+            await deleteData(`/TaskDetails/${listId[i]}`);
+        };
+        var listData = await getList("/TaskDetails");
+        newGrid.updateData(listData);
     });
 
 
@@ -168,6 +180,20 @@ $(document).ready(async function () {
             filename: "exportList.xls",
         });
     });
+
+    //Search
+    $("#btnFilter").click(async function () {
+        var field = $("#sellectBoxFilter").val();
+        var keyword = $("#searchBoxFilter").val();
+        keyword = keyword == "" ? null : keyword;
+        console.log(field + " - keyword: " + keyword)
+        var listData = await getList(`/TaskDetails/Search/${field}/${keyword}`);
+        console.log(listData)
+        newGrid.updateData(listData)
+        if (listData.length == 0) $(".noresult").show();
+        else $(".noresult").hide()
+
+    })
 
     //Ajax
     async function getList(endPoint) {
@@ -185,7 +211,7 @@ $(document).ready(async function () {
             }
         } catch (e) {
             console.log(e);
-            AJAXCONFIG.ajaxFail(e);
+               AJAXCONFIG.ajaxFail(e);
         }
         finally {
             AJAXCONFIG.ajaxAfterSend();
@@ -207,7 +233,7 @@ $(document).ready(async function () {
             }
         } catch (e) {
             console.log(e);
-           AJAXCONFIG.ajaxFail(e);
+            AJAXCONFIG.ajaxFail(e);
         }
         finally {
             AJAXCONFIG.ajaxAfterSend();
@@ -247,42 +273,6 @@ $(document).ready(async function () {
         }
     }
 
-    async function postDataImage(endPoint, data) {
-        var formData = new FormData();
-        formData.append("images", data);
-        try {
-            const res = await $.ajax({
-                url: `${API.API_URL}${endPoint}`,
-                type: "POST",
-                data: formData,
-                contentType: false,
-                processData: false,
-                beforeSend: function (xhr) {
-                    AJAXCONFIG.ajaxBeforeSend(xhr, false);
-                }
-            });
-            if (res) {
-                Toastify({
-                    text: "Uploaded file successfully!",
-                    close: true,
-                    className: "bg-success",
-                    duration: 2000
-                }).showToast();
-            }
-        } catch (e) {
-            console.log(e);
-            Toastify({
-                text: "Uploaded file failure!",
-                close: true,
-                className: "bg-danger",
-                duration: 2000
-            }).showToast();
-        }
-        finally {
-            AJAXCONFIG.ajaxAfterSend();
-        }
-    }
-
     async function putData(endPoint, data) {
         try {
             const res = await $.ajax({
@@ -314,21 +304,21 @@ $(document).ready(async function () {
         }
     }
 
-    async function putStatus(endPoint) {
+    async function deleteData(endPoint) {
         try {
             const res = await $.ajax({
                 url: `${API.API_URL}${endPoint}`,
-                type: "PUT",
+                type: "DELETE",
                 contentType: "application/json",
                 beforeSend: function (xhr) {
                     AJAXCONFIG.ajaxBeforeSend(xhr, false);
                 }
             });
             Toastify({
-                text: "Data has been moved to trash!",
+                text: "Data has been deleted!",
                 close: true,
                 className: "bg-success",
-                duration: 2000
+                duration: 1500
             }).showToast();
         } catch (e) {
             console.log(e);
@@ -347,60 +337,44 @@ $(document).ready(async function () {
     function getDataForm() {
         //console.log(pond)
         return {
-            id: $("#employee_id").val() == "" ? 0 : $("#employee_id").val(),
-            fullName: $("#fullName").val(),
-            phoneNumber: $("#phoneNumber").val(),
-            email: $("#email").val(),
-            dob: $("#dob").val(),
-            address: $("#address").val(),
-            avatar: pond.getFiles().length != 0 ? pond.getFile().filename : null,
-            gender: $("#gender").val() == "1" ? true : false,
-            departmentId: choicesDepartment.getValue(true),
-            positionId: choicesPosition.getValue(true),
-            identificationCard: $("#identificationCard").val(),
-            isDeleted: false
+            id: $("#taskDetailsId").val() == "" ? 0 : $("#taskDetailsId").val(),
+            assigneeId: choicesEmployee.getValue(true),
+            assignerId: choicesAssignerId.getValue(true),
+            taskId: choicesTask.getValue(true),
+            content: $("#content").val(),
+            description: $("#description").val(),
+            isDeleted: false,
         }
     }
 
     function setDataForm(data) {
         if (data == null) {
             $("#inforModal form :input").val("");
-            choicesDepartment.setChoiceByValue("");
-            choicesPosition.setChoiceByValue("");
-            pond.removeFile();
+            choicesEmployee.setChoiceByValue("");
+            choicesAssignerId.setChoiceByValue("");
+            choicesTask.setChoiceByValue("");
             return;
         }
-        $("#employee_id").val(data.id);
-        $("#fullName").val(data.fullName);
-        $("#phoneNumber").val(data.phoneNumber);
-        $("#email").val(data.email);
-        $("#dob").val(data.dob.substring(0, 10));
-        $("#address").val(data.address);
-        $("#gender").val(data.gender ? "1" : "0");
-        choicesDepartment.setChoiceByValue(data.departmentId);
-        choicesPosition.setChoiceByValue(data.positionId);
-        $("#identificationCard").val(data.identificationCard);
-        data.avatar && pond.addFile(`${API.IMAGE_URL}/avatar/${data.avatar}`)
-            .then((file) => {
-                // File has been added
-            })
-            .catch((error) => {
-                // Something went wrong
-                console.log(error)
-            });
-
+        $("#taskDetailsId").val(data.id);
+        choicesEmployee.setChoiceByValue(data.assigneeId);
+        choicesAssignerId.setChoiceByValue(data.assignerId);
+        choicesTask.setChoiceByValue(data.taskId);
+        $("#content").val(data.content);
+        $("#description").val(data.description);
     }
 
     function setStatusForm(status) {
         $("#inforModal form :input").prop("disabled", !status);
         $('input[name="id"]').prop("disabled", true);
         if (status == false) {
-            choicesPosition.disable();
-            choicesDepartment.disable();
+            choicesEmployee.disable();
+            choicesAssignerId.disable();
+            choicesTask.disable();
         }
         else {
-            choicesPosition.enable();
-            choicesDepartment.enable();
+            choicesEmployee.enable();
+            choicesAssignerId.enable();
+            choicesTask.enable();
         }
     }
 
@@ -416,22 +390,24 @@ $(document).ready(async function () {
 
     }
 
-    async function isValidForm(data) {
+    async function isValidForm(data, when = null) {
         var message = null;
-        const phoneNumberRegex = /^[+]?[(]?[0-9]{1,4}[)]?[-\s./0-9]*$/;
-        const emailRegex = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/;
-        const numberOnlyRegex = /^\d+$/;
-        if (data.fullName == "" || data.fullName ==null) {
-            message = "Full name is required!";
+        if (data.assigneeId == "" || data.assigneeId == null) {
+            message = "Assignee is required!";
         }
-        else if (!phoneNumberRegex.test(data.phoneNumber)) {
-            message = "phone number is not valid!";
+        if (data.assignerId == "" || data.assignerId == null) {
+            message = "Assigner is required!";
         }
-        else if (!emailRegex.test(data.email)) {
-            message = "email is not valid!";
+        else if (data.taskId == "" || data.taskId == null) {
+            message = "Task is required!";
         }
-        else if (!numberOnlyRegex.test(data.identificationCard)) {
-            message = "Identification Card is not valid!";
+        var lstData = await getList("/TaskDetails");
+        var filterData = lstData.filter(x => x.assigneeId == data.assigneeId
+            && x.taskId == data.taskId
+            && new Date(x.provideAt).getMonth() == new Date(data.provideAt).getMonth()
+            && new Date(x.provideAt).getFullYear() == new Date(data.provideAt).getFullYear());
+        if (when != "update" && filterData.length > 0) {
+            message = "Task for Employee in this month already exist!";
         }
         if (message != null) {
             Toastify({
@@ -452,50 +428,42 @@ $(document).ready(async function () {
     }
 
     async function loadSelectBox() {
-        var lstPosition= await getList("/Position");
-        var lstDepartment = await getList("/Department");
+        var lstEmployee = await getList("/Employee");
+        var lstTask = await getList("/Task");
 
-        var lstPositionChoices = [];
-        var lstDepartmentChoices = [];
-        for (var i = 0; i < lstPosition.length; i++) {
-            var obj = lstPosition[i];
-            lstPositionChoices.push({ value: obj.id, label: obj.name })
+        var lstEmployeeChoices = [];
+        var lstTaskChoices = [];
+        for (var i = 0; i < lstEmployee.length; i++) {
+            var obj = lstEmployee[i];
+            lstEmployeeChoices.push({ value: obj.id, label: obj.fullName })
         }
-        for (var i = 0; i < lstDepartment.length; i++) {
-            var obj = lstDepartment[i];
-            lstDepartmentChoices.push({ value: obj.id, label: obj.name })
+        for (var i = 0; i < lstTask.length; i++) {
+            var obj = lstTask[i];
+            lstTaskChoices.push({ value: obj.id, label: obj.name })
         }
-        choicesPosition.setChoices(lstPositionChoices)
-        choicesDepartment.setChoices(lstDepartmentChoices)
+        choicesTask.setChoices(lstTaskChoices)
+        choicesEmployee.setChoices(lstEmployeeChoices)
+        choicesAssignerId.setChoices(lstEmployeeChoices)
 
     }
 
-    //File handler
-    FilePond.registerPlugin(
-        // encodes the file as base64 data
-        FilePondPluginFileEncode,
-        // validates the size of the file
-        FilePondPluginFileValidateSize,
-        // corrects mobile image orientation
-        FilePondPluginImageExifOrientation,
-        // previews dropped images
-        FilePondPluginImagePreview
-    );
+    function toDateTime(stringDateTime) {
+        var now = new Date(stringDateTime);
 
-    const pond = FilePond.create(
-        document.querySelector('.filepond-input-circle'),
-        {
-            labelIdle: 'Drag & Drop your picture or Browse',
-            imagePreviewHeight: 170,
-            imageCropAspectRatio: '1:1',
-            imageResizeTargetWidth: 200,
-            imageResizeTargetHeight: 200,
-            stylePanelLayout: 'compact circle',
-            styleLoadIndicatorPosition: 'center bottom',
-            styleProgressIndicatorPosition: 'right bottom',
-            styleButtonRemoveItemPosition: 'left bottom',
-            styleButtonProcessItemPosition: 'right bottom',
-        }
-    );
-    
+        var day = now.getDate();
+        var month = now.getMonth() + 1;
+        var year = now.getFullYear();
+
+        var hours = now.getHours();
+        var minutes = now.getMinutes();
+
+        var formattedDate = day + '/' + month + '/' + year;
+        var formattedTime = hours + ':' + (minutes < 10 ? '0' + minutes : minutes);
+
+        return formattedDate + '  ' + formattedTime;
+    }
+
+
+
+
 });

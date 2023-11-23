@@ -21,15 +21,18 @@ namespace SmartHRM.Services
         private readonly AccountRepository _accountRepository;
         private readonly RoleRepository _roleRepository;
         private readonly RefeshTokenRepository _refeshTokenRepository;
+        private readonly EmployeeRepository _employeeRepository;
         public AccountService(AccountRepository accountRepository,
                             RoleRepository roleRepository,
                             RefeshTokenRepository refeshTokenRepository,
-                            IOptionsMonitor<AppSetting> optionsMonitor)
+                            IOptionsMonitor<AppSetting> optionsMonitor,
+                            EmployeeRepository employeeRepository)
         {
             _accountRepository = accountRepository;
             _roleRepository = roleRepository;
             _refeshTokenRepository = refeshTokenRepository;
             _appSettings = optionsMonitor.CurrentValue;
+            _employeeRepository = employeeRepository;
             _pbkdf2 = new PBKDF2();
         }
 
@@ -50,10 +53,29 @@ namespace SmartHRM.Services
             return account;
         }
 
-        public IEnumerable<Account> GetAccounts()
+        public IEnumerable<AccountDto> GetAccounts()
         {
-            var accounts = _accountRepository.GetAll();
-            return accounts;
+            var accountsQuerry = from a in _accountRepository.GetAll()
+                                 join r in _roleRepository.GetAll() on a.RoleId equals r.Id
+                                 select new AccountDto
+                                 {
+                                     Id = a.Id,
+                                     Username = a.Username,
+                                     FullName = a.FullName,
+                                     Avatar = a.Avatar,
+                                     RoleId = a.RoleId,
+                                     RoleName = r.Name,
+                                     Email = a.Email,
+                                     PhoneNumber = a.PhoneNumber,
+                                     EmployeeId = a.EmployeeId,
+                                     IsDeleted = a.IsDeleted
+                                 };
+            return accountsQuerry;
+        }
+
+        public AccountDto GetAccountById2(int accountId)
+        {
+            return GetAccounts().FirstOrDefault(x=>x.Id == accountId);
         }
 
         public ResponseModel CreateAccount(Account accountCreate)
@@ -68,6 +90,7 @@ namespace SmartHRM.Services
 
             accountCreate.Password = _pbkdf2.HashPassword(accountCreate.Password, out var salt);
             accountCreate.Salt = salt;
+            accountCreate.IsDeleted = false;
             if (!_accountRepository.Create(accountCreate))
             {
                 return new ResponseModel(500, "Something went wrong while saving");
@@ -87,6 +110,25 @@ namespace SmartHRM.Services
             updatedAccount.Password = _pbkdf2.HashPassword(updatedAccount.Password, out var salt);
             updatedAccount.Salt = salt;
             if (!_accountRepository.Update(updatedAccount))
+            {
+                return new ResponseModel(500, "Something went wrong updating account");
+            }
+            return new ResponseModel(204, "");
+
+        }
+
+        public ResponseModel UpdateAccountByAdmin(int accountId, Account updatedAccount)
+        {
+            if (!_accountRepository.IsExists(accountId)) return new ResponseModel(404, "Not found");
+
+            var selectedAccount = _accountRepository.GetById(accountId);
+            selectedAccount.RoleId = updatedAccount.RoleId;
+            selectedAccount.FullName = updatedAccount.FullName;
+            selectedAccount.Email = updatedAccount.Email;
+            selectedAccount.PhoneNumber = updatedAccount.PhoneNumber;
+            selectedAccount.EmployeeId = updatedAccount.EmployeeId;
+            selectedAccount.Avatar = updatedAccount.Avatar;
+            if (!_accountRepository.Update(selectedAccount))
             {
                 return new ResponseModel(500, "Something went wrong updating account");
             }
@@ -332,10 +374,24 @@ namespace SmartHRM.Services
                 RoleId = selectedAccount.RoleId,
                 RoleName = _roleRepository.GetById(selectedAccount.RoleId).Name,
                 Email = selectedAccount.Email,
-                PhoneNumber = selectedAccount.PhoneNumber
+                PhoneNumber = selectedAccount.PhoneNumber,
+                EmployeeId = selectedAccount.EmployeeId
             };
             return infor;
         }
+
+        public ResponseModel UpdateDeleteStatus(int AccountId, bool status)
+        {
+            if (!_accountRepository.IsExists(AccountId)) return new ResponseModel(404, "Not found");
+            var updatedAccount = _accountRepository.GetById(AccountId);
+            updatedAccount.IsDeleted = status;
+            if (!_accountRepository.Update(updatedAccount))
+            {
+                return new ResponseModel(500, "Something went wrong when change delete status Role");
+            }
+            return new ResponseModel(204, "");
+        }
+
     }
 
 

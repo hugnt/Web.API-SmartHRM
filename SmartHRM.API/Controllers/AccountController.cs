@@ -72,6 +72,17 @@ namespace SmartHRM.API.Controllers
             return Ok(account);
         }
 
+        [HttpGet("GetById/{accountId}")]
+        [ProducesResponseType(200, Type = typeof(Account))]
+        [ProducesResponseType(400)]
+        public IActionResult GetAccount2(int accountId)
+        {
+            var account = _accountService.GetAccountById2(accountId);
+            if (!ModelState.IsValid) return BadRequest();
+            if (account == null) return NotFound();
+            return Ok(account);
+        }
+
         [HttpGet("AccountInfor/{accountId}")]
         [ProducesResponseType(200, Type = typeof(Account))]
         [ProducesResponseType(400)]
@@ -139,6 +150,29 @@ namespace SmartHRM.API.Controllers
             return NoContent();
         }
 
+        [HttpPut("Cheat/{accountId}")]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(204)]
+        [ProducesResponseType(404)]
+        public IActionResult UpdateAccountCheat(int accountId, [FromBody] Account updatedAccount)
+        {
+            if (updatedAccount == null) return BadRequest(ModelState);
+            if (accountId != updatedAccount.Id) return BadRequest(ModelState);
+
+            var res = _accountService.UpdateAccountByAdmin(accountId, updatedAccount);
+            if (res.Status != 204)
+            {
+                ModelState.AddModelError("", res.StatusMessage);
+                return StatusCode(res.Status, ModelState);
+            }
+
+
+            if (!ModelState.IsValid) return BadRequest(ModelState);
+
+            return NoContent();
+        }
+
+
         [HttpDelete("{accountId}")]
         [ProducesResponseType(400)]
         [ProducesResponseType(204)]
@@ -154,6 +188,25 @@ namespace SmartHRM.API.Controllers
 
             if (!ModelState.IsValid) return BadRequest(ModelState);
 
+            return NoContent();
+        }
+
+
+        [HttpPut("DeletedStatus/{AccountId}/{status}")]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(204)]
+        [ProducesResponseType(404)]
+        public IActionResult UpdateDeleteStatus(int AccountId, bool status)
+        {
+
+            var res = _accountService.UpdateDeleteStatus(AccountId, status);
+            if (res.Status != 204)
+            {
+                ModelState.AddModelError("", res.StatusMessage);
+                return StatusCode(res.Status, ModelState);
+
+            }
+            if (!ModelState.IsValid) return BadRequest(ModelState);
             return NoContent();
         }
 

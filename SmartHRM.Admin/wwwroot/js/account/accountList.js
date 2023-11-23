@@ -3,10 +3,10 @@ import * as API from '../api.js';
 import * as AJAXCONFIG from '../ajax_config.js';
 
 $(document).ready(async function () {
-    const choicesPosition = new Choices(document.querySelector('#positionId'));
-    const choicesDepartment = new Choices(document.querySelector('#departmentId'));
+    const choicesEmployee = new Choices(document.querySelector('#employeeId'));
+    const choicesRole = new Choices(document.querySelector('#roleId'));
     await loadSelectBox();
-    var listData = await getList("/Employee");
+    var listData = await getList("/Account");
     console.log(listData);
     var columns = [
         {
@@ -33,7 +33,7 @@ $(document).ready(async function () {
                             <h5 class="fs-14 mb-1">
                                 <a href="apps-ecommerce-product-details.html" class="text-body">${e.fullName}</a>
                             </h5>
-                            <p class="text-muted mb-0">Department : <span class="fw-medium">${e.department}</span></p>
+                            <p class="text-muted mb-0">Role : <span class="fw-medium">${e.roleName}</span></p>
                         </div >
                     </div > `)
             }
@@ -45,20 +45,6 @@ $(document).ready(async function () {
         {
             id: "email",
             name: "Email"
-        },
-        {
-            id: "dob",
-            name: "Date of birth",
-            formatter: function (e) {
-                return new Date(e).toLocaleDateString();
-            }
-        },
-        {
-            id: "gender",
-            name: "Gender",
-            formatter: function (e) {
-                return e ? "Male" : "Female";
-            }
         },
         {
             id: 'Action',
@@ -104,7 +90,7 @@ $(document).ready(async function () {
     //Details
     async function getDetails() {
         var id = $(this).data("id");
-        var selectedData = await getData(`/Employee/${id}`);
+        var selectedData = await getData(`/Account/GetById/${id}`);
         setDataForm(selectedData);
         setTypeForm("details");
         setStatusForm(false);
@@ -121,9 +107,9 @@ $(document).ready(async function () {
         var dataInsert = getDataForm();
         if (!await isValidForm(dataInsert)) return;
         myModal.hide();
-        await postData("/Employee", dataInsert);
+        await postData("/Account", dataInsert);
         pond.getFiles().length != 0 && await postDataImage("/Utils/Avatar", pond.getFile().file);
-        var listData = await getList("/Employee");
+        var listData = await getList("/Account");
         newGrid.updateData(listData)
     });
 
@@ -131,7 +117,7 @@ $(document).ready(async function () {
     //Update
     async function updateInfor() {
         var id = $(this).data("id");
-        var selectedData = await getData(`/Employee/${id}`);
+        var selectedData = await getData(`/Account/GetById/${id}`);
         setDataForm(selectedData);
         setTypeForm("edit");
         myModal.show()
@@ -141,9 +127,9 @@ $(document).ready(async function () {
         console.log(updatedData)
         if (!await isValidForm(updatedData)) return;
         myModal.hide();
-        await putData(`/Employee/${updatedData.id}`, updatedData);
+        await putData(`/Account/Cheat/${updatedData.id}`, updatedData);
         pond.getFiles().length != 0 && await postDataImage("/Utils/Avatar", pond.getFile().file);
-        var listData = await getList("/Employee");
+        var listData = await getList("/Account");
         newGrid.updateData(listData)
     });
 
@@ -155,8 +141,8 @@ $(document).ready(async function () {
     };
     $("#delete-notification").click(async function () {
         var id = localStorage.getItem("selectedId");
-        await putStatus(`/Employee/DeletedStatus/${id}/${true}`);
-        var listData = await getList("/Employee");
+        await putStatus(`/Account/DeletedStatus/${id}/${true}`);
+        var listData = await getList("/Account");
         newGrid.updateData(listData)
     });
 
@@ -347,17 +333,15 @@ $(document).ready(async function () {
     function getDataForm() {
         //console.log(pond)
         return {
-            id: $("#employee_id").val() == "" ? 0 : $("#employee_id").val(),
+            id: $("#account_id").val() == "" ? 0 : $("#account_id").val(),
             fullName: $("#fullName").val(),
             phoneNumber: $("#phoneNumber").val(),
             email: $("#email").val(),
-            dob: $("#dob").val(),
-            address: $("#address").val(),
+            username: $("#username").val(),
+            password: $("#password").val(),
             avatar: pond.getFiles().length != 0 ? pond.getFile().filename : null,
-            gender: $("#gender").val() == "1" ? true : false,
-            departmentId: choicesDepartment.getValue(true),
-            positionId: choicesPosition.getValue(true),
-            identificationCard: $("#identificationCard").val(),
+            roleId: choicesRole.getValue(true),
+            employeeId: choicesEmployee.getValue(true) == "" ? 0 : choicesEmployee.getValue(true),
             isDeleted: false
         }
     }
@@ -365,21 +349,19 @@ $(document).ready(async function () {
     function setDataForm(data) {
         if (data == null) {
             $("#inforModal form :input").val("");
-            choicesDepartment.setChoiceByValue("");
-            choicesPosition.setChoiceByValue("");
+            choicesRole.setChoiceByValue("");
+            choicesEmployee.setChoiceByValue("");
             pond.removeFile();
             return;
         }
-        $("#employee_id").val(data.id);
+        
+        $("#account_id").val(data.id);
         $("#fullName").val(data.fullName);
+        $("#username").val(data.username);
         $("#phoneNumber").val(data.phoneNumber);
         $("#email").val(data.email);
-        $("#dob").val(data.dob.substring(0, 10));
-        $("#address").val(data.address);
-        $("#gender").val(data.gender ? "1" : "0");
-        choicesDepartment.setChoiceByValue(data.departmentId);
-        choicesPosition.setChoiceByValue(data.positionId);
-        $("#identificationCard").val(data.identificationCard);
+        choicesRole.setChoiceByValue(data.roleId);
+        choicesEmployee.setChoiceByValue(data.employeeId);
         data.avatar && pond.addFile(`${API.IMAGE_URL}/avatar/${data.avatar}`)
             .then((file) => {
                 // File has been added
@@ -395,12 +377,12 @@ $(document).ready(async function () {
         $("#inforModal form :input").prop("disabled", !status);
         $('input[name="id"]').prop("disabled", true);
         if (status == false) {
-            choicesPosition.disable();
-            choicesDepartment.disable();
+            choicesEmployee.disable();
+            choicesRole.disable();
         }
         else {
-            choicesPosition.enable();
-            choicesDepartment.enable();
+            choicesEmployee.enable();
+            choicesRole.enable();
         }
     }
 
@@ -408,9 +390,14 @@ $(document).ready(async function () {
         $("#btnSave").hide();
         $("#btnAdd").hide();
         if (type == "add") {
+            $('#username').prop("disabled", false);
+            $('#password').prop("disabled", false);
             $("#btnAdd").show();
+
         }
         else if (type == "edit") {
+            $('#username').prop("disabled", true);
+            $('#password').prop("disabled", true);
             $("#btnSave").show();
         }
 
@@ -429,9 +416,6 @@ $(document).ready(async function () {
         }
         else if (!emailRegex.test(data.email)) {
             message = "email is not valid!";
-        }
-        else if (!numberOnlyRegex.test(data.identificationCard)) {
-            message = "Identification Card is not valid!";
         }
         if (message != null) {
             Toastify({
@@ -452,21 +436,21 @@ $(document).ready(async function () {
     }
 
     async function loadSelectBox() {
-        var lstPosition= await getList("/Position");
-        var lstDepartment = await getList("/Department");
+        var lstPosition= await getList("/Employee");
+        var lstDepartment = await getList("/Role");
 
         var lstPositionChoices = [];
         var lstDepartmentChoices = [];
         for (var i = 0; i < lstPosition.length; i++) {
             var obj = lstPosition[i];
-            lstPositionChoices.push({ value: obj.id, label: obj.name })
+            lstPositionChoices.push({ value: obj.id, label: obj.fullName })
         }
         for (var i = 0; i < lstDepartment.length; i++) {
             var obj = lstDepartment[i];
             lstDepartmentChoices.push({ value: obj.id, label: obj.name })
         }
-        choicesPosition.setChoices(lstPositionChoices)
-        choicesDepartment.setChoices(lstDepartmentChoices)
+        choicesEmployee.setChoices(lstPositionChoices)
+        choicesRole.setChoices(lstDepartmentChoices)
 
     }
 

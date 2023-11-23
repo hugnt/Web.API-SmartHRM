@@ -113,5 +113,32 @@ namespace SmartHRM.Services
             }
             return new List<TaskDetails>();
         }
+
+        public IEnumerable<TaskDetailsDto> GetTaskDetailsByEmployeeDepartment(int employeeId)
+        {
+            var employeeDepartmentId = _employeeRepository.GetById(employeeId).DepartmentId;
+            var lstEmployeeDepartment = _employeeRepository.GetAll().Where(x => x.DepartmentId == employeeDepartmentId);
+
+            var queryTaskDetails = from e in lstEmployeeDepartment
+                                   join ti in _TaskDetailsRepository.GetAll() on e.Id equals ti.AssigneeId
+                                   join t in _TaskRepository.GetAll() on ti.TaskId equals t.Id
+                                   select new TaskDetailsDto
+                                   {
+                                       Id = ti.Id,
+                                       AssigneeId = ti.AssigneeId,
+                                       AssignerId = ti.AssignerId,
+                                       AssigneeName = _employeeRepository.GetById(ti.AssigneeId).FullName,
+                                       AssignerName = _employeeRepository.GetById(ti.AssignerId).FullName,
+                                       TaskName = t.Name,
+                                       TaskId = ti.Id,
+                                       Content = ti.Content,
+                                       Description = ti.Description,
+                                       Status = ti.Status,
+                                       IsDeleted = ti.IsDeleted
+                                   };
+            return queryTaskDetails.ToList();
+        }
+
+
     }
 }

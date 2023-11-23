@@ -67,7 +67,16 @@ namespace SmartHRM.Admin.Attributes
 				context.Result = new RedirectResult("/NotPermission");
 				return;
 			}
-
+			var currentUrl = context.HttpContext.Request.Path.Value;
+			if (string.Equals(currentUrl, "/Tasks/TasksOfEmployee", StringComparison.OrdinalIgnoreCase))
+			{
+				if (string.Equals(userRoles?.ToLower(), "employee", StringComparison.OrdinalIgnoreCase))
+				{
+					// Redirect đến trang /Task/TaskOfEmployeeDepartment
+					context.Result = new RedirectResult("/Tasks/TaskOfEmployeeDepartment");
+					return;
+				}
+			}
 
 		}
 

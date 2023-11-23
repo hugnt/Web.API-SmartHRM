@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using SmartHRM.Admin.Attributes;
 
 namespace SmartHRM.Admin.Controllers
 {
@@ -22,11 +23,21 @@ namespace SmartHRM.Admin.Controllers
             return View("~/Views/Task/Task.cshtml");
         }
 
+        
+        [Route("/Tasks/TaskOfEmployeeDepartment")]
+        public IActionResult TaskOfEmployeeDepartment()
+        {
+            return View("~/Views/Task/Index.cshtml");
+        }
+
+
         [Route("Tasks/TaskList/Trash")]
         public IActionResult TaskTrash()
         {
             return View("~/Views/Task/TaskTrash.cshtml");
         }
+
+        [CustomAuthorize("Employee")]
         [Route("/Tasks/TasksOfEmployee")]
         public IActionResult TasksOfEmployee()
         {

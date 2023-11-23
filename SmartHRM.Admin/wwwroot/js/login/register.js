@@ -17,9 +17,10 @@ $(document).ready(async function () {
 	$(".btn-register").click(async function () {
 		var username = $("#username").val();
 		var password = $("#password").val();
+		var fullName = $("#fullName").val();
 		var retypePassword = $("#retypePassword").val();
 
-		var infor = { username, password, retypePassword };
+		var infor = { fullName, username, password, retypePassword };
 		console.log(infor);
 
 		var isValid = validateInfo(infor);
@@ -41,6 +42,7 @@ $(document).ready(async function () {
 			roleId: 3,
 			username: infor.username,
 			password: infor.password,
+			fullName: infor.fullName
         }
 
 		await postNewAccount("/Account",newAccount);
@@ -131,6 +133,13 @@ $(document).ready(async function () {
 			};
 		}
 
+		if (infor.fullName == null || infor.fullName == "" || infor.fullName.length < 8) {
+			return {
+				status: false,
+				message: `Require: Name is not valid, must be > 8 character`
+			};
+		}
+
 		//check password matches
 		if (infor.password !== infor.retypePassword) {
 			return {
@@ -146,9 +155,5 @@ $(document).ready(async function () {
 
     }
 
-
-	$(".btn-signin").click(function () {
-		window.location.href = "/Admin/Login";
-	});
 
 });

@@ -14,7 +14,7 @@ builder.Services.AddDIServices(builder.Configuration);
 
 //Account
 builder.Services.AddScoped<AccountService>();
-
+builder.Services.AddScoped<RoleService>();
 //Employee
 builder.Services.AddScoped<EmployeeService>();
 builder.Services.AddScoped<AllowanceService>();

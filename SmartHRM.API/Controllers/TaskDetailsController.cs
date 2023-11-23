@@ -26,6 +26,17 @@ namespace SmartHRM.API.Controllers
             return Ok(TaskDetailss);
         }
 
+        [HttpGet("EmployeeDepartment/{employeeId}")]
+        [ProducesResponseType(200, Type = typeof(IEnumerable<TaskDetails>))]
+        public IActionResult GetTaskDetailsByEmployeeDepartment(int employeeId)
+        {
+            var TaskDetailss = _TaskDetailsService.GetTaskDetailsByEmployeeDepartment(employeeId);
+            if (!ModelState.IsValid) return BadRequest(ModelState);
+
+            return Ok(TaskDetailss);
+        }
+
+
         [HttpGet("{TaskDetailsId}")]
         [ProducesResponseType(200, Type = typeof(TaskDetails))]
         [ProducesResponseType(400)]
