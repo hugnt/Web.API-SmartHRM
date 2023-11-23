@@ -8,7 +8,12 @@
 <!-- Filepond css -->
 <link rel="stylesheet" href="~/assets/libs/filepond/filepond.min.css" type="text/css" />
 <link rel="stylesheet" href="~/assets/libs/filepond-plugin-image-preview/filepond-plugin-image-preview.min.css" />
-} 
+
+<!-- Sweet Alert css-->
+<link href="~/assets/libs/sweetalert2/sweetalert2.min.css" rel="stylesheet" type="text/css" />
+
+
+}
 <div class="row bodyContent">
     <div class="col-lg-12">
         <div class="card">
@@ -16,11 +21,6 @@
                 <div class="row g-4 align-items-center">
                     <div class="col-sm">
                         <div>
-                            <!-- <h5 class="card-title mb-0">Employee Roster</h5> -->
-                            <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                                    data-bs-target="#inforModal">
-                                Test Modal
-                            </button>
                             <button type="button" class="btn btn-success btnAddNew me-1">
                                 <i class="ri-user-add-line align-bottom me-1"></i>
                                 Add new
@@ -34,11 +34,10 @@
                                         data-bs-toggle="dropdown" aria-haspopup="true"
                                         aria-expanded="false"></button>
                                 <div class="dropdown-menu">
-                                    <a class="dropdown-item" href="#">Category 1</a>
-                                    <a class="dropdown-item" href="#">Category 2</a>
-                                    <a class="dropdown-item" href="#">Category 3</a>
+                                    <a class="dropdown-item" href="/Employee/Department">Department List</a>
+                                    <a class="dropdown-item" href="/Employee/Position">Position List</a>
                                     <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item" href="#">
+                                    <a class="dropdown-item" href="/Employee/PersonnelFiles/Trash">
                                         <i class="ri-delete-bin-5-line align-middle me-1"></i>Trash
                                     </a>
                                 </div>
@@ -59,7 +58,7 @@
                                 <i class="ri-edit-box-line align-bottom ri-1x"></i>
                             </button>
 
-                            <button type="button" class="btn btn-info">
+                            <button id="btnExport" type="button" class="btn btn-info">
                                 <i class="ri-printer-line align-bottom me-1"></i>
                                 Export
                             </button>
@@ -168,7 +167,7 @@
                         <div class="col-2">
                             <div>
                                 <label for="id" class="form-label">Id</label>
-                                <input type="text" class="form-control" id="employee_id" />
+                                <input type="text" class="form-control" name="id" id="employee_id" disabled />
                             </div>
                         </div>
                         <div class="col-10">
@@ -197,7 +196,6 @@
                                 <select class="form-select mb-3" aria-label="Gender" id="gender">
                                     <option value="1" selected>Male</option>
                                     <option value="0">Female</option>
-                                    <option value="null">Other</option>
                                 </select>
                             </div>
                         </div>
@@ -209,30 +207,26 @@
                         </div>
                         <div class="col-5">
                             <div>
-                                <label for="icard" class="form-label">Identification Card</label>
-                                <input type="text" class="form-control" id="icard" placeholder="Enter icard" />
+                                <label for="identificationCard" class="form-label">Identification Card</label>
+                                <input type="text" class="form-control" id="identificationCard" placeholder="Enter icard" />
                             </div>
                         </div>
                         <!--end col-->
                         <div class="col-xxl-6">
                             <div>
-                                <label for="position" class="form-label">Position</label>
-                                <select class="form-select mb-3" aria-label="Department" id="position">
-                                    <option selected>----Select position---</option>
-                                    <option value="1">One</option>
-                                    <option value="2">Two</option>
-                                    <option value="3">Three</option>
+                                <label for="positionId" class="form-label">Position</label>
+                                <select class="form-control" id="positionId">
+                                    <option value="" disabled selected>---Position---</option>
+
                                 </select>
                             </div>
                         </div>
                         <div class="col-xxl-6">
                             <div>
-                                <label for="department" class="form-label">Department</label>
-                                <select class="form-select mb-3" aria-label="Department" id="department">
-                                    <option selected>----Select department---</option>
-                                    <option value="1">One</option>
-                                    <option value="2">Two</option>
-                                    <option value="3">Three</option>
+                                <label for="departmentId" class="form-label">Department</label>
+                                <select class="form-control" id="departmentId">
+                                    <option value="" disabled selected>---Department---</option>
+
                                 </select>
                             </div>
                         </div>
@@ -244,39 +238,44 @@
                                        placeholder="Enter your address" />
                             </div>
                         </div>
-                        <!--end col-->
-                        <div class="col-lg-12">
-                            <div class="hstack gap-2 justify-content-end">
-                                <button type="button" class="btn btn-light" data-bs-dismiss="modal">
-                                    Close
-                                </button>
-                                <button type="submit" class="btn btn-primary">
-                                    Submit
-                                </button>
-                            </div>
-                        </div>
-                        <!--end col-->
                     </div>
                     <!--end row-->
                 </form>
             </div>
+            <div class="modal-footer">
+                <div class="hstack gap-2 justify-content-end">
+                    <button type="button" class="btn btn-light" data-bs-dismiss="modal">
+                        Close
+                    </button>
+                    <button type="button" class="btn btn-primary" id="btnSave">
+                        Save
+                    </button>
+                    <button type="button" class="btn btn-success" id="btnAdd">
+                        Add
+                    </button>
+                </div>
+            </div>
         </div>
     </div>
 </div>
+
 <!-- end: Modal -->
+
 }
 @section Scripts{
 
     @await Html.PartialAsync("~/Views/Shared/Partial/ScriptLink/FilePond.cshtml")
 
-    <script>
-        $("#sidebarEmployeeRoster").addClass("show");
-        $('a[href="#sidebarEmployeeRoster"]').addClass("active");
-        $('a[href="/Employee/PersonnelFiles"]').addClass("active");
+<!-- Sweet Alerts js -->
+<script src="~/assets/libs/sweetalert2/sweetalert2.min.js"></script>
 
+<script>
+    $("#sidebarEmployeeRoster").addClass("show");
+    $('a[href="#sidebarEmployeeRoster"]').addClass("active");
+    $('a[href="/Employee/PersonnelFiles"]').addClass("active");
+</script>
 
-    </script>
-
-    <script src="~/js/table_custom.js"></script>
-    <script type="module" src="~/js/employee/personnelFiles.js"></script>
+<script src="~/js/table_custom.js"></script>
+<script src="~/js/jquery.table2excel.js"></script>
+<script type="module" src="~/js/employee/personnelFiles.js"></script>
 }

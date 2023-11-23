@@ -1,0 +1,231 @@
+﻿@{
+    ViewData["Title"] = "TASK OF EMPLOYEE";
+}
+@section Styles{
+    <!-- gridjs css -->
+    <link rel="stylesheet" href="~/assets/libs/gridjs/theme/mermaid.min.css" />
+
+    <!-- Sweet Alert css-->
+    <link href="~/assets/libs/sweetalert2/sweetalert2.min.css" rel="stylesheet" type="text/css" />
+
+
+}
+<div class="row bodyContent">
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="card-header border-bottom-dashed">
+                <div class="row g-4 align-items-center">
+                    <div class="col-sm">
+                        <div>
+                            <button type="button" class="btn btn-success btnAddNew me-1">
+                                <i class="ri-user-add-line align-bottom me-1"></i>
+                                Add new
+                            </button>
+                            <div class="btn-group">
+                                <button class="btn btn-light" type="button">
+                                    Others
+                                </button>
+                                <button type="button"
+                                        class="btn btn-light dropdown-toggle dropdown-toggle-split"
+                                        data-bs-toggle="dropdown" aria-haspopup="true"
+                                        aria-expanded="false"></button>
+                                <div class="dropdown-menu">
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" href="/Task/TaskList">
+                                        <i class="ri-arrow-left-up-line align-middle me-1"></i>Task List
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-auto">
+                        <div class="d-flex flex-wrap align-items-start gap-2">
+                            <button type="button" class="btn btn-outline-danger btnCheckTool"
+                                    id="btnRemoveListCheck">
+                                <i class="ri-delete-bin-2-line align-bottom ri-1x"></i>
+                            </button>
+                            <button type="button" class="btn btn-outline-warning" id="btnOpenCheck">
+                                <i class="ri-edit-box-line align-bottom ri-1x"></i>
+                            </button>
+
+                            <button id="btnExport" type="button" class="btn btn-info">
+                                <i class="ri-printer-line align-bottom me-1"></i>
+                                Export
+                            </button>
+                            <button type="button" class="btn btn-primary" data-bs-toggle="collapse"
+                                    data-bs-target="#collapseFilter" aria-expanded="false"
+                                    aria-controls="collapseFilter">
+                                <i class="ri-equalizer-fill me-1 align-bottom"></i>Filters
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="collapse" id="collapseFilter">
+                <div class="card-body border-bottom-dashed border-bottom">
+                    <form>
+                        <div class="row g-3">
+                            <div class="col-xl-6">
+                                <div class="search-box">
+                                    <input type="text" class="form-control search" id="searchBoxFilter"
+                                           placeholder="Search for something..." />
+                                    <i class="ri-search-line search-icon"></i>
+                                </div>
+                            </div>
+                            <!--end col-->
+                            <div class="col-xl-6">
+                                <div class="row g-3">
+                                    <div class="col-sm-4">
+                                        <div class="">
+                                            <input type="text" class="form-control"
+                                                   id="datepicker-range" data-provider="flatpickr"
+                                                   data-date-format="d M, Y" data-range-date="true"
+                                                   placeholder="Select date" disabled />
+                                        </div>
+                                    </div>
+                                    <!--end col-->
+                                    <div class="col-sm-4">
+                                        <div id="select-status">
+                                            <select class="form-control" data-plugin="choices"
+                                                    data-choices data-choices-search-false
+                                                    name="choices-single-default" id="sellectBoxFilter">
+                                                <option value="name" selected>All</option>
+                                                <option value="id">Id</option>
+                                                <option value="name">Task Name</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <!--end col-->
+
+                                    <div class="col-sm-4">
+                                        <div>
+                                            <button type="button" class="btn btn-primary w-100" id="btnFilter">
+                                                <i class="ri-equalizer-fill me-2 align-bottom"></i>Filters
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <!--end col-->
+                                </div>
+                            </div>
+                        </div>
+                        <!--end row-->
+                    </form>
+                </div>
+            </div>
+
+            <div class="card-body">
+                <div id="table-product-list-all" class="table-card gridjs-border-none"></div>
+
+                <div class="noresult" style="display: none">
+                    <div class="text-center">
+                        <lord-icon src="https://cdn.lordicon.com/msoeawqm.json" trigger="loop"
+                                   colors="primary:#121331,secondary:#08a88a"
+                                   style="width: 75px; height: 75px"></lord-icon>
+                        <h5 class="mt-2">Sorry! No Result Found</h5>
+                        <p class="text-muted mb-0">
+                            We've searched more than 150+ customer We did not find
+                            any customer for you search.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Modals{
+    <!-- begin: Modal -->
+    <div class="modal fade" id="inforModal" tabindex="-1" aria-labelledby="inforModal" aria-modal="true"
+         data-bs-backdrop="static">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="inforModal">Details</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form action="javascript:void(0);">
+                        <div class="row g-3">
+                            <div class="col-2">
+                                <div>
+                                    <label for="taskDetailsId" class="form-label">Id</label>
+                                    <input type="text" class="form-control" name="id" id="taskDetailsId" disabled />
+                                </div>
+                            </div>
+                            <div class="col-10">
+                                <div>
+                                    <label for="assigneeId" class="form-label">Assignee Name</label>
+                                    <select class="form-control" id="assigneeId">
+                                        <option value="" disabled selected>---Select Assignee---</option>
+
+                                    </select>
+                                </div>
+                            </div>  
+                            <div class="col-12">
+                            <div>
+                                <label for="assignerId" class="form-label">Assigner Name</label>
+                                <select class="form-control" id="assignerId">
+                                    <option value="" disabled selected>---Select Assigner---</option>
+
+                                </select>
+                            </div>
+                            </div>
+                            <div class="col-12">
+                                <div>
+                                    <label for="taskId" class="form-label">Task Name</label>
+                                    <select class="form-control" id="taskId">
+                                        <option value="" disabled selected>---Select Task---</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div>
+                                    <label for="content" class="form-label">Content</label>
+                                    <input type="text" class="form-control" id="content"
+                                           placeholder="Enter Content" />
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div>
+                                    <label for="description" class="form-label">Description</label>
+                                    <input type="text" class="form-control" id="description"
+                                           placeholder="Enter Description" />
+                                </div>
+                            </div>
+                        <!--end row-->
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <div class="hstack gap-2 justify-content-end">
+                        <button type="button" class="btn btn-light" data-bs-dismiss="modal">
+                            Close
+                        </button>
+                        <button type="button" class="btn btn-primary" id="btnSave">
+                            Save
+                        </button>
+                        <button type="button" class="btn btn-success" id="btnAdd">
+                            Add
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- end: Modal -->
+}
+@section Scripts{
+
+    <!-- Sweet Alerts js -->
+    <script src="~/assets/libs/sweetalert2/sweetalert2.min.js"></script>
+
+    <script>
+        $("#sidebarTask").addClass("show");
+        $('a[href="#sidebarTask"]').addClass("active");
+        $('a[href="/Task/TaskOfEmployee"]').addClass("active");
+    </script>
+
+    <script src="~/js/table_custom.js"></script>
+    <script src="~/js/jquery.table2excel.js"></script>
+    <script type="module" src="~/js/task/taskOfEmployee2.js"></script>
+}

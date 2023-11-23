@@ -34,7 +34,7 @@
                     <span data-key="t-general">General</span>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link menu-link" href="#">
+                    <a class="nav-link menu-link" href="/Dashboard">
                         <i class="ri-pie-chart-2-line"></i>
                         <span data-key="t-dashboards">Dashboard</span>
                     </a>
@@ -54,13 +54,13 @@
                                 <a href="/Employee/PersonnelFiles" class="nav-link">Personnel files</a>
                             </li>
                             <li class="nav-item">
-                                <a href="#" class="nav-link" >Positions</a>
+                                <a href="/Employee/Position" class="nav-link">Positions</a>
                             </li>
                             <li class="nav-item">
-                                <a href="#" class="nav-link" >Department</a>
+                                <a href="/Employee/Department" class="nav-link" >Department</a>
                             </li>
                             <li class="nav-item">
-                                <a href="#" class="nav-link"> Contract</a>
+                                <a href="/Employee/Contract" class="nav-link"> Contract</a>
                             </li>
                         </ul>
                     </div>
@@ -74,17 +74,17 @@
                     <div class="collapse menu-dropdown" id="sidebarTasks">
                         <ul class="nav nav-sm flex-column">
                             <li class="nav-item">
-                                <a href="#" class="nav-link" data-key="t-working-schedule">
+                                <a href="/Tasks/TasksOfEmployee" class="nav-link" data-key="t-working-schedule">
                                     Tasks of employee
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="#" class="nav-link" data-key="t-working-schedule">
-                                    Task list
+                                <a href="/Tasks/TaskList" class="nav-link" data-key="t-working-schedule">
+                                    Task List
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="#" class="nav-link" data-key="t-working-schedule">
+                                <a href="/Tasks/Project" class="nav-link" data-key="t-working-schedule">
                                     Project
                                 </a>
                             </li>
@@ -100,7 +100,7 @@
                     <div class="collapse menu-dropdown" id="sidebarTimekeeping">
                         <ul class="nav nav-sm flex-column">
                             <li class="nav-item">
-                                <a href="#" target="_blank" class="nav-link"
+                                <a href="/TimeKeeping/TimeKeeper" class="nav-link sidebarTimekeeping"
                                    data-key="t-timekeeper">Timekeeper</a>
                             </li>
                             <li class="nav-item">
@@ -124,19 +124,19 @@
                     <div class="collapse menu-dropdown" id="sidebarSalary">
                         <ul class="nav nav-sm flex-column">
                             <li class="nav-item">
-                                <a href="#" target="_blank" class="nav-link"
+                                <a href="/Salary/SalaryOfEmployee" class="nav-link"
                                    data-key="t-payroll-Salary">Salary of employee</a>
                             </li>
                             <li class="nav-item">
-                                <a href="#" target="_blank" class="nav-link"
+                                <a href="/Salary/AllowanceList" class="nav-link"
                                    data-key="t-payroll-Allowance">Allowance List</a>
                             </li>
                             <li class="nav-item">
-                                <a href="#" target="_blank" class="nav-link"
+                                <a href="/Salary/BonusList" class="nav-link"
                                    data-key="t-salary-Bonus">Bonus List</a>
                             </li>
                             <li class="nav-item">
-                                <a href="#" target="_blank" class="nav-link"
+                                <a href="/Salary/DeductionList" class="nav-link sidebarSalary"
                                    data-key="t-salary-Deduction">Deduction List</a>
                             </li>
                         </ul>
@@ -152,11 +152,11 @@
                     <div class="collapse menu-dropdown" id="sidebarInsurance">
                         <ul class="nav nav-sm flex-column">
                             <li class="nav-item">
-                                <a href="#" target="_blank" class="nav-link"
+                                <a href="/Insurance/InsuranceOfEmployee" class="nav-link"
                                    data-key="t-payroll-employee">Insurance of employee</a>
                             </li>
                             <li class="nav-item">
-                                <a href="#" target="_blank" class="nav-link"
+                                <a href="/Insurance/InsuranceList" class="nav-link"
                                    data-key="t-Insurance-list">Insurance list</a>
                             </li>
                         </ul>
@@ -165,58 +165,24 @@
 
                 <li class="menu-title">
                     <i class="ri-more-fill"></i>
-                    <span data-key="t-categories">Categories</span>
+                    <span data-key="t-categories">Account and Settings</span>
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link menu-link" href="#sidebarMultilevel" data-bs-toggle="collapse"
-                       role="button" aria-expanded="false" aria-controls="sidebarMultilevel">
-                        <i class="ri-share-line"></i>
-                        <span data-key="t-multi-level">Multi Level</span>
+                    <a class="nav-link menu-link" href="#sidebarAccount" data-bs-toggle="collapse" role="button"
+                       aria-expanded="false" aria-controls="sidebarAccount">
+                        <i class="ri-account-circle-line"></i>
+                        <span data-key="t-Account">Account</span>
                     </a>
-                    <div class="collapse menu-dropdown" id="sidebarMultilevel">
+                    <div class="collapse menu-dropdown" id="sidebarAccount">
                         <ul class="nav nav-sm flex-column">
                             <li class="nav-item">
-                                <a href="#" class="nav-link" data-key="t-level-1.1">
-                                    Level 1.1
-                                </a>
+                                <a href="/Account/AccountList" class="nav-link"
+                                   data-key="t-payroll-employee">Account List</a>
                             </li>
                             <li class="nav-item">
-                                <a href="#sidebarAccount" class="nav-link" data-bs-toggle="collapse"
-                                   role="button" aria-expanded="false" aria-controls="sidebarAccount"
-                                   data-key="t-level-1.2">
-                                    Level 1.2
-                                </a>
-                                <div class="collapse menu-dropdown" id="sidebarAccount">
-                                    <ul class="nav nav-sm flex-column">
-                                        <li class="nav-item">
-                                            <a href="#" class="nav-link" data-key="t-level-2.1">
-                                                Level 2.1
-                                            </a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a href="#sidebarCrm" class="nav-link" data-bs-toggle="collapse"
-                                               role="button" aria-expanded="false" aria-controls="sidebarCrm"
-                                               data-key="t-level-2.2">
-                                                Level 2.2
-                                            </a>
-                                            <div class="collapse menu-dropdown" id="sidebarCrm">
-                                                <ul class="nav nav-sm flex-column">
-                                                    <li class="nav-item">
-                                                        <a href="#" class="nav-link" data-key="t-level-3.1">
-                                                            Level 3.1
-                                                        </a>
-                                                    </li>
-                                                    <li class="nav-item">
-                                                        <a href="#" class="nav-link" data-key="t-level-3.2">
-                                                            Level 3.2
-                                                        </a>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </li>
-                                    </ul>
-                                </div>
+                                <a href="/Account/RoleList" class="nav-link"
+                                   data-key="t-Account-list">Role list</a>
                             </li>
                         </ul>
                     </div>

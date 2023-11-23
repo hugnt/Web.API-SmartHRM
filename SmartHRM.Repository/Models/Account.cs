@@ -13,12 +13,18 @@ namespace SmartHRM.Repository
     {
         [Column("role_id")]
         public int RoleId { get; set; }
-
-        [Column("employee_id")]
-        public int EmployeeId { get; set; }
         public string Username { get; set; }
         public string Password { get; set; }
+        public string? FullName { get; set; }
+        public string? Email { get; set; }
 
+        [Column("phone_number")]
+        public string? PhoneNumber { get; set; }
+        public string? Avatar { get; set; }
+
+        [Column("employee_id")]
+        public int? EmployeeId { get; set; }
+        public byte[]? Salt { get; set; }
 
     }
 }

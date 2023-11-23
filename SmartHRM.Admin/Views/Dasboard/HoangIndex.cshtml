@@ -1,0 +1,174 @@
+﻿@{
+    ViewData["Title"] = "Dashboard | Home";
+}
+@section Styles{
+    <!-- gridjs css -->
+    <link rel="stylesheet" href="assets/libs/gridjs/theme/mermaid.min.css" />
+    <style>
+        .hugrid-pagination {
+            display: none;
+        }
+
+        .hugrid-table, .gridjs-table {
+            height: 400px !important;
+        }
+    </style>
+
+}
+
+<div class="bodyContent">
+    @* project *@
+
+    <div class="row" id="rowCard-project">
+    </div>
+
+    <div class="row">
+        <div class="col-xl-6">
+            <div class="card">
+                <div class="card-header align-items-center d-flex">
+                    <h4 class="card-title mb-0 flex-grow-1">Top Project</h4>
+                </div><!-- end card header -->
+
+                <div class="card-body">
+                    <div id="table-project" class="table-card gridjs-border-none"></div>
+                    <div class="noresult" style="display: none">
+                        <div class="text-center">
+                            <lord-icon src="https://cdn.lordicon.com/msoeawqm.json" trigger="loop"
+                                       colors="primary:#121331,secondary:#08a88a"
+                                       style="width: 75px; height: 75px"></lord-icon>
+                            <h5 class="mt-2">Sorry! No Result Found</h5>
+                            <p class="text-muted mb-0">
+                                We've searched more than 150+ customer We did not find
+                                any customer for you search.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xl-6">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title mb-0">Project Pie Chart</h4>
+                </div><!-- end card header -->
+
+                <div class="card-body">
+                    <div id="apex-piechart-project" data-colors='["--vz-primary", "--vz-success", "--vz-warning", "--vz-danger", "--vz-info"]' class="apex-charts" dir="ltr">
+                    </div>
+                </div><!-- end card-body -->
+            </div><!-- end card -->
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xl-6">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title mb-0">Project Bar Chart</h4>
+                </div><!-- end card header -->
+                <div class="card-body">
+                    <div id="apex-barchar-project" data-colors='["--vz-primary", "--vz-success", "--vz-warning", "--vz-danger", "--vz-info"]' class="apex-charts" dir="ltr"></div>
+                </div><!-- end card-body -->
+            </div><!-- end card -->
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xl-6">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title mb-0">Project Donut Chart</h4>
+                </div><!-- end card header -->
+                <div class="card-body">
+                    <div id="apex-donutchart-project" data-colors='["--vz-primary", "--vz-success", "--vz-warning", "--vz-danger", "--vz-info"]' class="apex-charts" dir="ltr"></div>
+                </div><!-- end card-body -->
+            </div><!-- end card -->
+        </div>
+    </div>
+
+    @* task *@
+
+    <div class="row" id="rowCard-task">
+    </div>
+
+    <div class="row">
+        <div class="col-xl-6">
+            <div class="card">
+                <div class="card-header align-items-center d-flex">
+                    <h4 class="card-title mb-0 flex-grow-1">Top Task</h4>
+                </div><!-- end card header -->
+
+                <div class="card-body">
+                    <div id="table-task" class="table-card gridjs-border-none"></div>
+                    <div class="noresult" style="display: none">
+                        <div class="text-center">
+                            <lord-icon src="https://cdn.lordicon.com/msoeawqm.json" trigger="loop"
+                                       colors="primary:#121331,secondary:#08a88a"
+                                       style="width: 75px; height: 75px"></lord-icon>
+                            <h5 class="mt-2">Sorry! No Result Found</h5>
+                            <p class="text-muted mb-0">
+                                We've searched more than 150+ customer We did not find
+                                any customer for you search.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xl-6">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title mb-0">Task Pie Chart</h4>
+                </div><!-- end card header -->
+
+                <div class="card-body">
+                    <div id="apex-piechart-task" data-colors='["--vz-primary", "--vz-success", "--vz-warning", "--vz-danger", "--vz-info"]' class="apex-charts" dir="ltr">
+                    </div>
+                </div><!-- end card-body -->
+            </div><!-- end card -->
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xl-6">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title mb-0">Task Bar Chart</h4>
+                </div><!-- end card header -->
+                <div class="card-body">
+                    <div id="apex-barchar-task" data-colors='["--vz-primary", "--vz-success", "--vz-warning", "--vz-danger", "--vz-info"]' class="apex-charts" dir="ltr"></div>
+                </div><!-- end card-body -->
+            </div><!-- end card -->
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xl-6">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title mb-0">Task Donut Chart</h4>
+                </div><!-- end card header -->
+                <div class="card-body">
+                    <div id="apex-donutchart-task" data-colors='["--vz-primary", "--vz-success", "--vz-warning", "--vz-danger", "--vz-info"]' class="apex-charts" dir="ltr"></div>
+                </div><!-- end card-body -->
+            </div><!-- end card -->
+        </div>
+    </div>
+</div>
+
+
+@section Modals{
+
+}
+
+@section Scripts{
+    
+    <script type="module" src="~/js/dashboard/project.js"></script>
+    <script type="module" src="~/js/dashboard/task.js"></script>
+}

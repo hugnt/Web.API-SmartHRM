@@ -19,7 +19,7 @@ export function ajaxFail(error){
     $(".loading").css("display", "none");
     $(".bodyContent").css("display", "block");
     localStorage.setItem("ERROR", JSON.stringify(error));
-    window.location.href = "/Error"
+    //window.location.href = "/Error"
 }
 
 export function ajaxComplete(){

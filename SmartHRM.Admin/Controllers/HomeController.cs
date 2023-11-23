@@ -1,21 +1,18 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using SmartHRM.Admin.Attributes;
 using SmartHRM.Admin.Models;
 using System.Diagnostics;
 
 namespace SmartHRM.Admin.Controllers
 {
+    [CustomAuthorize("Admin", "Employee")]
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
-
-        public HomeController(ILogger<HomeController> logger)
+        
+        [Route("/Dashboard")]
+        public IActionResult Dashboard()
         {
-            _logger = logger;
-        }
-
-        public IActionResult Index()
-        {
-            return View();
+            return View("~/Views/Home/Index.cshtml");
         }
 
         public IActionResult Privacy()

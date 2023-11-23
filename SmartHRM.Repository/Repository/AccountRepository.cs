@@ -25,7 +25,9 @@ namespace SmartHRM.Repository
 
         public Account GetAccount(Account account)
         {
-            return _dbContext.Accounts.SingleOrDefault(a => a.Username == account.Username);
+            return _dbContext.Accounts.SingleOrDefault(a =>
+                a.Username == account.Username
+            );
         }
     }
 }

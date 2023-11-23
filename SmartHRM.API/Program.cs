@@ -14,28 +14,63 @@ builder.Services.AddDIServices(builder.Configuration);
 
 //Account
 builder.Services.AddScoped<AccountService>();
-
+builder.Services.AddScoped<RoleService>();
 //Employee
 builder.Services.AddScoped<EmployeeService>();
+builder.Services.AddScoped<AllowanceService>();
+builder.Services.AddScoped<BonusService>();
+//SALARY
+builder.Services.AddScoped<SalaryService>();
+
+
+
+//Position
+builder.Services.AddScoped<PositionService>();
+builder.Services.AddScoped<DeductionService>();
+
+
+
+//Insurance
+builder.Services.AddScoped<InsuranceService>();
+builder.Services.AddScoped<InsuranceDetailsService>();
+
+//Statistic
+builder.Services.AddScoped<StatisticalService>();
+
+
+builder.Services.AddScoped<ContractService>();
+
+builder.Services.AddScoped<DepartmentService>();
+
+//Deduction
+builder.Services.AddScoped<DeductionService>();
+
+//TimeKeeping
+builder.Services.AddScoped<TimeKeepingService>();
+
+//Task
+builder.Services.AddScoped<TaskService>();
+builder.Services.AddScoped<TaskDetailsService>();
+builder.Services.AddScoped<ProjectService>();
 
 //Enable CORS
-builder.Services.AddCors(p =>
-    p.AddPolicy("HUG_LOCAL", build =>
-    {
-        //build.WithOrigins("https://localhost:7034",
-        //                  "http://localhost:5034",
-        //                  "https://localhost:7289",
-        //                  "http://localhost:5289",
-        //                  "http://localhost:3000")
-        //     .AllowAnyMethod()
-        //     .AllowAnyHeader()
-        //    .AllowCredentials()
-        //    .SetIsOriginAllowed((hosts) => true);
-        build.WithOrigins("*")
-             .AllowAnyMethod()
-             .AllowAnyHeader();
-    })
-);
+//builder.Services.AddCors(p =>
+//    p.AddPolicy("HUG_LOCAL", build =>
+//    {
+//        //build.WithOrigins("https://localhost:7034",
+//        //                  "http://localhost:5034",
+//        //                  "https://localhost:7289",
+//        //                  "http://localhost:5289",
+//        //                  "http://localhost:3000")
+//        //     .AllowAnyMethod()
+//        //     .AllowAnyHeader()
+//        //    .AllowCredentials()
+//        //    .SetIsOriginAllowed((hosts) => true);
+//        build.WithOrigins("*")
+//             .AllowAnyMethod()
+//             .AllowAnyHeader();
+//    })
+//);
 
 var app = builder.Build();
 
@@ -48,7 +83,15 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-app.UseCors("HUG_LOCAL");
+//app.UseCors("HUG_LOCAL");
+
+app.UseCors(options => options.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin());
+
+app.UseStaticFiles();// Add middleware for specify the static files in wwwroot
+
+app.UseRouting();
+
+app.UseAuthentication();
 
 app.UseAuthorization();
 
